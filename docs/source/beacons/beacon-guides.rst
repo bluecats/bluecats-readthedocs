@@ -1,3 +1,6 @@
+Beacon Guides
+==============
+
 Here are a few guides on getting started with your Beacons:
 
    -  [Getting Started With Your Beacons]({{

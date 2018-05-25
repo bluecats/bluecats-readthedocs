@@ -1,0 +1,928 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Table of Contents: &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>This describes the resources for the DMAN API. If you have any problems
+or requests contact <a class="reference external" href="mailto:support&#37;&#52;&#48;bluecats&#46;com">support<span>&#64;</span>bluecats<span>&#46;</span>com</a>.</p>
+<p>The BlueCats DMAN API allows you to:</p>
+<ul class="simple">
+<li>GET Resources</li>
+<li>PATCH and PUT Resources</li>
+</ul>
+<div class="section" id="table-of-contents">
+<h1>Table of Contents:<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference external" href="https://bluecats.github.io/documentation/dman/BlueCats-API#connecting-to-the-api">Connecting to the
+API</a></li>
+<li><a class="reference external" href="https://bluecats.github.io/documentation/dman/BlueCats-API#404-errors">404
+Errors</a></li>
+<li><a class="reference external" href="https://bluecats.github.io/documentation/dman/BlueCats-API#obtaining-credentials">Obtaining
+Credentials</a><ul>
+<li><a class="reference external" href="https://bluecats.github.io/documentation/dman/BlueCats-API#oauth-20-credentials">OAuth 2.0
+Credentials</a></li>
+<li><a class="reference external" href="https://bluecats.github.io/documentation/dman/BlueCats-API#credentials-from-the-bluecats-web-app">Credentials from the BlueCats Web
+App</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="https://bluecats.github.io/documentation/dman/BlueCats-API#api-endpoints">API
+Endpoints</a><ul>
+<li><a class="reference external" href="https://bluecats.github.io/documentation/dman/BlueCats-API#get-resources">GET
+Resources</a></li>
+<li><a class="reference external" href="https://bluecats.github.io/documentation/dman/BlueCats-API#put-resources">PUT
+Resources</a></li>
+<li><a class="reference external" href="https://bluecats.github.io/documentation/dman/BlueCats-API#patch-resources">PATCH
+Resources</a></li>
+<li><a class="reference external" href="https://bluecats.github.io/documentation/dman/BlueCats-API#editable-beacon-settings">Editable Beacon
+Settings</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="connecting-to-the-api">
+<h1>Connecting to the API<a class="headerlink" href="#connecting-to-the-api" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="43%" />
+<col width="35%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Environment</th>
+<th class="head">Connectivity</th>
+<th class="head">PORT</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>BlueCats API</em></td>
+<td>URL: <a class="reference external" href="https://api.bluecats.com/">https://api.bluecats.com/</a></td>
+<td>443 (default https port)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="errors">
+<h1>404 Errors<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h1>
+<p>If the API returns a 404 error - <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">got</span> <span class="pre">your</span> <span class="pre">tongue</span></code>, this means
+that you hit a bad endpoint. So make sure the endpoint you are hitting
+is correct.</p>
+</div>
+<div class="section" id="obtaining-credentials">
+<h1>Obtaining Credentials<a class="headerlink" href="#obtaining-credentials" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="oauth-2-0-credentials">
+<h2>OAuth 2.0 Credentials<a class="headerlink" href="#oauth-2-0-credentials" title="Permalink to this headline">¶</a></h2>
+<p>Authentication with the BlueCats API follows the key/secret usage
+outlined in the <a class="reference external" href="https://tools.ietf.org/html/rfc6749#section-4.4">OAuth 2.0 Client Credentials
+Flow</a>. Don’t leak
+your OAuth application’s client secret to application users - this is
+intended for use in server to server scenarios.</p>
+<p>Receive your bearer token by posting your your client ID and secret to
+<code class="docutils literal notranslate"><span class="pre">https://api.bluecats.com/token</span></code> using the <code class="docutils literal notranslate"><span class="pre">client_credentials</span></code>
+grant type.</p>
+<p>You must send as the header
+<code class="docutils literal notranslate"><span class="pre">ContentType=application/x-www-form-urlencoded</span></code>. The body should be as
+form data in x-www-form-urlencoded:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grant_type</span><span class="o">=</span><span class="n">client_credentials</span>
+
+<span class="n">client_id</span><span class="o">=</span><span class="p">{</span><span class="n">client_id</span><span class="p">}</span>
+
+<span class="n">client_secret</span><span class="o">=</span><span class="p">{</span><span class="n">client_secret</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="credentials-from-the-bluecats-web-app">
+<h2>Credentials from the BlueCats Web App<a class="headerlink" href="#credentials-from-the-bluecats-web-app" title="Permalink to this headline">¶</a></h2>
+<p>To obtain credentials:</p>
+<ol class="arabic simple">
+<li>Go to the <a class="reference external" href="https://app.bluecats.com">BlueCats Web App</a></li>
+<li>Go to the app tab then “Create a new app”</li>
+<li>Give a name to your app.</li>
+<li>Select the platform: API Client</li>
+<li>Once you create your app, click “Show App Token/Secret”</li>
+<li>Click “Reset Client Secret”</li>
+<li>Write down the Client ID and Client Secret</li>
+</ol>
+<p>You will need to Base64 encode the Client ID and Client Secret in the
+form: {clientID}:{clientSecret}</p>
+<p>You can either Base64 encode using a website like <a class="reference external" href="https://www.base64encode.org">Base64
+Encode</a> or if you want to use this
+short Python example below to encode your credentials.</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">base64</span>
+
+<span class="n">client_id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">client_secret</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">raw_auth</span> <span class="o">=</span> <span class="n">client_id</span> <span class="o">+</span> <span class="s2">&quot;:&quot;</span> <span class="o">+</span> <span class="n">client_secret</span>
+<span class="n">auth_credentials</span> <span class="o">=</span> <span class="s2">&quot;BlueCats &quot;</span> <span class="o">+</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64encode</span><span class="p">(</span><span class="n">raw_auth</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The final credentials should be formatted as: Bluecats
+{Base64EncodedCredentials}</p>
+<div class="section" id="api-endpoints">
+<h3>API Endpoints<a class="headerlink" href="#api-endpoints" title="Permalink to this headline">¶</a></h3>
+<p>This section contains outlines for API Endpoints and JSON structures
+with examples using <a class="reference external" href="https://github.com/curl/curl">cURL</a>.</p>
+</div>
+</div>
+</div>
+<div class="section" id="get-resources">
+<h1>GET Resources<a class="headerlink" href="#get-resources" title="Permalink to this headline">¶</a></h1>
+<p>For getting resource information, you will usually supply a base_uri, a
+resource, and that resource ID with parameters if needed. An example of
+resources that you can get are:</p>
+<ul class="simple">
+<li>Teams</li>
+<li>Sites</li>
+<li>Beacons</li>
+<li>Beacon Settings</li>
+<li>Devices</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">HTTPS Element</th>
+<th class="head">Request Details</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>method</em></td>
+<td>GET</td>
+</tr>
+<tr class="row-odd"><td><em>header</em></td>
+<td>Authorization: {credentials}, Content-Type:
+application/json, X-Api-Version: 3</td>
+</tr>
+<tr class="row-even"><td><em>path</em></td>
+<td>{base_uri}/{resourceURL} <em>See Below</em></td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Resource Type</th>
+<th class="head">Resource URL</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Teams</em></td>
+<td>{base_uri}/teams/{teamID}</td>
+</tr>
+<tr class="row-odd"><td><em>Sites</em></td>
+<td>{base_uri}/sites/{siteID}</td>
+</tr>
+<tr class="row-even"><td><em>Beacons</em></td>
+<td>{base_uri}/beacons/{beaconID}</td>
+</tr>
+<tr class="row-odd"><td><em>Beacon Modes</em></td>
+<td>{base_uri}/beacons/{beaconID}/beaconmodes</td>
+</tr>
+<tr class="row-even"><td><em>Beacon Target Speeds</em></td>
+<td>{base_uri}/beacons/{beaconID}/targetspeeds</td>
+</tr>
+<tr class="row-odd"><td><em>Beacon Loudnesses</em></td>
+<td>{base_uri}/beacons/{beaconID}/beaconloudnesses</td>
+</tr>
+<tr class="row-even"><td><em>Beacon Regions</em></td>
+<td>{base_uri}/beaconRegions/{regionID}</td>
+</tr>
+<tr class="row-odd"><td><em>Devices</em></td>
+<td>{base_uri}/devices/{deviceID}</td>
+</tr>
+<tr class="row-even"><td><em>Maps</em></td>
+<td>{base_uri}/sites/{siteID}/Maps</td>
+</tr>
+<tr class="row-odd"><td><em>Packs</em></td>
+<td>{base_uri}/packs/{claimcode}</td>
+</tr>
+</tbody>
+</table>
+<p>This Example GET Request pulls down all of the information for one
+Beacon. Similarly, you GET other resources like Devices, sites, and
+packs.</p>
+  <details>
+
+Example GET Beacon Request<pre><code>
+    curl \
+    -H "Authorization: Bluecats {Base64EncodedCredentials}" \
+    -H "Content-Type: application/json" \
+    -H "X-Api-Version: 3" \
+    -X GET 'https://api.bluecats.com/beacons/{beaconSN}'
+    </code></pre></details>  <details>
+
+Example GET Beacon Response<pre><code>
+    {
+        "beacon": {
+            "name": "new",
+            "categories": [],
+            "customValues": [],
+            "iBeaconKey": "61687109-905F-4436-91F8-E602F514C96D:4:23326",
+            "siteName": "Newborn Beacon Incubator",
+            "pendingVersion": 44,
+            "batteryStatus": {
+                "name": "Dead",
+                "displayName": "Dead",
+                "id": 3
+            },
+            "healthStatus": {
+                "name": "NeverReported",
+                "displayName": "Never Reported",
+                "id": 4
+            },
+            "beaconLoudness": {
+                "name": "Talk",
+                "displayName": "Talk",
+                "level": 4,
+                "measuredPowerAt1Meter": -67,
+                "ranges": [],
+                "id": 28
+            },
+            "targetSpeed": {
+                "name": "Walk",
+                "displayName": "Walk",
+                "milliseconds": 319,
+                "id": 3
+            },
+            "measuredPowerAt1Meter": -67,
+            "createdAt": "2017-09-05T17:40:12Z",
+            "modifiedAt": "2017-11-23T16:28:28Z",
+            "firmwareVersion": "2.2.0",
+            "featureBitmask": 24810495,
+            "beaconRegion": {
+                "name": "BlueCats",
+                "regionIdentifier": "com.bluecats.BlueCats",
+                "proximityUUID": "61687109-905F-4436-91F8-E602F514C96D",
+                "teamID": "dfc67101-2fa7-4c85-2647-c3ae556d95ef",
+                "beaconCount": 1791,
+                "proximityUUIDAccessType": {
+                    "name": "Public",
+                    "displayName": "Public",
+                    "id": 1
+                },
+                "namespaceIDAccessType": {
+                    "name": "Public",
+                    "displayName": "Public",
+                    "id": 1
+                },
+                "namespaceID": "61687109E602F514C96D",
+                "monitorOnly": false,
+                "keepAliveProximityUUID": "61687109-905F-4436-91F8-E602F514C96D",
+                "keepAliveMajor": 0,
+                "keepAliveMinor": 0,
+                "id": "e1c67101-2fa7-fb8c-7142-1fe3067f69df"
+            },
+            "beaconMode": {
+                "name": "Custom",
+                "displayName": "Custom",
+                "id": 8
+            },
+            "modelNumber": "BC413",
+            "upgradableOTA": true,
+            "lastKnownBatteryLevel": 0,
+            "privacyDuration": 0,
+            "eddystone": {
+                "uid": "61687109E602F514C96D000000021EE6",
+                "url": "https://goo.gl/jaLfW3",
+                "namespaceID": "61687109E602F514C96D",
+                "instanceID": "000000021EE6",
+                "encodedUrl": "Z29vLmdsL2phTGZXMw==",
+                "urlSchemePrefixID": 3
+            },
+            "lastVisitedAt": "2018-01-31T21:11:29Z",
+            "securityType": {
+                "name": "TripleKey",
+                "displayName": "TripleKey",
+                "id": 3
+            },
+            "wireframeUrl": "http://res.cloudinary.com/hehoijro7/image/upload/v1469032691/bn1jph5sxzqwa3tnhnjk.png",
+            "connectable": true,
+            "eddystoneService": false,
+            "version": 35,
+            "latestFirmwareVersion": "2.4.0",
+            "firmwareUID": "5000006E",
+            "latestFirmwareUID": "5000008F",
+            "proximityUUID": "61687109-905F-4436-91F8-E602F514C96D",
+            "major": 4,
+            "minor": 23326,
+            "teamID": "dfc67101-2fa7-4c85-2647-c3ae556d95ef",
+            "siteID": "c0357201-2fa7-7a9e-1e44-2ba7323905eb",
+            "serialNumber": "50002A56",
+            "bluetoothAddress": "98072D067D27",
+            "id": "3f322301-e5a7-e1bf-2443-11c71c2b073f"
+        }
+    }
+    </code></pre></details></div>
+<div class="section" id="put-resources">
+<h1>PUT Resources<a class="headerlink" href="#put-resources" title="Permalink to this headline">¶</a></h1>
+<p>In order to edit resources, you can PUT to a resources endpoint. To edit
+beacons or devices, you can PUT settings with a body of JSON.</p>
+<p>There are a few settings that require to GET the available information
+for that object. For example, to patch the setting Beacon Loudness to a
+Beacon, you will have to first GET all of the available Beacon Loudness
+IDs for that Beacon. After you get the corresponding Beacon Loudness ID,
+you can patch it to the API.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">HTTPS Element</th>
+<th class="head">Request Details</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>method</em></td>
+<td>PUT</td>
+</tr>
+<tr class="row-odd"><td><em>header</em></td>
+<td>Authorization: {credentials}, Content-Type:
+application/json, X-Api-Version: 3</td>
+</tr>
+<tr class="row-even"><td><em>path</em></td>
+<td>{base_uri}/beacons/{beaconID} OR
+{base_uri}/devices/{deviceID}</td>
+</tr>
+<tr class="row-odd"><td><em>body</em></td>
+<td><em>See Editable Beacon Settings Below</em></td>
+</tr>
+</tbody>
+</table>
+<p>For an Example PUT Request, firstly GET a Beacon’s/Device’s (resource’s)
+information.</p>
+<p>Then you should edit the fields that you want. The possible <a class="reference external" href="https://bluecats.github.io/documentation/dman/BlueCats-API#editable-beacon-settings">editable
+Beacon
+Settings</a>
+are below. Any settings with the suffix -ID, will require you to GET
+that resources ID. For example, you will get the
+{base_uri}/beacons/{beaconID}/beaconmodes so that you can give the
+BlueCats API the proper ID back. Save that response to a JSON file.</p>
+<p>PUT to the resource with those change. Similarly to the GET, you PUT
+other resources like Devices and Beacons.</p>
+  <details>
+
+Example PUT Request<pre><code>
+    curl \
+    -H "Authorization: Bluecats {Base64EncodedCredentials}" \
+    -H "Content-Type: application/json" \
+    -H "X-Api-Version: 3" \
+    -X PUT --data '@beacon.json' 'https://api.bluecats.com/beacons/{beaconSN}'
+    </code></pre></details>  <details>
+
+Example PUT beacon.json BODY<pre><code>
+        {
+          "beacon": {
+            "name": "Beacon1",
+            "categories": [
+
+            ],
+            "customValues": [
+
+            ],
+            "iBeaconKey": "36B884FE-685B-46FA-A98B-F004D7F41048:5000:1",
+            "siteName": "Newborn Beacon Incubator",
+            "pendingVersion": 44,
+            "batteryStatus": {
+              "name": "Dead",
+              "displayName": "Dead",
+              "id": 3
+            },
+            "healthStatus": {
+              "name": "NeverReported",
+              "displayName": "Never Reported",
+              "id": 4
+            },
+            "beaconLoudness": {
+              "name": "Talk",
+              "displayName": "Talk",
+              "level": 4,
+              "measuredPowerAt1Meter": -67,
+              "ranges": [
+
+              ],
+              "id": 28
+            },
+            "targetSpeed": {
+              "name": "Walk",
+              "displayName": "Walk",
+              "milliseconds": 319,
+              "id": 3
+            },
+            "measuredPowerAt1Meter": -67,
+            "createdAt": "2017-09-05T17:40:12Z",
+            "modifiedAt": "2018-05-10T19:27:42.5088353Z",
+            "firmwareVersion": "2.2.0",
+            "featureBitmask": 24810495,
+            "beaconRegion": {
+              "name": "dmanTest",
+              "regionIdentifier": "com.bluecats.dmanTest",
+              "proximityUUID": "36B884FE-685B-46FA-A98B-F004D7F41048",
+              "teamID": "dfc67101-2fa7-4c85-2647-c3ae556d95ef",
+              "beaconCount": 0,
+              "proximityUUIDAccessType": {
+                "name": "Private",
+                "displayName": "Private",
+                "id": 2
+              },
+              "monitorOnly": false,
+              "keepAliveProximityUUID": "61687109-905F-4436-91F8-E602F514C96D",
+              "keepAliveMajor": 0,
+              "keepAliveMinor": 0,
+              "id": "74293a01-23a8-0b80-c942-b88f3a3bea77"
+            },
+            "beaconMode": {
+              "name": "Custom",
+              "displayName": "Custom",
+              "id": 8
+            },
+            "modelNumber": "BC413",
+            "upgradableOTA": true,
+            "lastKnownBatteryLevel": 0,
+            "privacyDuration": 0,
+            "eddystone": {
+              "url": "https:\/\/goo.gl\/jaLfW3",
+              "encodedUrl": "Z29vLmdsL2phTGZXMw==",
+              "urlSchemePrefixID": 3
+            },
+            "lastVisitedAt": "2018-01-31T21:11:29Z",
+            "securityType": {
+              "name": "TripleKey",
+              "displayName": "TripleKey",
+              "id": 3
+            },
+            "wireframeUrl": "http:\/\/res.cloudinary.com\/hehoijro7\/image\/upload\/v1469032691\/bn1jph5sxzqwa3tnhnjk.png",
+            "connectable": true,
+            "eddystoneService": false,
+            "version": 44,
+            "latestFirmwareVersion": "2.4.0",
+            "firmwareUID": "5000006E",
+            "latestFirmwareUID": "5000008F",
+            "proximityUUID": "36B884FE-685B-46FA-A98B-F004D7F41048",
+            "major": 5000,
+            "minor": 1,
+            "teamID": "dfc67101-2fa7-4c85-2647-c3ae556d95ef",
+            "siteID": "c0357201-2fa7-7a9e-1e44-2ba7323905eb",
+            "serialNumber": "50002A56",
+            "bluetoothAddress": "98072D067D27",
+            "id": "3f322301-e5a7-e1bf-2443-11c71c2b073f"
+          }
+        }
+
+    </code></pre></details>  <details>
+
+Example PUT Response<pre><code>
+    {
+        "beacon": {
+            "name": "new",
+            "categories": [],
+            "customValues": [],
+            "iBeaconKey": "61687109-905F-4436-91F8-E602F514C96D:4:23326",
+            "siteName": "Newborn Beacon Incubator",
+            "pendingVersion": 44,
+            "batteryStatus": {
+                "name": "Dead",
+                "displayName": "Dead",
+                "id": 3
+            },
+            "healthStatus": {
+                "name": "NeverReported",
+                "displayName": "Never Reported",
+                "id": 4
+            },
+            "beaconLoudness": {
+                "name": "Talk",
+                "displayName": "Talk",
+                "level": 4,
+                "measuredPowerAt1Meter": -67,
+                "ranges": [],
+                "id": 28
+            },
+            "targetSpeed": {
+                "name": "Walk",
+                "displayName": "Walk",
+                "milliseconds": 319,
+                "id": 3
+            },
+            "measuredPowerAt1Meter": -67,
+            "createdAt": "2017-09-05T17:40:12Z",
+            "modifiedAt": "2017-11-23T16:28:28Z",
+            "firmwareVersion": "2.2.0",
+            "featureBitmask": 24810495,
+            "beaconRegion": {
+                "name": "BlueCats",
+                "regionIdentifier": "com.bluecats.BlueCats",
+                "proximityUUID": "61687109-905F-4436-91F8-E602F514C96D",
+                "teamID": "dfc67101-2fa7-4c85-2647-c3ae556d95ef",
+                "beaconCount": 1791,
+                "proximityUUIDAccessType": {
+                    "name": "Public",
+                    "displayName": "Public",
+                    "id": 1
+                },
+                "namespaceIDAccessType": {
+                    "name": "Public",
+                    "displayName": "Public",
+                    "id": 1
+                },
+                "namespaceID": "61687109E602F514C96D",
+                "monitorOnly": false,
+                "keepAliveProximityUUID": "61687109-905F-4436-91F8-E602F514C96D",
+                "keepAliveMajor": 0,
+                "keepAliveMinor": 0,
+                "id": "e1c67101-2fa7-fb8c-7142-1fe3067f69df"
+            },
+            "beaconMode": {
+                "name": "Custom",
+                "displayName": "Custom",
+                "id": 8
+            },
+            "modelNumber": "BC413",
+            "upgradableOTA": true,
+            "lastKnownBatteryLevel": 0,
+            "privacyDuration": 0,
+            "eddystone": {
+                "uid": "61687109E602F514C96D000000021EE6",
+                "url": "https://goo.gl/jaLfW3",
+                "namespaceID": "61687109E602F514C96D",
+                "instanceID": "000000021EE6",
+                "encodedUrl": "Z29vLmdsL2phTGZXMw==",
+                "urlSchemePrefixID": 3
+            },
+            "lastVisitedAt": "2018-01-31T21:11:29Z",
+            "securityType": {
+                "name": "TripleKey",
+                "displayName": "TripleKey",
+                "id": 3
+            },
+            "wireframeUrl": "http://res.cloudinary.com/hehoijro7/image/upload/v1469032691/bn1jph5sxzqwa3tnhnjk.png",
+            "connectable": true,
+            "eddystoneService": false,
+            "version": 35,
+            "latestFirmwareVersion": "2.4.0",
+            "firmwareUID": "5000006E",
+            "latestFirmwareUID": "5000008F",
+            "proximityUUID": "61687109-905F-4436-91F8-E602F514C96D",
+            "major": 4,
+            "minor": 23326,
+            "teamID": "dfc67101-2fa7-4c85-2647-c3ae556d95ef",
+            "siteID": "c0357201-2fa7-7a9e-1e44-2ba7323905eb",
+            "serialNumber": "50002A56",
+            "bluetoothAddress": "98072D067D27",
+            "id": "3f322301-e5a7-e1bf-2443-11c71c2b073f"
+        }
+    }
+    </code></pre></details></div>
+<div class="section" id="patch-resources">
+<h1>PATCH Resources<a class="headerlink" href="#patch-resources" title="Permalink to this headline">¶</a></h1>
+<p>In order to edit resources, you can PATCH to a resources endpoint. To
+edit beacons or devices, you can PATCH settings with a body of JSON.</p>
+<p>There are a few settings that require to GET the available information
+for that object. For example, to patch the setting Beacon Loudness to a
+Beacon, you will have to first GET all of the available Beacon Loudness
+IDs for that Beacon. After you get the corresponding Beacon Loudness ID,
+you can patch it to the API.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">HTTPS Element</th>
+<th class="head">Request Details</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>method</em></td>
+<td>PATCH</td>
+</tr>
+<tr class="row-odd"><td><em>header</em></td>
+<td>Authorization: {credentials}, Content-Type:
+application/json, X-Api-Version: 3</td>
+</tr>
+<tr class="row-even"><td><em>path</em></td>
+<td>{base_uri}/beacons/{beaconID} OR
+{base_uri}/devices/{deviceID}</td>
+</tr>
+<tr class="row-odd"><td><em>body</em></td>
+<td><em>See Editable Beacon Settings Below</em></td>
+</tr>
+</tbody>
+</table>
+<p>For an Example PATCH Request, firstly GET a Beacon’s/Device’s
+(resource’s) information, so you know what you can change.</p>
+<p>Then send only the possible <a class="reference external" href="https://bluecats.github.io/documentation/dman/BlueCats-API#editable-beacon-settings">editable Beacon
+settings</a>
+as a JSON object. Any settings with the suffix -ID, will require you to
+GET that resources ID. For example, you will get the
+{base_uri}/beacons/{beaconID}/beaconmodes so that you can give the
+BlueCats API the proper ID back. You only PATCH the key:value pairs that
+you want from the editable Beacon settings.</p>
+<p>PATCH to the resource with those change. Similarly to the GET, you PATCH
+other resources like Devices and Beacons.</p>
+  <details>
+
+Example Beacon PATCH Request<pre><code>
+
+    curl \
+    -H "Authorization: Bluecats {Base64EncodedCredentials}" \
+    -H "Content-Type: application/json" \
+    -H "X-Api-Version: 3" \
+    -X PATCH --data '{"name": "Beacon1"}' 'https://api.bluecats.com/beacons/{beaconSN}'
+
+    </code></pre></details>  <details>
+
+Example PATCH Response<pre><code>
+        {
+          "beacon": {
+            "name": "Beacon1",
+            "categories": [
+
+            ],
+            "customValues": [
+
+            ],
+            "iBeaconKey": "36B884FE-685B-46FA-A98B-F004D7F41048:5000:1",
+            "siteName": "Newborn Beacon Incubator",
+            "pendingVersion": 44,
+            "batteryStatus": {
+              "name": "Dead",
+              "displayName": "Dead",
+              "id": 3
+            },
+            "healthStatus": {
+              "name": "NeverReported",
+              "displayName": "Never Reported",
+              "id": 4
+            },
+            "beaconLoudness": {
+              "name": "Talk",
+              "displayName": "Talk",
+              "level": 4,
+              "measuredPowerAt1Meter": -67,
+              "ranges": [
+
+              ],
+              "id": 28
+            },
+            "targetSpeed": {
+              "name": "Walk",
+              "displayName": "Walk",
+              "milliseconds": 319,
+              "id": 3
+            },
+            "measuredPowerAt1Meter": -67,
+            "createdAt": "2017-09-05T17:40:12Z",
+            "modifiedAt": "2018-05-10T19:27:42.5088353Z",
+            "firmwareVersion": "2.2.0",
+            "featureBitmask": 24810495,
+            "beaconRegion": {
+              "name": "dmanTest",
+              "regionIdentifier": "com.bluecats.dmanTest",
+              "proximityUUID": "36B884FE-685B-46FA-A98B-F004D7F41048",
+              "teamID": "dfc67101-2fa7-4c85-2647-c3ae556d95ef",
+              "beaconCount": 0,
+              "proximityUUIDAccessType": {
+                "name": "Private",
+                "displayName": "Private",
+                "id": 2
+              },
+              "monitorOnly": false,
+              "keepAliveProximityUUID": "61687109-905F-4436-91F8-E602F514C96D",
+              "keepAliveMajor": 0,
+              "keepAliveMinor": 0,
+              "id": "74293a01-23a8-0b80-c942-b88f3a3bea77"
+            },
+            "beaconMode": {
+              "name": "Custom",
+              "displayName": "Custom",
+              "id": 8
+            },
+            "modelNumber": "BC413",
+            "upgradableOTA": true,
+            "lastKnownBatteryLevel": 0,
+            "privacyDuration": 0,
+            "eddystone": {
+              "url": "https:\/\/goo.gl\/jaLfW3",
+              "encodedUrl": "Z29vLmdsL2phTGZXMw==",
+              "urlSchemePrefixID": 3
+            },
+            "lastVisitedAt": "2018-01-31T21:11:29Z",
+            "securityType": {
+              "name": "TripleKey",
+              "displayName": "TripleKey",
+              "id": 3
+            },
+            "wireframeUrl": "http:\/\/res.cloudinary.com\/hehoijro7\/image\/upload\/v1469032691\/bn1jph5sxzqwa3tnhnjk.png",
+            "connectable": true,
+            "eddystoneService": false,
+            "version": 44,
+            "latestFirmwareVersion": "2.4.0",
+            "firmwareUID": "5000006E",
+            "latestFirmwareUID": "5000008F",
+            "proximityUUID": "36B884FE-685B-46FA-A98B-F004D7F41048",
+            "major": 5000,
+            "minor": 1,
+            "teamID": "dfc67101-2fa7-4c85-2647-c3ae556d95ef",
+            "siteID": "c0357201-2fa7-7a9e-1e44-2ba7323905eb",
+            "serialNumber": "50002A56",
+            "bluetoothAddress": "98072D067D27",
+            "id": "3f322301-e5a7-e1bf-2443-11c71c2b073f"
+          }
+        }
+
+    </code></pre></details></div>
+<div class="section" id="editable-beacon-settings">
+<h1>Editable Beacon Settings<a class="headerlink" href="#editable-beacon-settings" title="Permalink to this headline">¶</a></h1>
+<p>These are decriptions of Settings that are editable through PATCHing or
+PUTing a Beacon. If you do not know the setting you are changing it to,
+you should try to GET that resource first.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="42%" />
+<col width="28%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Beacon Setting Name</th>
+<th class="head">Description</th>
+<th class="head">Body Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>“name”</td>
+<td>name of the
+Beacon</td>
+<td>{“name”:
+“Beacon1”}</td>
+</tr>
+<tr class="row-odd"><td>“siteID”</td>
+<td>siteID</td>
+<td>{“siteID”:
+“{siteID}”}</td>
+</tr>
+<tr class="row-even"><td>“targetSpeedID”</td>
+<td>targetSpeedID</td>
+<td>{“targetSpeedID”:
+“{targetSpeedID}”}</td>
+</tr>
+<tr class="row-odd"><td>“beaconLoudnessID”</td>
+<td>beaconLoudnessID</td>
+<td>{“beaconLoudnessID
+”:
+“{beaconLoudnessID
+}”}</td>
+</tr>
+<tr class="row-even"><td>“beaconModeID”</td>
+<td>beaconModeID</td>
+<td>{“beaconModeID”:
+“{beaconModeID}”}</td>
+</tr>
+<tr class="row-odd"><td>“mapID”</td>
+<td>MapID</td>
+<td>{“mapID”:
+“{mapID}”}</td>
+</tr>
+<tr class="row-even"><td>“mapX”</td>
+<td>MapX</td>
+<td>{“mapX”: “{mapX}”}</td>
+</tr>
+<tr class="row-odd"><td>“mapY”</td>
+<td>MapY</td>
+<td>{“mapY”: “{mapY}”}</td>
+</tr>
+<tr class="row-even"><td>“categoryList”</td>
+<td>categoryList</td>
+<td>{“categoryList”:
+[“category1”,
+“category2”]}</td>
+</tr>
+<tr class="row-odd"><td>“customValueList”</td>
+<td>customValueList</td>
+<td>{“customValueList”
+:
+[{“key”: “key”,
+“value”:
+“value”}]}</td>
+</tr>
+<tr class="row-even"><td>“privacyDuration”</td>
+<td>privacyDuration
+in minutes. Set
+to 0 to turn it
+off</td>
+<td>{“privacyDuration”
+:
+1440}</td>
+</tr>
+<tr class="row-odd"><td>“notes”</td>
+<td>any notes you
+want beacon to
+have</td>
+<td>{“notes”:
+“{notes}”}</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Table of Contents:</a></li>
+<li><a class="reference internal" href="#connecting-to-the-api">Connecting to the API</a></li>
+<li><a class="reference internal" href="#errors">404 Errors</a></li>
+<li><a class="reference internal" href="#obtaining-credentials">Obtaining Credentials</a><ul>
+<li><a class="reference internal" href="#oauth-2-0-credentials">OAuth 2.0 Credentials</a></li>
+<li><a class="reference internal" href="#credentials-from-the-bluecats-web-app">Credentials from the BlueCats Web App</a><ul>
+<li><a class="reference internal" href="#api-endpoints">API Endpoints</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-resources">GET Resources</a></li>
+<li><a class="reference internal" href="#put-resources">PUT Resources</a></li>
+<li><a class="reference internal" href="#patch-resources">PATCH Resources</a></li>
+<li><a class="reference internal" href="#editable-beacon-settings">Editable Beacon Settings</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/dman/BlueCats-API.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/dman/BlueCats-API.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

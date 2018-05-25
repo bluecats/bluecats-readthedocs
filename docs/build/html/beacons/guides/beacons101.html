@@ -1,0 +1,181 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>What is a beacon? &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="what-is-a-beacon">
+<h1>What is a beacon?<a class="headerlink" href="#what-is-a-beacon" title="Permalink to this headline">¶</a></h1>
+<p>Beacons are devices that use the Bluetooth Low Energy (BLE) protocol to
+repeatedly send short transmissions, called advertisements, to mobile
+devices and other. Advertisements can contain identifier and/or sensor
+data and the brevity of these advertisements allows for battery operated
+use lasting several years.</p>
+</div>
+<div class="section" id="what-can-i-do-with-beacons-why-beacons">
+<h1>What can I do with beacons? (Why Beacons?)<a class="headerlink" href="#what-can-i-do-with-beacons-why-beacons" title="Permalink to this headline">¶</a></h1>
+<p>In their simplest form, beacons can be used to pinpoint your location.
+At their most complex, beacons can transmit and receive data from
+sensors and other beacons. Beacons enable (but are not limited to) the
+following use cases: * triggering relevant mobile content for education
+and shopping experiences * initiating data transfer between a mobile
+device, beacon and point of sale computer to redeem offers * logging
+and reporting temperature data * notifying a quick service restaurant
+of your arrival for order pickup * tracking the location of assets in
+real time</p>
+<p>Beacons are essentially broadcasters of data. This data can be static,
+such as an identifier, public or obfuscated, or data from sensors or
+devices such as order ID. We have several real world uses in the case
+study section of our <a class="reference external" href="http://bluecats.com/case-study.html">website</a>.</p>
+<p>Choose the right beacon for your project:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://www.bluecats.com/aa-beacon/">AA Beacon</a> Our most popular
+beacon. Longest battery life and supports Eddystone, iBeacon and
+BlueCats advertisement specifications with dust and weather resistant
+options. AA and Coin Beacon are functionally the same unit. They
+utilize the BC010 module and have an average range of 100-200 meters.</li>
+<li><a class="reference external" href="https://www.bluecats.com/coin-beacon/">Coin Beacon</a>. Compact and
+powerful. Supports all available Eddystone, iBeacon and BlueCats
+advertisement specifications with replaceable coin cell battery. AA
+and Coin Beacon are functionally the same unit. They utilize the
+BC010 module and have an average range of 100-200 meters.</li>
+<li><a class="reference external" href="https://www.bluecats.com/usb-beacon/">USB Beacon</a>. More than a
+beacon. Scan for beacons nearby and two-way communication between a
+mobile device and host of BLE via the USB beacon</li>
+<li><a class="reference external" href="https://www.bluecats.com/bc010/">BC010 BLE Module</a>. The BC010 can
+be connected directly to a battery or SMT soldered to a host PCB and
+is ideal for data logging from BlueCats Sensor Boards while the rest
+of the system is in sleep mode. The module is perfect for application
+where battery life, small form factor, RF performance and speed to
+market are important.</li>
+</ul>
+<div class="section" id="whats-ble-ibeacon-eddystone">
+<h2>What’s BLE, iBeacon, Eddystone?<a class="headerlink" href="#whats-ble-ibeacon-eddystone" title="Permalink to this headline">¶</a></h2>
+<p>Bluetooth Low Energy (BLE) is a power friendly version of Bluetooth.
+Built from the beginning to enable the Internet of Things, BLE is power
+efficient and extensible to diverse use cases. These goals are achieved
+by short, customizable transmissions that are sent from BLE enabled
+devices.</p>
+<p><strong>iBeacon</strong> is a BLE advertisement format defined by Apple that enables
+iOS applications, open or closed, to be notified when particular beacon
+ranging events occur. This is most important when you wish to deliver
+context to a customer even when their application is closed or
+backgrounded.</p>
+<p><strong>Eddystone</strong> is a collection of open beacon formats created by Google.
+These formats include the following: * Eddystone-UID: for sending
+static beacon identifier information * Eddystone-URL: for sending a
+short URL to surrounding devices and can be leveraged by mobile devices
+using the Chrome app * Eddystone-TLM: for sending beacon health
+information to monitor the health of beacons * Eddystone-EID: for
+sending encoded beacon identifier information for secure beacon use</p>
+</div>
+<div class="section" id="how-granular-can-i-be">
+<h2>How granular can I be?<a class="headerlink" href="#how-granular-can-i-be" title="Permalink to this headline">¶</a></h2>
+<p>Beacons operate as reference points. The more reference points you add,
+the more granular you can become. Accompanied by the BlueCatsSDKs and
+BlueCats know-how, applications and devices can define triggers that
+single out the nearest beacon and trigger the appropriate event. You can
+even be as granular as defining an interaction to the near tapping of a
+phone or tablet on a beacon.</p>
+</div>
+<div class="section" id="what-makes-bluetooth-low-energy-different-from-traditional-bluetooth">
+<h2>What Makes Bluetooth Low Energy Different from traditional Bluetooth?<a class="headerlink" href="#what-makes-bluetooth-low-energy-different-from-traditional-bluetooth" title="Permalink to this headline">¶</a></h2>
+<p>Bluetooth Low Energy uses a new framework for device connectivity that
+is ultra-power efficient and requires no pairing.</p>
+<p>In addition, simply having Bluetooth turned on in your phone settings
+doesn’t mean it will drain battery when not paired to your favorite
+headset or car stereo. When not paired, Bluetooth is passive and scans
+for connectable devices in a decaying time period. As time passes, the
+scan for my previously paired devices interval grows to a longer and
+longer period up to a defined maximum which differs by platform.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">What is a beacon?</a></li>
+<li><a class="reference internal" href="#what-can-i-do-with-beacons-why-beacons">What can I do with beacons? (Why Beacons?)</a><ul>
+<li><a class="reference internal" href="#whats-ble-ibeacon-eddystone">What’s BLE, iBeacon, Eddystone?</a></li>
+<li><a class="reference internal" href="#how-granular-can-i-be">How granular can I be?</a></li>
+<li><a class="reference internal" href="#what-makes-bluetooth-low-energy-different-from-traditional-bluetooth">What Makes Bluetooth Low Energy Different from traditional Bluetooth?</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/beacons/guides/beacons101.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../_sources/beacons/guides/beacons101.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

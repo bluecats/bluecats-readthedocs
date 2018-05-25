@@ -1,0 +1,425 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>POST search &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>The search API for Loop can perform queries and analytics on users,
+objects, and groups. Our API is based off the <a class="reference external" href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST
+API</a>.</p>
+<p>The following examples outlines for API Endpoints and JSON structures
+with examples using <a class="reference external" href="https://github.com/curl/curl">cURL</a>.</p>
+<div class="section" id="post-search">
+<h1>POST search<a class="headerlink" href="#post-search" title="Permalink to this headline">¶</a></h1>
+<p>A Search API request contains the following elements:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">HTTPS Element</th>
+<th class="head">Request Details</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>method</em></td>
+<td>POST</td>
+</tr>
+<tr class="row-odd"><td><em>header</em></td>
+<td>Authorization: Basic
+{credentials}, Content-Type:
+application/json</td>
+</tr>
+<tr class="row-even"><td><em>path</em> (req)</td>
+<td>{base_uri}/search</td>
+</tr>
+<tr class="row-odd"><td><em>body</em></td>
+<td>JSON of the search request</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Request</strong></p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> \
+<span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Authorization: Basic ZXJuaWVAYmx1ZWNhdHMuY29tOnBhc3N3b3Jk&quot;</span> \
+<span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Content-Type: application/json&quot;</span> \
+<span class="o">-</span><span class="n">X</span> <span class="n">POST</span> <span class="o">--</span><span class="n">data</span> <span class="s2">&quot;@search.json&quot;</span> <span class="s1">&#39;https://bcstage.api.loop.bluecats.com/search&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="search-body">
+<h1>Search Body<a class="headerlink" href="#search-body" title="Permalink to this headline">¶</a></h1>
+<p>The search topics send up a body of JSON. The first required key:value
+pair is <em>from:resource</em>. One of the 3 following string types of resource
+must be picked from as a resource:</p>
+<ul class="simple">
+<li>users</li>
+<li>objects</li>
+<li>groups</li>
+</ul>
+<p>If you were to query the <em>users</em> resource, you would format it as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;users&#39;</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>If you were to query the <em>groups</em> resource, you would format it as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;from&#39;</span><span class="p">:</span> <span class="s1">&#39;groups&#39;</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>If you were to query the <em>object</em> resource, then a valid objectType of
+type is string is required in the base level of the JSON. For the rest
+of our example, we are going to be querying for a car object.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;objectType&#39;</span><span class="p">:</span> <span class="s1">&#39;car&#39;</span><span class="p">,</span>
+</pre></div>
+</div>
+<p>The next required key is <em>select</em>, which is of the list type. Within the
+select list, can either select for { ‘value’: ‘type’ } and/or { ‘count’:
+‘all’ }. Count returns the total number of the object queried. We can
+query things the year, color, and count all car objectTypes that you
+have ownership of. This example we will select by year, color, and count
+all of the types.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="p">{</span>
+    <span class="s1">&#39;objectType&#39;</span><span class="p">:</span> <span class="s1">&#39;car&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;select&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;year&#39;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;color&#39;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="s1">&#39;all&#39;</span> <span class="p">}</span>
+    <span class="p">],</span>
+</pre></div>
+</div>
+<p>The next few parameters are not required:</p>
+<ul class="simple">
+<li><em>offset</em> (integer): defaults to 0 and is where to start indexing the
+objects from</li>
+<li><em>limit</em> (integer): defaults to 100 and can be between the values
+0-1000</li>
+<li><em>orderBy</em> (list of dictionaries): requires at at least one dictionary
+and has the form of key:value with direction being either ascending
+or descending: {‘value’: {key}, ‘direction’: asc/desc}</li>
+<li><em>ssearch</em> (string): this allows you to search any string</li>
+</ul>
+<p>To add to our car example, we will:</p>
+<ul class="simple">
+<li>offset the index by 5</li>
+<li>limit the results to 50</li>
+<li>orderBy:<ol class="arabic">
+<li>the year by descending</li>
+<li>color by ascending</li>
+</ol>
+</li>
+<li>ssearch by ‘cool car’</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;objectType&#39;</span><span class="p">:</span> <span class="s1">&#39;car&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;select&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;year&#39;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;color&#39;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="s1">&#39;all&#39;</span> <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;offset&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s1">&#39;limit&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s1">&#39;orderBy&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;direction&#39;</span><span class="p">:</span> <span class="s1">&#39;desc&#39;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;direction&#39;</span><span class="p">,</span> <span class="s1">&#39;asc&#39;</span> <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;ssearch&#39;</span><span class="p">:</span> <span class="s1">&#39;cool car&#39;</span><span class="p">,</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="search-filters-where">
+<h1>Search Filters: <em>where</em><a class="headerlink" href="#search-filters-where" title="Permalink to this headline">¶</a></h1>
+<p><em>where</em> is a list that allows you to filter on your searches with a few
+powerful concepts that need to be explained: clause dictionaries
+(composed of comparison operations), query clause, and clause lists. The
+bare minimum where filter is using a <em>clause dictionary</em>.</p>
+<div class="section" id="clause-dictionary">
+<h2>Clause Dictionary<a class="headerlink" href="#clause-dictionary" title="Permalink to this headline">¶</a></h2>
+<p>This is a form of a dictionary that allows <em>comparison operations</em> to be
+performed on keys with some type of value. This takes the form of:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s1">&#39;key_name&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;comparison operation&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span> <span class="p">}}</span>
+</pre></div>
+</div>
+<p>This is all the possible current comparison operations available.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="56%" />
+<col width="26%" />
+<col width="18%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Comparison Operation Name</th>
+<th class="head">Explanation</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>EQ</td>
+<td>filters if the
+value is equal</td>
+<td>{‘year’:
+{‘EQ’:
+2000 }}</td>
+</tr>
+<tr class="row-odd"><td>NEQ</td>
+<td>filters if the
+value is not
+equal</td>
+<td>{‘year’:
+{‘NEQ’:
+400 }}</td>
+</tr>
+<tr class="row-even"><td>GT</td>
+<td>filters if the
+value is greater
+than</td>
+<td>{‘age’:
+{‘GT’: 25
+}}</td>
+</tr>
+<tr class="row-odd"><td>GE</td>
+<td>filters if the
+value is greater
+than or equal to</td>
+<td>{‘age’:
+{‘GE’: 25
+}}</td>
+</tr>
+<tr class="row-even"><td>LT</td>
+<td>filters if the
+value is less
+than</td>
+<td>{‘age’:
+{‘LT’: 25
+}}</td>
+</tr>
+<tr class="row-odd"><td>LE</td>
+<td>filters if the
+value is less
+than or equal to</td>
+<td>{‘age’:
+{‘LE’: 25
+}}</td>
+</tr>
+<tr class="row-even"><td>HAS</td>
+<td>filters if the
+key has the
+value (Requires
+the string
+‘value’)</td>
+<td>{‘age’:
+{‘HAS’:
+‘value’ }}</td>
+</tr>
+<tr class="row-odd"><td>HAS NO</td>
+<td>filters if the
+key has the
+value (Requires
+the string
+‘value’)</td>
+<td>{‘age’:
+{‘HAS NO’:
+‘value’ }}</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="comparison-operation-available-for-types">
+<h2>Comparison Operation Available for Types<a class="headerlink" href="#comparison-operation-available-for-types" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="24%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Types</th>
+<th class="head">Comparison Operations Types Available</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>String</em></td>
+<td>ALL</td>
+</tr>
+<tr class="row-odd"><td><em>dateTime</em></td>
+<td>ALL</td>
+</tr>
+<tr class="row-even"><td><em>decimal</em></td>
+<td>ALL</td>
+</tr>
+<tr class="row-odd"><td><em>int</em></td>
+<td>ALL</td>
+</tr>
+<tr class="row-even"><td><em>bool</em></td>
+<td>EQ, NEQ, HAS, HAS NO</td>
+</tr>
+<tr class="row-odd"><td><em>json</em></td>
+<td>HAS, HAS NO</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="query-list">
+<h2>Query List<a class="headerlink" href="#query-list" title="Permalink to this headline">¶</a></h2>
+<p>A query clause is the use of AND or OR. A query list allows is a list
+type that requires a query clause first and then allows clause
+dictionaries and/or query lists to be nested. Here is an example of a
+basic query list with a two clause dictionaries.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">where</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="n">query</span> <span class="n">clause</span><span class="p">:</span>
+            <span class="p">[</span>
+                <span class="p">{</span><span class="n">clause</span> <span class="n">dictionary</span><span class="p">},</span>
+                <span class="p">{</span><span class="n">clause</span> <span class="n">dictionary</span><span class="p">}</span>
+            <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Here is an example of a basic query list with a two clause dictionaries
+and a nested query list.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">where</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="n">query</span> <span class="n">clause</span><span class="p">:</span>
+            <span class="p">[</span>
+                <span class="p">{</span><span class="n">clause</span> <span class="n">dictionary</span><span class="p">},</span>
+                <span class="p">{</span><span class="n">clause</span> <span class="n">dictionary</span><span class="p">}</span>
+            <span class="p">],</span>
+
+    <span class="p">},</span>
+    <span class="p">{</span>
+                <span class="n">query</span> <span class="n">clause</span><span class="p">:</span>
+                    <span class="p">[</span>
+                        <span class="p">{</span><span class="n">clause</span> <span class="n">dictionary</span><span class="p">},</span>
+                        <span class="p">{</span><span class="n">clause</span> <span class="n">dictionary</span><span class="p">}</span>
+                    <span class="p">]</span>
+            <span class="p">}</span>
+
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>This is a where filter with filtering a car by the colors: (green) OR
+(red) OR (blue AND white). The final JSON body for our car example would
+like:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;objectType&#39;</span><span class="p">:</span> <span class="s1">&#39;car&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;select&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;year&#39;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;color&#39;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s1">&#39;count&#39;</span><span class="p">:</span> <span class="s1">&#39;all&#39;</span> <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;offset&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s1">&#39;limit&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s1">&#39;orderBy&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;direction&#39;</span><span class="p">:</span> <span class="s1">&#39;desc&#39;</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="s1">&#39;value&#39;</span><span class="p">:</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="s1">&#39;direction&#39;</span><span class="p">,</span> <span class="s1">&#39;asc&#39;</span> <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s1">&#39;ssearch&#39;</span><span class="p">:</span> <span class="s1">&#39;cool car&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;where&#39;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s1">&#39;or&#39;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;EQ&#39;</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span> <span class="p">}</span> <span class="p">},</span>
+                <span class="p">{</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;EQ&#39;</span><span class="p">:</span> <span class="s1">&#39;green&#39;</span> <span class="p">},</span>
+                <span class="p">{</span><span class="s1">&#39;and&#39;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;EQ&#39;</span><span class="p">:</span> <span class="s1">&#39;blue&#39;</span> <span class="p">}</span> <span class="p">},</span>
+                        <span class="p">{</span> <span class="s1">&#39;color&#39;</span><span class="p">:</span> <span class="p">{</span> <span class="s1">&#39;EQ&#39;</span><span class="p">:</span> <span class="s1">&#39;white&#39;</span> <span class="p">}</span> <span class="p">}</span>
+                    <span class="p">]</span>
+                <span class="p">}</span>
+            <span class="p">]</span>
+        <span class="p">}</span>
+    <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">POST search</a></li>
+<li><a class="reference internal" href="#search-body">Search Body</a></li>
+<li><a class="reference internal" href="#search-filters-where">Search Filters: <em>where</em></a><ul>
+<li><a class="reference internal" href="#clause-dictionary">Clause Dictionary</a></li>
+<li><a class="reference internal" href="#comparison-operation-available-for-types">Comparison Operation Available for Types</a></li>
+<li><a class="reference internal" href="#query-list">Query List</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/loop/api-search.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/loop/api-search.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

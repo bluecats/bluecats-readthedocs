@@ -1,0 +1,990 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Introduction &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>This describes the resources for the Loop API. If you have any problems
+or requests contact <a class="reference external" href="mailto:support&#37;&#52;&#48;bluecats&#46;com">support<span>&#64;</span>bluecats<span>&#46;</span>com</a>.</p>
+<div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>The Loop API allows you to:</p>
+<ul class="simple">
+<li>Create or update a single or multiple (batch) Groups or Objects</li>
+<li>Change the password of the Group</li>
+<li>Claim or unclaim a single or multiple (batch) Objects by the Owner</li>
+<li>Send batch Events</li>
+<li>Search and perform analytics on Groups, Objects, and Events</li>
+</ul>
+</div>
+<div class="section" id="connecting-to-the-api">
+<h1>Connecting to the API<a class="headerlink" href="#connecting-to-the-api" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Environment</th>
+<th class="head">Connectivity</th>
+<th class="head">PORT</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>Labs</em></td>
+<td>URL:
+<a class="reference external" href="https://bcstage.api.l">https://bcstage.api.l</a>
+oop.bluecats.com/</td>
+<td>443 (default https
+port)</td>
+</tr>
+<tr class="row-odd"><td><em>Production</em></td>
+<td>URL: {base_uri}</td>
+<td>443 (default https
+port)</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="endpoints-and-json">
+<h2>Endpoints and JSON<a class="headerlink" href="#endpoints-and-json" title="Permalink to this headline">¶</a></h2>
+<p>This section contains outlines for API Endpoints and JSON structures
+with examples using <a class="reference external" href="https://github.com/curl/curl">cURL</a>.</p>
+</div>
+</div>
+<div class="section" id="login">
+<h1>Login<a class="headerlink" href="#login" title="Permalink to this headline">¶</a></h1>
+<p>Login credentials are returned after a GET request for user login.
+<em>Basic Authorization Credentials</em> is returned after a GET request for
+user login. Adding the <em>Basic Authorization Credentials</em> to your header
+allows you to make requests POST/GET groups.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="22%" />
+<col width="78%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">HTTPS Element</th>
+<th class="head">Request Details</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>method</em></td>
+<td>GET</td>
+</tr>
+<tr class="row-odd"><td><em>path</em></td>
+<td>{base_uri}/login?email={email}&amp;password={password}</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Request</strong></p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> \
+<span class="o">-</span><span class="n">X</span> <span class="n">GET</span> <span class="s1">&#39;https://bcstage.api.loop.bluecats.com/login?&#39;</span>\
+    <span class="s1">&#39;email=</span><span class="si">{email}</span><span class="s1">&amp;&#39;</span>\
+    <span class="s1">&#39;password=</span><span class="si">{password}</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+<p><strong>Response</strong></p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;auth&quot;</span><span class="p">:</span> <span class="s2">&quot;Basic {Authorization Token}&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;groupID&quot;</span><span class="p">:</span> <span class="s2">&quot;764166c0c49c4e113c62f0ca3cecd84e&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{email}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;firstName&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{firstName}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;lastName&quot;</span><span class="p">:</span> <span class="s2">&quot;</span><span class="si">{lastName}</span><span class="s2">&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="groups-query">
+<h1>Groups Query<a class="headerlink" href="#groups-query" title="Permalink to this headline">¶</a></h1>
+<p>Performing a GET request on <em>groups</em> allows you to see all of the
+<em>groups</em> that you are authorized to access. Querying groups also allows
+you to determine <em>Groups IDs</em>. <em>Group IDs</em> allow you to create objects
+in that groups and perform other meaningful queries.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">HTTPS Element</th>
+<th class="head">Request Details</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>method</em></td>
+<td>GET</td>
+</tr>
+<tr class="row-odd"><td><em>header</em></td>
+<td>Authorization: Basic {credentials}</td>
+</tr>
+<tr class="row-even"><td><em>path</em></td>
+<td>{base_uri}/groups</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Request</strong></p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> \
+<span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Authorization: Basic {Authorization Token}&quot;</span> \
+<span class="o">-</span><span class="n">X</span> <span class="n">GET</span> <span class="s1">&#39;https://bcstage.api.loop.bluecats.com/groups&#39;</span>
+</pre></div>
+</div>
+<p><strong>Response</strong></p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;764166c0c49c4e113c62f0ca3cecd84e&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Root&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;BlueCats&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;abbreviation&quot;</span><span class="p">:</span> <span class="s2">&quot;bc&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;a3cec63e2aa927c93567abd968677314&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Tenant&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;BlueCats Demo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;abbreviation&quot;</span><span class="p">:</span> <span class="s2">&quot;bcd&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;children&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;5390eea486cad80464c24ca2e861837a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Customer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;BC Car Park SYD&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;abbreviation&quot;</span><span class="p">:</span> <span class="s2">&quot;bcdcparksyd&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;66679cbce97e147f3ef61122eb63a1a3&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Customer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;BC Local Fulfillment ATX&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;abbreviation&quot;</span><span class="p">:</span> <span class="s2">&quot;bcdlocfulatx&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;9d6d3255547edffe380502e554bfb24d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Customer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;BC Internal Stock Tranfers&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;abbreviation&quot;</span><span class="p">:</span> <span class="s2">&quot;bcdintstktrans&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;d3f78b1267b5bd9f3531009fea8365d&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Customer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;BC Car Lot ATX&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;abbreviation&quot;</span><span class="p">:</span> <span class="s2">&quot;bcdclotatx&quot;</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objecttypes-query">
+<h1>ObjectTypes Query<a class="headerlink" href="#objecttypes-query" title="Permalink to this headline">¶</a></h1>
+<p>Performing a GET request on <em>objectTypes</em> is useful to determine which
+objects are available to which groups and which you can query. The group
+ID in the objectTypes shows what group created and has ownership of the
+objectType. Anyone underneath that group can create objects. When
+creating objects, check which object keys are required and what types
+they are when you want to create objects.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">HTTPS Element</th>
+<th class="head">Request Details</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>method</em></td>
+<td>GET</td>
+</tr>
+<tr class="row-odd"><td><em>header</em></td>
+<td>Authorization: Basic {credentials}</td>
+</tr>
+<tr class="row-even"><td><em>path</em></td>
+<td>{base_uri}/objectTypes</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Request</strong></p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> \
+<span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Authorization: Basic {Authorization Token}&quot;</span> \
+<span class="o">-</span><span class="n">X</span> <span class="n">GET</span> <span class="s1">&#39;https://bcdev.api.loop.bluecats.com/schema&#39;</span>
+</pre></div>
+</div>
+<p><strong>Response</strong></p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;bcdEquipment&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Equipment&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;Thing&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;keys&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;type&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Type&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;varchar(100)&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;editable&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;serialNumber&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Serial Number&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;varchar(100)&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;editable&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;batterySoC&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Battery %&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;editable&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;temp&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Temp&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;varchar(10)&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;editable&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;tempObservedAt&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Observed At&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;datetime(6)&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;editable&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;place&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Place&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;varchar(32)&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;objectLink&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;table&quot;</span><span class="p">:</span> <span class="s2">&quot;Place&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;nested&quot;</span><span class="p">:</span> <span class="n">true</span>
+      <span class="p">},</span>
+      <span class="s2">&quot;editable&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;placeChangedAt&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Changed At&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;datetime(6)&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;editable&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;long&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Longitude&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;decimal(13,10)&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;editable&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;lat&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Latitude&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;decimal(13,10)&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;editable&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;positionObservedAt&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Observed At&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;datetime(6)&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;editable&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;accObservedAt&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Observed At&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;datetime(6)&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;editable&quot;</span><span class="p">:</span> <span class="n">false</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;eventID&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;displayName&quot;</span><span class="p">:</span> <span class="s2">&quot;Event ID&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;required&quot;</span><span class="p">:</span> <span class="n">false</span><span class="p">,</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;varchar(100)&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;editable&quot;</span><span class="p">:</span> <span class="n">true</span><span class="p">,</span>
+      <span class="s2">&quot;hidden&quot;</span><span class="p">:</span> <span class="n">true</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;groupID&quot;</span><span class="p">:</span> <span class="s2">&quot;a3cec63e2aa927c93567abd968677314&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="create-object">
+<h1>Create Object<a class="headerlink" href="#create-object" title="Permalink to this headline">¶</a></h1>
+<p>Login credentials are returned after a GET request for user login.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="30%" />
+<col width="70%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">HTTPS Element</th>
+<th class="head">Request Details</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>method</em></td>
+<td>POST</td>
+</tr>
+<tr class="row-odd"><td><em>header</em></td>
+<td>Authorization: Basic {credentials},
+Content-Type: application/json</td>
+</tr>
+<tr class="row-even"><td><em>path</em> (req)</td>
+<td>{base_uri}/objects?objectType={objectType}</td>
+</tr>
+<tr class="row-odd"><td><em>body</em></td>
+<td>{ “groupID”: {groupID}, “requiredKey”:
+{requiredValue}, “optionalKey”:
+{optionalValue} }</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Request</strong></p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> \
+<span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Authorization: Basic {Authorization Token}&quot;</span> \
+<span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Content-Type: application/json&quot;</span> \
+<span class="o">-</span><span class="n">X</span> <span class="n">POST</span> <span class="o">--</span><span class="n">data</span> <span class="s2">&quot;@object.json&quot;</span> <span class="s1">&#39;https://bcstage.api.loop.bluecats.com/objects?objectType=Place&#39;</span>
+</pre></div>
+</div>
+<p><strong>Response</strong></p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;success&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objects-query">
+<h1>Objects Query<a class="headerlink" href="#objects-query" title="Permalink to this headline">¶</a></h1>
+<p>Login credentials are returned after a GET request for user login.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">HTTPS Element</th>
+<th class="head">Request Details</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>method</em></td>
+<td>GET</td>
+</tr>
+<tr class="row-odd"><td><em>header</em></td>
+<td>Authorization: Basic {credentials}</td>
+</tr>
+<tr class="row-even"><td><em>path</em></td>
+<td>{base_uri}/objects</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="query-params">
+<h1>Query Params<a class="headerlink" href="#query-params" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="18%" />
+<col width="17%" />
+<col width="23%" />
+<col width="15%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Key</strong></th>
+<th class="head"><strong>Value</strong></th>
+<th class="head">Required</th>
+<th class="head">Explanation</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>objectType</td>
+<td><em>string</em></td>
+<td>Yes</td>
+<td>specifying
+objectType to
+query</td>
+<td>objectTy
+pe=bcdPe
+rson</td>
+</tr>
+<tr class="row-odd"><td>limit</td>
+<td><em>int</em></td>
+<td>No</td>
+<td>Number of
+objects
+returned (max
+200)</td>
+<td>limit=34</td>
+</tr>
+<tr class="row-even"><td>first</td>
+<td><em>int</em></td>
+<td>No</td>
+<td>Index of
+object to
+start from
+(when paging)</td>
+<td>first=67</td>
+</tr>
+<tr class="row-odd"><td>sortkey</td>
+<td><em>string</em></td>
+<td>No</td>
+<td>Sorting
+objects by a
+key (defaults
+to ascending)</td>
+<td>sortkey=
+name</td>
+</tr>
+<tr class="row-even"><td>sortdir</td>
+<td><em>string</em></td>
+<td>No</td>
+<td>Sorting
+objects by a
+key and
+direction
+ascending or
+descending
+(asc or desc)</td>
+<td>sortkey=
+name&amp;sor
+tdir=des
+c</td>
+</tr>
+<tr class="row-odd"><td>ssearch</td>
+<td><em>string</em></td>
+<td>No</td>
+<td>Index of
+object to
+start from,
+when paging</td>
+<td>ssearch=
+ernie</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Request</strong></p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> \
+<span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Authorization: Basic {Authorization Token}&quot;</span> \
+<span class="o">-</span><span class="n">X</span> <span class="n">GET</span> <span class="s1">&#39;https://bcstage.api.loop.bluecats.com/objects?&#39;</span>\
+    <span class="s1">&#39;objectType=bcdPerson&#39;</span>\
+</pre></div>
+</div>
+<p><strong>Response</strong></p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;objects&quot;</span><span class="p">:</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;439859f6c79bf12eab0e338bc3194a7b&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;groupID&quot;</span><span class="p">:</span> <span class="s2">&quot;66679cbce97e147f3ef61122eb63a1a3&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eventID&quot;</span><span class="p">:</span> <span class="s2">&quot;eddyUID#3EBC2C6462A6D9E7BF47000000000005&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ernie Forzano&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;serialNumber&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;batterySoC&quot;</span><span class="p">:</span> <span class="mi">65</span><span class="p">,</span>
+        <span class="s2">&quot;batterySoCObservedAt&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-10-24T14:59:10.982710Z&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span> <span class="s2">&quot;tempObservedAt&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span> <span class="s2">&quot;impactMagnitude&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;impactObservedAt&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;place&quot;</span><span class="p">:</span>
+        <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;4d27ec3d975b45f9af2137a240afcf9b&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;groupID&quot;</span><span class="p">:</span> <span class="s2">&quot;66679cbce97e147f3ef61122eb63a1a3&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;eventID&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;BC ATX Office&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;fullName&quot;</span><span class="p">:</span> <span class="s2">&quot;BlueCats Austin, Texas Office&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;countryCode&quot;</span><span class="p">:</span> <span class="s2">&quot;US&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;adminCode&quot;</span><span class="p">:</span> <span class="s2">&quot;TX&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="s2">&quot;Austin&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;postalCode&quot;</span><span class="p">:</span> <span class="s2">&quot;78702&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;street&quot;</span><span class="p">:</span> <span class="s2">&quot;301 Chicon, Suite A&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;boundingBox&quot;</span><span class="p">:</span>
+                <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">type</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">Polygon</span><span class="se">\&quot;</span><span class="s2">,</span><span class="se">\&quot;</span><span class="s2">coordinates</span><span class="se">\&quot;</span><span class="s2">:         [[-97.72360056638718,30.25915060702415],[-97.72323042154312,30.259018550957144],[-97.72332161664963,30.2588366839777],[-97.72368639707565,30.258971057065057],[-97.72360056638718,30.25915060702415]]}&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;attributes&quot;</span><span class="p">:</span>
+                <span class="s2">&quot;{</span><span class="se">\&quot;</span><span class="s2">fillColor</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">#FF0000</span><span class="se">\&quot;</span><span class="s2">,</span>
+                \<span class="s2">&quot;fillOpacity</span><span class="se">\&quot;</span><span class="s2">:0.35,</span>
+                \<span class="s2">&quot;strokeColor</span><span class="se">\&quot;</span><span class="s2">:</span><span class="se">\&quot;</span><span class="s2">#FF0000</span><span class="se">\&quot;</span><span class="s2">,</span>
+                \<span class="s2">&quot;strokeWeight</span><span class="se">\&quot;</span><span class="s2">:2,</span>
+                \<span class="s2">&quot;strokeOpacity</span><span class="se">\&quot;</span><span class="s2">:0.8}&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;placeChangedAt&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-10-24T14:36:30.849691Z&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;long&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mf">97.7234845608</span><span class="p">,</span>
+        <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="mf">30.259081683</span><span class="p">,</span>
+        <span class="s2">&quot;positionObservedAt&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-10-24T14:36:30.849691Z&quot;</span><span class="p">,</span>        <span class="s2">&quot;objectType&quot;</span><span class="p">:</span> <span class="s2">&quot;bcdPerson&quot;</span>
+    <span class="p">},</span>
+
+    <span class="p">{</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;b5d3daebcad1bef1ff660d13ec80a1df&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;groupID&quot;</span><span class="p">:</span> <span class="s2">&quot;66679cbce97e147f3ef61122eb63a1a3&quot;</span><span class="p">,</span> <span class="s2">&quot;eventID&quot;</span><span class="p">:</span>       <span class="s2">&quot;eddyUID#3EBC2C6462A6D9E7BF47000000000003&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Jarran Pedersen&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;serialNumber&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;batterySoC&quot;</span><span class="p">:</span> <span class="mi">83</span><span class="p">,</span>
+        <span class="s2">&quot;batterySoCObservedAt&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-10-23T22:57:47.838706Z&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;tempObservedAt&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;impactMagnitude&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;impactObservedAt&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;place&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;placeChangedAt&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-10-23T22:58:08.279756Z&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;long&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+        <span class="s2">&quot;positionObservedAt&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-10-23T22:58:08.279756Z&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;objectType&quot;</span><span class="p">:</span> <span class="s2">&quot;bcdPerson&quot;</span><span class="p">}],</span>
+<span class="s2">&quot;start&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;total&quot;</span><span class="p">:</span> <span class="mi">2</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="query-events">
+<h2>Query Events<a class="headerlink" href="#query-events" title="Permalink to this headline">¶</a></h2>
+<p>Login credentials are returned after a GET request for user login. Any
+event type located here. Those event types will be saved. However, it
+will not necessarily have state logic applied to it.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">HTTPS Element</th>
+<th class="head">Request Details</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>method</em></td>
+<td>GET</td>
+</tr>
+<tr class="row-odd"><td><em>header</em></td>
+<td>Authorization: Basic {credentials}</td>
+</tr>
+<tr class="row-even"><td><em>path</em></td>
+<td>{base_uri}/events</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="event-query-params">
+<h1>Event Query Params<a class="headerlink" href="#event-query-params" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="22%" />
+<col width="20%" />
+<col width="20%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head"><strong>Key</strong></th>
+<th class="head"><strong>Value</strong></th>
+<th class="head">Required</th>
+<th class="head">Explanation</th>
+<th class="head">Examples</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>identifier</td>
+<td><em>string</em></td>
+<td>Yes</td>
+<td>specifying
+identifier
+to query</td>
+<td>identifie
+r={identi
+fier}
+check
+below</td>
+</tr>
+<tr class="row-odd"><td>eventType</td>
+<td><em>string</em></td>
+<td>No</td>
+<td>[event
+types]({{
+‘documentat
+ion/loop/bc
+-loop-event
+-types’</td>
+<td><a href="#id1"><span class="problematic" id="id2">relative_</span></a>
+url
+}})</td>
+</tr>
+<tr class="row-even"><td>lastKeyID</td>
+<td><em>string</em></td>
+<td>No</td>
+<td>Starts from
+the event
+after
+referenced.
+(<em>Requires</em>
+lastKeyTS)</td>
+<td>“lastKeyI
+D”:
+“bcId#500
+02D7D”,
+“lastKeyT
+S”:
+“2017-11-
+01T17:34:
+59.801528
+Z”</td>
+</tr>
+<tr class="row-odd"><td>lastKeyTS</td>
+<td><em>string</em></td>
+<td>No</td>
+<td>Starts from
+the event
+after
+referenced.
+(<em>Requires</em>
+lastKeyID)</td>
+<td>“lastKeyI
+D”:
+“bcId#500
+02D7D”,
+“lastKeyT
+S”:
+“2017-11-
+01T17:34:
+59.801528
+Z”</td>
+</tr>
+<tr class="row-even"><td>count</td>
+<td><em>int</em></td>
+<td>No</td>
+<td>Number of
+objects
+returned
+(max 100)</td>
+<td>count=34</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>identifier=edge#{edgeMAC}</li>
+<li>identifier=ibeac#{ibeaconkeyinhex}</li>
+<li>identifier=eddyUID#{eddystoneUID}</li>
+<li>identifier=bcId#{bc custom identifier, normally serial number}</li>
+<li>identifier=btAddr#{bluetooth address}</li>
+</ul>
+<p><strong>Request</strong></p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> \
+<span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Authorization: Basic {Authorization Token}&quot;</span> \
+<span class="o">-</span><span class="n">X</span> <span class="n">GET</span> <span class="s1">&#39;https://bcstage.api.loop.bluecats.com/events?&#39;</span>\
+    <span class="s1">&#39;identifier=bcId%2350002D7D&#39;</span>
+</pre></div>
+</div>
+<p><strong>Response</strong></p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;events&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;ts&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-11-01T17:35:33.382555Z&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;bcId&quot;</span><span class="p">:</span> <span class="s2">&quot;50002D7D&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;enZone&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;edgeMAC&quot;</span><span class="p">:</span> <span class="s2">&quot;E4956E4E4024&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;identifier&quot;</span><span class="p">:</span> <span class="s2">&quot;bcId#50002D7D&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;mac&quot;</span><span class="p">:</span> <span class="s2">&quot;6A35258BB9E5&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;enZone&quot;</span><span class="p">:</span> <span class="s2">&quot;CALIFORNIA&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;identifierAndType&quot;</span><span class="p">:</span> <span class="s2">&quot;bcId#50002D7D#enZone&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;ts&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-11-01T17:35:25.185150Z&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;bcId&quot;</span><span class="p">:</span> <span class="s2">&quot;50002D7D&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;exZone&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;edgeMAC&quot;</span><span class="p">:</span> <span class="s2">&quot;E4956E4E4024&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;exZone&quot;</span><span class="p">:</span> <span class="s2">&quot;CALIFORNIA&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;identifier&quot;</span><span class="p">:</span> <span class="s2">&quot;bcId#50002D7D&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;mac&quot;</span><span class="p">:</span> <span class="s2">&quot;6A35258BB9E5&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;identifierAndType&quot;</span><span class="p">:</span> <span class="s2">&quot;bcId#50002D7D#exZone&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;ts&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-11-01T17:35:12.991150Z&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;bcId&quot;</span><span class="p">:</span> <span class="s2">&quot;50002D7D&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;enZone&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;edgeMAC&quot;</span><span class="p">:</span> <span class="s2">&quot;E4956E4E4024&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;identifier&quot;</span><span class="p">:</span> <span class="s2">&quot;bcId#50002D7D&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;mac&quot;</span><span class="p">:</span> <span class="s2">&quot;6A35258BB9E5&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;enZone&quot;</span><span class="p">:</span> <span class="s2">&quot;CALIFORNIA&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;identifierAndType&quot;</span><span class="p">:</span> <span class="s2">&quot;bcId#50002D7D#enZone&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;ts&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-11-01T17:35:11.589368Z&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;bcId&quot;</span><span class="p">:</span> <span class="s2">&quot;50002D7D&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;exZone&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;edgeMAC&quot;</span><span class="p">:</span> <span class="s2">&quot;E4956E4E4024&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;exZone&quot;</span><span class="p">:</span> <span class="s2">&quot;CALIFORNIA&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;identifier&quot;</span><span class="p">:</span> <span class="s2">&quot;bcId#50002D7D&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;mac&quot;</span><span class="p">:</span> <span class="s2">&quot;6A35258BB9E5&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;identifierAndType&quot;</span><span class="p">:</span> <span class="s2">&quot;bcId#50002D7D#exZone&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;ts&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-11-01T17:34:59.801528Z&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;bcId&quot;</span><span class="p">:</span> <span class="s2">&quot;50002D7D&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;enZone&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;edgeMAC&quot;</span><span class="p">:</span> <span class="s2">&quot;E4956E4E4024&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;identifier&quot;</span><span class="p">:</span> <span class="s2">&quot;bcId#50002D7D&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;mac&quot;</span><span class="p">:</span> <span class="s2">&quot;6A35258BB9E5&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;enZone&quot;</span><span class="p">:</span> <span class="s2">&quot;CALIFORNIA&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;identifierAndType&quot;</span><span class="p">:</span> <span class="s2">&quot;bcId#50002D7D#enZone&quot;</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+  <span class="s2">&quot;lastKeyID&quot;</span><span class="p">:</span> <span class="s2">&quot;bcId#50002D7D&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;lastKeyTS&quot;</span><span class="p">:</span> <span class="s2">&quot;2017-11-01T17:34:59.801528Z&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="section" id="posting-events">
+<h2>Posting Events<a class="headerlink" href="#posting-events" title="Permalink to this headline">¶</a></h2>
+<p>Login credentials are returned after a GET request for user login.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="71%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">HTTPS Element</th>
+<th class="head">Request Details</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><em>method</em></td>
+<td>POST</td>
+</tr>
+<tr class="row-odd"><td><em>header</em></td>
+<td>Authorization: Basic {credentials}</td>
+</tr>
+<tr class="row-even"><td><em>path</em></td>
+<td>{base_uri}/events</td>
+</tr>
+<tr class="row-odd"><td><em>body</em></td>
+<td>{event body}</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="event-body">
+<h3>Event Body<a class="headerlink" href="#event-body" title="Permalink to this headline">¶</a></h3>
+<p>In general for the Event Body, you will have a edgeMac identifier this
+is where the Events are being posted from.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;edgeMac&quot;</span><span class="p">:{</span><span class="n">identifier</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If you have GPS values, you can have a location dictionary with key
+value pairs for lat and long. Including values for Lat and long will
+create a an Edge Location Event. For the locations lat and long, the
+value can be empty “” or contain a {value}.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="s2">&quot;loc&quot;</span><span class="p">:</span> <span class="p">{</span>
+   <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="p">{</span><span class="n">value</span><span class="p">},</span>
+   <span class="s2">&quot;long&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="p">{</span><span class="n">value</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Nested underneath will be an events list. <em>Time Stamp</em>, an <em>identifier</em>,
+and <em>eventType</em> is required in each event.</p>
+<ol class="arabic simple">
+<li>Time stamp is required in this UTC ISO-format: DATE:TIME
+(2017-07-20T18:42:34.129120Z).</li>
+<li>Identifiers are required and can be delivered in two formats:<ul>
+<li>The edge relay format for:<ul>
+<li>iBeac</li>
+<li>eddyUID</li>
+<li>bcId</li>
+<li>btAddr</li>
+</ul>
+</li>
+<li>Identifier key value pair:<ul>
+<li>identifier=ibeac#{ibeaconkeyinhex}</li>
+<li>identifier=eddyUID#{eddystoneUID}</li>
+<li>identifier=bcId#{bc custom identifier, normally serial number}</li>
+<li>identifier=btAddr#{bluetooth address}</li>
+<li>identifier=Whatever {though this does not mean it will be
+processed by State Logic}</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>The final thing required for this eventType. There are many different
+[event types]({{ ‘/documentation/loop/bc-loop-event-types’|
+relative_url }}). There are other things that can be included in the
+events. It will be saved but does not necessarily mean it will be
+processed.</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="s2">&quot;events&quot;</span><span class="p">:[</span>
+     <span class="p">{</span>
+        <span class="s2">&quot;mac&quot;</span><span class="p">:</span><span class="s2">&quot;D42202000053&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2017-07-20T18:42:34.129120Z&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;event&quot;</span><span class="p">:</span><span class="s2">&quot;exZone&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;exZone&quot;</span><span class="p">:</span><span class="s2">&quot;IN&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;iBeac&quot;</span><span class="p">:</span><span class="s2">&quot;E2C56DB5DFFB48D2B060D0F5A71096E000000000&quot;</span>
+     <span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Here is a complete example that can be sent up as POST. There are many
+different iterations of how you can POST Events. Save an event.json file
+to POST.</p>
+<p><strong>Example (event.json)</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+   <span class="s2">&quot;edgeMAC&quot;</span><span class="p">:</span><span class="s2">&quot;E4956E4CC2E0&quot;</span><span class="p">,</span>
+   <span class="s2">&quot;loc&quot;</span><span class="p">:{</span>
+      <span class="s2">&quot;lat&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;long&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;fixQual&quot;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span>
+      <span class="s2">&quot;spd&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;alt&quot;</span><span class="p">:</span><span class="s2">&quot;&quot;</span>
+   <span class="p">},</span>
+   <span class="s2">&quot;events&quot;</span><span class="p">:[</span>
+      <span class="p">{</span>
+         <span class="s2">&quot;mac&quot;</span><span class="p">:</span><span class="s2">&quot;D42202000053&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2017-07-20T18:42:34.129120Z&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;event&quot;</span><span class="p">:</span><span class="s2">&quot;exZone&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;exZone&quot;</span><span class="p">:</span><span class="s2">&quot;IN&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;iBeac&quot;</span><span class="p">:</span><span class="s2">&quot;E2C56DB5DFFB48D2B060D0F5A71096E000000000&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+         <span class="s2">&quot;mac&quot;</span><span class="p">:</span><span class="s2">&quot;D42202000053&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2017-07-20T18:42:34.205799Z&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;event&quot;</span><span class="p">:</span><span class="s2">&quot;enZone&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;enZone&quot;</span><span class="p">:</span><span class="s2">&quot;ME&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;iBeac&quot;</span><span class="p">:</span><span class="s2">&quot;E2C56DB5DFFB48D2B060D0F5A71096E000000000&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+         <span class="s2">&quot;mac&quot;</span><span class="p">:</span><span class="s2">&quot;98072D05F878&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2017-07-20T18:42:34.273086Z&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;event&quot;</span><span class="p">:</span><span class="s2">&quot;enZone&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;enZone&quot;</span><span class="p">:</span><span class="s2">&quot;ME&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+         <span class="s2">&quot;mac&quot;</span><span class="p">:</span><span class="s2">&quot;A0E6F854F546&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2017-07-20T18:42:34.816404Z&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;event&quot;</span><span class="p">:</span><span class="s2">&quot;enZone&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;enZone&quot;</span><span class="p">:</span><span class="s2">&quot;ME&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+         <span class="s2">&quot;mac&quot;</span><span class="p">:</span><span class="s2">&quot;44FB9726E7B1&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2017-07-20T18:42:35.437517Z&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;event&quot;</span><span class="p">:</span><span class="s2">&quot;enZone&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;enZone&quot;</span><span class="p">:</span><span class="s2">&quot;ME&quot;</span>
+      <span class="p">},</span>
+      <span class="p">{</span>
+         <span class="s2">&quot;mac&quot;</span><span class="p">:</span><span class="s2">&quot;98072D068212&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2017-07-20T18:42:36.254939Z&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;event&quot;</span><span class="p">:</span><span class="s2">&quot;enZone&quot;</span><span class="p">,</span>
+         <span class="s2">&quot;enZone&quot;</span><span class="p">:</span><span class="s2">&quot;ME&quot;</span>
+      <span class="p">}</span>
+   <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Request</strong></p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">curl</span> \
+<span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Authorization: Basic {Authorization Token}&quot;</span> \
+<span class="o">-</span><span class="n">H</span> <span class="s2">&quot;Content-Type: application/json&quot;</span> \
+<span class="o">-</span><span class="n">X</span> <span class="n">POST</span> <span class="o">--</span><span class="n">data</span> <span class="s2">&quot;@event.json&quot;</span> <span class="s1">&#39;https://bcstage.api.loop.bluecats.com/events?&#39;</span>
+</pre></div>
+</div>
+<p><strong>Request</strong></p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;Success: 3 events reported&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction</a></li>
+<li><a class="reference internal" href="#connecting-to-the-api">Connecting to the API</a><ul>
+<li><a class="reference internal" href="#endpoints-and-json">Endpoints and JSON</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#login">Login</a></li>
+<li><a class="reference internal" href="#groups-query">Groups Query</a></li>
+<li><a class="reference internal" href="#objecttypes-query">ObjectTypes Query</a></li>
+<li><a class="reference internal" href="#create-object">Create Object</a></li>
+<li><a class="reference internal" href="#objects-query">Objects Query</a></li>
+<li><a class="reference internal" href="#query-params">Query Params</a><ul>
+<li><a class="reference internal" href="#query-events">Query Events</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#event-query-params">Event Query Params</a><ul>
+<li><a class="reference internal" href="#posting-events">Posting Events</a><ul>
+<li><a class="reference internal" href="#event-body">Event Body</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/loop/loop-versions/loop-api-0.2.1.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../_sources/loop/loop-versions/loop-api-0.2.1.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,173 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Downloading the New Firmware &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>There are two ways to update the edge firmware, manually uploading a
+file or via the web UI.</p>
+<div class="section" id="downloading-the-new-firmware">
+<h1>Downloading the New Firmware<a class="headerlink" href="#downloading-the-new-firmware" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li>Go to our BlueCats App and log in with your BlueCats account
+<a class="reference external" href="https://app.bluecats.com/login">https://app.bluecats.com/login</a></li>
+<li>On the left-hand side, click on the “Devices” tab</li>
+<li>Find your Edge and click on the “Settings” or the gear icon in the
+upper right corner</li>
+<li>Click and download the latest Edge and BLE firmware</li>
+</ol>
+<p align="center"></p><div class="section" id="manually-uploading-a-file">
+<h2>Manually Uploading a File<a class="headerlink" href="#manually-uploading-a-file" title="Permalink to this headline">¶</a></h2>
+<p>Download the sysupgrade-compatible image file to your local machine.</p>
+<p align="center"></p><p>Navigate to <code class="docutils literal notranslate"><span class="pre">System</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Backup</span> <span class="pre">/</span> <span class="pre">Flash</span> <span class="pre">Firmware</span></code> and then choose
+image file by clicking the choose file button in the ‘Flash new firmware
+image’ section. Uncheck the ‘Keep settings’ checkbox when flashing a
+major firmware revision. You can keep it checked for minor firmware
+updates. Click ‘Flash Image’ button to proceed.</p>
+<p align="center"></p><p>Compare the checksum and the file size with the original file to ensure
+data integrity. Click ‘Proceed’ to start the flash process.</p>
+<p align="center"></p><p>Wait a few minutes before you try to reconnect. Depending on your
+settings, it might be necessary to renew the address of your computer to
+reach the device again.</p>
+</div>
+<div class="section" id="using-web-interface">
+<h2>Using Web Interface<a class="headerlink" href="#using-web-interface" title="Permalink to this headline">¶</a></h2>
+<p>This requires the edge to be internet connected which you can do by
+configuring the WIFI as described in the getting started doc.</p>
+<p>Then navigate to <code class="docutils literal notranslate"><span class="pre">Bluecats</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">and</span> <span class="pre">Manage</span></code>. If the ‘Device
+Register Status’ is ‘Registered’ then the edge device is successfully
+connected with the Bluecats cloud services. If the status is ‘Invalid’
+or you need to re-register the device, refer <a class="reference external" href="getting-started-connect#register-with-bluecats-cloud">registering the
+device</a>.</p>
+<p align="center"></p><p>Once registered in bluecats cloud, click ‘Update’ button on the ‘Update
+to Latest Edge Firmware’ section to update the edge to the latest
+firmware. Wait a few minutes before you try to reconnect. This update
+will not overwite your settings.</p>
+</div>
+</div>
+<div class="section" id="updating-bluecats-edge-packages">
+<h1>Updating BlueCats Edge Packages<a class="headerlink" href="#updating-bluecats-edge-packages" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="using-web-interface-1">
+<span id="id1"></span><h2>Using Web Interface<a class="headerlink" href="#using-web-interface-1" title="Permalink to this headline">¶</a></h2>
+<p>There are two ways to update the BlueCats Edge packages to receive
+updates or after a firmware update. First is via the web GUI. This
+requires the Edge to be internet connected which you can do by
+configuring the WIFI as described in the getting started doc. Then you
+can navigate to <code class="docutils literal notranslate"><span class="pre">System</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Software</span></code> and then under the Actions
+tab there is an input box with ‘Download and install package’. You can
+then paste each of the following links one at a time and hit ‘OK’. This
+will download and install each of the packages.</p>
+<p>Contact <a class="reference external" href="mailto:support&#37;&#52;&#48;bluecats&#46;com">support<span>&#64;</span>bluecats<span>&#46;</span>com</a> for download urls for latest packages.</p>
+<p>Note that this method only supports download via HTTP.</p>
+<p align="center"></p></div>
+<div class="section" id="using-ssh">
+<h2>Using SSH<a class="headerlink" href="#using-ssh" title="Permalink to this headline">¶</a></h2>
+<p>Download the package files to your local computer:</p>
+<p>Use secure copy to transfer to the Edge:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scp</span> <span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">your</span><span class="o">-</span><span class="n">files</span><span class="o">/</span><span class="n">luci</span><span class="o">-</span><span class="n">base</span><span class="o">.</span><span class="n">ipk</span> <span class="n">root</span><span class="nd">@192</span><span class="o">.</span><span class="mf">168.8</span><span class="o">.</span><span class="mi">1</span><span class="p">:</span><span class="o">~</span>
+<span class="n">scp</span> <span class="n">path</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">your</span><span class="o">-</span><span class="n">files</span><span class="o">/</span><span class="n">luci</span><span class="o">-</span><span class="n">app</span><span class="o">-</span><span class="n">bluecats</span><span class="o">.</span><span class="n">ipk</span> <span class="n">root</span><span class="nd">@192</span><span class="o">.</span><span class="mf">168.8</span><span class="o">.</span><span class="mi">1</span><span class="p">:</span><span class="o">~</span>
+</pre></div>
+</div>
+<p>SSH into the Edge:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">root</span><span class="nd">@192</span><span class="o">.</span><span class="mf">168.8</span><span class="o">.</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Then install the packages:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">opkg</span> <span class="n">install</span> <span class="n">luci</span><span class="o">-</span><span class="n">base</span><span class="o">.</span><span class="n">ipk</span>
+<span class="n">opkg</span> <span class="n">install</span> <span class="n">luci</span><span class="o">-</span><span class="n">app</span><span class="o">-</span><span class="n">bluecats</span><span class="o">.</span><span class="n">ipk</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Downloading the New Firmware</a><ul>
+<li><a class="reference internal" href="#manually-uploading-a-file">Manually Uploading a File</a></li>
+<li><a class="reference internal" href="#using-web-interface">Using Web Interface</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#updating-bluecats-edge-packages">Updating BlueCats Edge Packages</a><ul>
+<li><a class="reference internal" href="#using-web-interface-1">Using Web Interface</a></li>
+<li><a class="reference internal" href="#using-ssh">Using SSH</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/edge/edge-0.2.X-0.4.X/edge-update-firmware.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../_sources/edge/edge-0.2.X-0.4.X/edge-update-firmware.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,416 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Initializing the Zone Monitor &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>The <code class="docutils literal notranslate"><span class="pre">BCZone</span></code> class defines an object that represents a dynamic
+micro-location. A <code class="docutils literal notranslate"><span class="pre">BCZone</span></code> can be composed of a site, a category,
+multiple categories and specific beacons. Zones can also be configured
+to trigger dwell time events.</p>
+<div class="section" id="initializing-the-zone-monitor">
+<h1>Initializing the Zone Monitor<a class="headerlink" href="#initializing-the-zone-monitor" title="Permalink to this headline">¶</a></h1>
+<p>Custom values placed on beacons, categories and sites define which sites
+are included within a zone. You must pass the key for these custom
+values to the zone monitor upon initialization.</p>
+<div class="section" id="java">
+<h2>Java<a class="headerlink" href="#java" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">protected</span> <span class="n">void</span> <span class="n">onCreate</span><span class="p">(</span> <span class="n">final</span> <span class="n">Bundle</span> <span class="n">savedInstanceState</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+    <span class="n">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">zoneIdentifierKeys</span> <span class="o">=</span> <span class="n">Arrays</span><span class="o">.</span><span class="n">asList</span><span class="p">(</span> <span class="s2">&quot;ZONE_ID_KEY&quot;</span> <span class="p">);</span>
+    <span class="n">final</span> <span class="n">BCZoneMonitor</span> <span class="n">zoneMonitor</span> <span class="o">=</span> <span class="n">new</span> <span class="n">BCZoneMonitor</span><span class="p">(</span> <span class="n">mZoneMonitorCallback</span><span class="p">,</span> <span class="n">zoneIdentifierKeys</span> <span class="p">);</span>
+    <span class="n">zoneMonitor</span><span class="o">.</span><span class="n">startMonitoringZones</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="n">private</span> <span class="n">final</span> <span class="n">BCZoneMonitorCallback</span> <span class="n">mZoneMonitorCallback</span> <span class="o">=</span> <span class="n">new</span> <span class="n">BCZoneMonitorCallback</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c">
+<h2>Objective-C<a class="headerlink" href="#objective-c" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NSArray</span> <span class="o">*</span><span class="n">zoneIdentifierKeys</span> <span class="o">=</span> <span class="o">@</span><span class="p">[</span><span class="o">@</span><span class="s2">&quot;ZONE_ID_KEY&quot;</span><span class="p">;</span>
+<span class="n">_zoneMonitor</span> <span class="o">=</span> <span class="p">[[</span><span class="n">BCZoneMonitor</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithDelegate</span><span class="p">:</span><span class="bp">self</span> <span class="n">queue</span><span class="p">:</span><span class="n">nil</span> <span class="n">zoneIdentifierKeys</span><span class="p">:</span><span class="n">keys</span><span class="p">];</span>
+<span class="p">[</span><span class="n">_zoneMonitor</span> <span class="n">startMonitoringZones</span><span class="p">];</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift">
+<h2>Swift<a class="headerlink" href="#swift" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">let</span> <span class="n">zoneIdentifierKeys</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;ZONE_ID_KEY&quot;</span><span class="p">]</span>
+<span class="n">zoneMonitor</span> <span class="o">=</span> <span class="n">BCZoneMonitor</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">delegate</span><span class="p">:</span> <span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">:</span> <span class="n">nil</span><span class="p">,</span> <span class="n">zoneIdentifierKeys</span><span class="p">:</span> <span class="n">zoneIdentifierKeys</span><span class="p">)</span>
+<span class="n">zoneMonitor</span><span class="o">.</span><span class="n">startMonitoringZones</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="section" id="get-notified-when-the-device-enters-a-site">
+<h3>Get notified when the device enters a site<a class="headerlink" href="#get-notified-when-the-device-enters-a-site" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="java-1">
+<span id="id1"></span><h2>Java<a class="headerlink" href="#java-1" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">void</span> <span class="n">didEnterSite</span><span class="p">(</span> <span class="n">final</span> <span class="n">BCSite</span> <span class="n">site</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c-1">
+<span id="id2"></span><h2>Objective-C<a class="headerlink" href="#objective-c-1" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">zoneMonitor</span><span class="p">:(</span><span class="n">BCZoneMonitor</span> <span class="o">*</span><span class="p">)</span><span class="n">monitor</span> <span class="n">didEnterSite</span><span class="p">:(</span><span class="n">BCSite</span> <span class="o">*</span><span class="p">)</span><span class="n">site</span> <span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-1">
+<span id="id3"></span><h2>Swift<a class="headerlink" href="#swift-1" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func zoneMonitor(monitor: BCZoneMonitor!, didEnterSite site: BCSite!) {
+    ...
+}
+</pre></div>
+</div>
+<div class="section" id="get-notified-when-the-device-enters-a-zone">
+<h3>Get notified when the device enters a zone<a class="headerlink" href="#get-notified-when-the-device-enters-a-zone" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="java-2">
+<span id="id4"></span><h2>Java<a class="headerlink" href="#java-2" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">void</span> <span class="n">didEnterZone</span><span class="p">(</span> <span class="n">final</span> <span class="n">BCZone</span> <span class="n">zone</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c-2">
+<span id="id5"></span><h2>Objective-C<a class="headerlink" href="#objective-c-2" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">zoneMonitor</span><span class="p">:(</span><span class="n">BCZoneMonitor</span> <span class="o">*</span><span class="p">)</span><span class="n">monitor</span> <span class="n">didEnterZone</span><span class="p">:(</span><span class="n">BCZone</span> <span class="o">*</span><span class="p">)</span><span class="n">zone</span> <span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-2">
+<span id="id6"></span><h2>Swift<a class="headerlink" href="#swift-2" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func zoneMonitor(monitor: BCZoneMonitor!, didEnterZone zone: BCZone!) {
+    ...
+}
+</pre></div>
+</div>
+<div class="section" id="get-notified-when-the-device-re-enters-a-zone">
+<h3>Get notified when the device re-enters a zone<a class="headerlink" href="#get-notified-when-the-device-re-enters-a-zone" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="java-3">
+<span id="id7"></span><h2>Java<a class="headerlink" href="#java-3" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">void</span> <span class="n">didReenterZone</span><span class="p">(</span> <span class="n">final</span> <span class="n">BCZone</span> <span class="n">zone</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c-3">
+<span id="id8"></span><h2>Objective-C<a class="headerlink" href="#objective-c-3" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">zoneMonitor</span><span class="p">:(</span><span class="n">BCZoneMonitor</span> <span class="o">*</span><span class="p">)</span><span class="n">monitor</span> <span class="n">didReEnterZone</span><span class="p">:(</span><span class="n">BCZone</span> <span class="o">*</span><span class="p">)</span><span class="n">zone</span> <span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-3">
+<span id="id9"></span><h2>Swift<a class="headerlink" href="#swift-3" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func zoneMonitor(monitor: BCZoneMonitor!, didReEnterZone zone: BCZone!) {
+    ...
+}
+</pre></div>
+</div>
+<div class="section" id="get-notified-when-the-device-ranges-beacons-in-a-zone">
+<h3>Get notified when the device ranges beacons in a zone<a class="headerlink" href="#get-notified-when-the-device-ranges-beacons-in-a-zone" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="java-4">
+<span id="id10"></span><h2>Java<a class="headerlink" href="#java-4" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">void</span> <span class="n">didRangeBeacons</span><span class="p">(</span> <span class="n">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">BCBeacon</span><span class="o">&gt;</span> <span class="n">beacons</span><span class="p">,</span> <span class="n">final</span> <span class="n">BCZone</span> <span class="n">inZone</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c-4">
+<span id="id11"></span><h2>Objective-C<a class="headerlink" href="#objective-c-4" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">zoneMonitor</span><span class="p">:(</span><span class="n">BCZoneMonitor</span> <span class="o">*</span><span class="p">)</span><span class="n">monitor</span> <span class="n">didRangeBeacons</span><span class="p">:(</span><span class="n">NSArray</span> <span class="o">*</span><span class="p">)</span><span class="n">beacons</span> <span class="n">inZone</span><span class="p">:(</span><span class="n">BCZone</span> <span class="o">*</span><span class="p">)</span><span class="n">zone</span> <span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-4">
+<span id="id12"></span><h2>Swift<a class="headerlink" href="#swift-4" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func zoneMonitor(monitor: BCZoneMonitor!, didRangeBeacons beacons: [AnyObject]!, inZone zone: BCZone!) {
+    ...
+}
+</pre></div>
+</div>
+<div class="section" id="get-notified-when-your-dwell-time-interval-is-met">
+<h3>Get notified when your dwell time interval is met<a class="headerlink" href="#get-notified-when-your-dwell-time-interval-is-met" title="Permalink to this headline">¶</a></h3>
+<p>Dwell time events occur when the device dwells in the specified zone
+matching the dwell time interval. ##### Java</p>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">void</span> <span class="n">didDwellInZone</span><span class="p">(</span> <span class="n">final</span> <span class="n">BCZone</span> <span class="n">zone</span><span class="p">,</span> <span class="n">final</span> <span class="n">Integer</span> <span class="n">dwellTimeInterval</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="objective-c-5">
+<span id="id13"></span><h2>Objective-C<a class="headerlink" href="#objective-c-5" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">zoneMonitor</span><span class="p">:(</span><span class="n">BCZoneMonitor</span> <span class="o">*</span><span class="p">)</span><span class="n">monitor</span> <span class="n">didDwellInZone</span><span class="p">:(</span><span class="n">BCZone</span> <span class="o">*</span><span class="p">)</span><span class="n">zone</span> <span class="n">forTimeInterval</span><span class="p">:(</span><span class="n">NSTimeInterval</span><span class="p">)</span><span class="n">dwellTimeInterval</span> <span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-5">
+<span id="id14"></span><h2>Swift<a class="headerlink" href="#swift-5" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func zoneMonitor(monitor: BCZoneMonitor!, didDwellInZone zone: BCZone!, forTimeInterval dwellTimeInterval: NSTimeInterval) {
+    ...
+}
+</pre></div>
+</div>
+<div class="section" id="get-notified-when-the-device-exits-a-zone">
+<h3>Get notified when the device exits a zone<a class="headerlink" href="#get-notified-when-the-device-exits-a-zone" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="java-5">
+<span id="id15"></span><h2>Java<a class="headerlink" href="#java-5" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">void</span> <span class="n">didExitZone</span><span class="p">(</span> <span class="n">final</span> <span class="n">BCZone</span> <span class="n">zone</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c-6">
+<span id="id16"></span><h2>Objective-C<a class="headerlink" href="#objective-c-6" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">zoneMonitor</span><span class="p">:(</span><span class="n">BCZoneMonitor</span> <span class="o">*</span><span class="p">)</span><span class="n">monitor</span> <span class="n">didExitZone</span><span class="p">:(</span><span class="n">BCZone</span> <span class="o">*</span><span class="p">)</span><span class="n">zone</span> <span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-6">
+<span id="id17"></span><h2>Swift<a class="headerlink" href="#swift-6" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func zoneMonitor(monitor: BCZoneMonitor!, didExitZone zone: BCZone!) {
+    ...
+}
+</pre></div>
+</div>
+<div class="section" id="get-notified-when-zone-monitoring-is-suspended">
+<h3>Get notified when zone monitoring is suspended<a class="headerlink" href="#get-notified-when-zone-monitoring-is-suspended" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="java-6">
+<span id="id18"></span><h2>Java<a class="headerlink" href="#java-6" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">void</span> <span class="n">willSuspendMonitoringInSite</span><span class="p">(</span> <span class="n">final</span> <span class="n">BCSite</span> <span class="n">site</span><span class="p">,</span> <span class="n">final</span> <span class="n">Date</span> <span class="n">untilDate</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c-7">
+<span id="id19"></span><h2>Objective-C<a class="headerlink" href="#objective-c-7" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">zoneMonitor</span><span class="p">:(</span><span class="n">BCZoneMonitor</span> <span class="o">*</span><span class="p">)</span><span class="n">monitor</span> <span class="n">willSuspendMonitoringInSite</span><span class="p">:(</span><span class="n">BCSite</span> <span class="o">*</span><span class="p">)</span><span class="n">site</span> <span class="n">untilDate</span><span class="p">:(</span><span class="n">NSDate</span> <span class="o">*</span><span class="p">)</span><span class="n">date</span> <span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-7">
+<span id="id20"></span><h2>Swift<a class="headerlink" href="#swift-7" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func zoneMonitor(monitor: BCZoneMonitor!, willSuspendMonitoringInSite site: BCSite!, untilDate date: NSDate!) {
+    ...
+}
+</pre></div>
+</div>
+<div class="section" id="get-notified-when-zone-monitoring-will-resume">
+<h3>Get notified when zone monitoring will resume<a class="headerlink" href="#get-notified-when-zone-monitoring-will-resume" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="java-7">
+<span id="id21"></span><h2>Java<a class="headerlink" href="#java-7" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">void</span> <span class="n">willResumeMonitoringInSite</span><span class="p">(</span> <span class="n">final</span> <span class="n">BCSite</span> <span class="n">site</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c-8">
+<span id="id22"></span><h2>Objective-C<a class="headerlink" href="#objective-c-8" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">zoneMonitor</span><span class="p">:(</span><span class="n">BCZoneMonitor</span> <span class="o">*</span><span class="p">)</span><span class="n">monitor</span> <span class="n">willResumeMonitoringInSite</span><span class="p">:(</span><span class="n">BCSite</span> <span class="o">*</span><span class="p">)</span><span class="n">site</span> <span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-8">
+<span id="id23"></span><h2>Swift<a class="headerlink" href="#swift-8" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func zoneMonitor(monitor: BCZoneMonitor!, willResumeMonitoringInSite site: BCSite!) {
+    ...
+}
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Initializing the Zone Monitor</a><ul>
+<li><a class="reference internal" href="#java">Java</a></li>
+<li><a class="reference internal" href="#objective-c">Objective-C</a></li>
+<li><a class="reference internal" href="#swift">Swift</a><ul>
+<li><a class="reference internal" href="#get-notified-when-the-device-enters-a-site">Get notified when the device enters a site</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#java-1">Java</a></li>
+<li><a class="reference internal" href="#objective-c-1">Objective-C</a></li>
+<li><a class="reference internal" href="#swift-1">Swift</a><ul>
+<li><a class="reference internal" href="#get-notified-when-the-device-enters-a-zone">Get notified when the device enters a zone</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#java-2">Java</a></li>
+<li><a class="reference internal" href="#objective-c-2">Objective-C</a></li>
+<li><a class="reference internal" href="#swift-2">Swift</a><ul>
+<li><a class="reference internal" href="#get-notified-when-the-device-re-enters-a-zone">Get notified when the device re-enters a zone</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#java-3">Java</a></li>
+<li><a class="reference internal" href="#objective-c-3">Objective-C</a></li>
+<li><a class="reference internal" href="#swift-3">Swift</a><ul>
+<li><a class="reference internal" href="#get-notified-when-the-device-ranges-beacons-in-a-zone">Get notified when the device ranges beacons in a zone</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#java-4">Java</a></li>
+<li><a class="reference internal" href="#objective-c-4">Objective-C</a></li>
+<li><a class="reference internal" href="#swift-4">Swift</a><ul>
+<li><a class="reference internal" href="#get-notified-when-your-dwell-time-interval-is-met">Get notified when your dwell time interval is met</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#objective-c-5">Objective-C</a></li>
+<li><a class="reference internal" href="#swift-5">Swift</a><ul>
+<li><a class="reference internal" href="#get-notified-when-the-device-exits-a-zone">Get notified when the device exits a zone</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#java-5">Java</a></li>
+<li><a class="reference internal" href="#objective-c-6">Objective-C</a></li>
+<li><a class="reference internal" href="#swift-6">Swift</a><ul>
+<li><a class="reference internal" href="#get-notified-when-zone-monitoring-is-suspended">Get notified when zone monitoring is suspended</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#java-6">Java</a></li>
+<li><a class="reference internal" href="#objective-c-7">Objective-C</a></li>
+<li><a class="reference internal" href="#swift-7">Swift</a><ul>
+<li><a class="reference internal" href="#get-notified-when-zone-monitoring-will-resume">Get notified when zone monitoring will resume</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#java-7">Java</a></li>
+<li><a class="reference internal" href="#objective-c-8">Objective-C</a></li>
+<li><a class="reference internal" href="#swift-8">Swift</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/libraries/mobileSDK/usage/zones.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../../_sources/libraries/mobileSDK/usage/zones.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

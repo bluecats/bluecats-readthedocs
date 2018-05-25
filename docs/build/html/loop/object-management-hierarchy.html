@@ -1,0 +1,178 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Root &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>Loop is composed of groups and objects. These groups and objects are
+organized by a object management hierarchy. Certain groups are linked to
+objects based on their inheritance. Looking at the diagram below, you
+can see that depending on the level of a group decides on what objects
+or control they have. Groups only have control over the objects and
+groups that are nested underneath it. <img alt="Object Management Hierarchy" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/Loop/omanobjectdiagram.png" /></p>
+<div class="section" id="root">
+<h1>Root<a class="headerlink" href="#root" title="Permalink to this headline">¶</a></h1>
+<div class="figure" id="id1">
+<img alt="Object Management Hierarchy" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/Loop/omanobjectdiagram-root.png" />
+<p class="caption"><span class="caption-text">Object Management Hierarchy</span></p>
+</div>
+<p>For this instance of Loop, <em>Root</em> is at the base of the object
+management hierarchy. <em>Root</em> has total administration control of all the
+objects and groups underneath it. In the current instance of Loop, the
+<em>Root</em> user is BlueCats. This allows us to manage all of groups and
+objects.</p>
+<p>Use Case: This could allow the Managers of the company complete control
+over all of the objects and groups so that they can monitor and have
+complete administrative control.</p>
+<p>For example, there is a <em>Place::Object</em> only under <em>Root</em>. No other
+Group has access of that Place::Object besides <em>Root</em>. In another
+example, the <em>sbVehicle</em> is under <em>SITE B (SB)</em> but because it is under
+<em>Root</em>, <em>Root</em> still has has control over that object.</p>
+</div>
+<div class="section" id="tenant">
+<h1>Tenant<a class="headerlink" href="#tenant" title="Permalink to this headline">¶</a></h1>
+<div class="figure" id="id2">
+<img alt="Object Management Hierarchy" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/Loop/omanobjectdiagram-tenant.png" />
+<p class="caption"><span class="caption-text">Object Management Hierarchy</span></p>
+</div>
+<p><em>Tenants</em> are the first group nested within <em>Root</em>. <em>Tenants</em> have total
+administration control of all the objects and groups underneath it. Each
+<em>Tenant</em> has seperate control of its own objects and groups. <em>Tenants</em>
+allow a seperation of control and allows you to provide subgroupings of
+users and objects without giving complete administration control.</p>
+<p>Use Case: This could allow a lower level managers or different offices
+of the company control over the objects and groups that are under their
+authority and nothing more.</p>
+<p>In this example, <em>Tenant A (TA)</em> has control of <em>taPERSON</em> and all of
+the objects and groups nested under it. However, <em>Tenant B (TB)</em> has no
+control of <em>taPERSON</em> or <em>cbMaterial</em>.</p>
+</div>
+<div class="section" id="customer">
+<h1>Customer<a class="headerlink" href="#customer" title="Permalink to this headline">¶</a></h1>
+<div class="figure" id="id3">
+<img alt="Object Management Hierarchy" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/Loop/omanobjectdiagram-customer.png" />
+<p class="caption"><span class="caption-text">Object Management Hierarchy</span></p>
+</div>
+<p><em>Customers</em> are the group nested within <em>Tenant</em>. <em>Customers</em> have total
+administration control of all the objects and groups underneath it.
+<em>Customers</em> allow a seperation of control and allows you to provide
+subgroupings of users and objects.</p>
+<p>Use Case: This does not have to be an actual customer but could allow
+for a subgrouping underneath the Tenant. This could be a specific
+department or specific area of your company.</p>
+<p>In this example, <em>Customer A (CA)</em> has control of <em>SITE B (SB)</em> and all
+of the objects and groups nested under it. However, <em>Customer B (CB)</em>
+has no control of <em>SITE B (SB)</em> or <em>sbVEHICLE</em>.</p>
+</div>
+<div class="section" id="site">
+<h1>Site<a class="headerlink" href="#site" title="Permalink to this headline">¶</a></h1>
+<div class="figure" id="id4">
+<img alt="Object Management Hierarchy" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/Loop/omanobjectdiagram-site.png" />
+<p class="caption"><span class="caption-text">Object Management Hierarchy</span></p>
+</div>
+<p><em>Sites</em> are the group nested within <em>Customers</em>. <em>Sites</em> have total
+administration control of all the objects and groups underneath it.
+<em>Sites</em> allow a seperation of control and allows you to provide
+subgroupings of users and objects.</p>
+<p>Use Case: This does not have to be an actual customer but could allow
+for a subgrouping underneath the <em>Customer</em>. This could be a specific
+department or specific area of your company.</p>
+<p>In this example, <em>Customer A (CA)</em> has control of <em>SITE B (SB)</em> and all
+of the objects and groups nested under it. However, <em>Customer B (CB)</em>
+has no control of <em>SITE B (SB)</em> or <em>sbVEHICLE</em>.</p>
+</div>
+<div class="section" id="other-groupings">
+<h1>Other Groupings<a class="headerlink" href="#other-groupings" title="Permalink to this headline">¶</a></h1>
+<p>These groupings and this naming convention is just one possible way to
+group objects. This grouping follows the basic administration for
+companies with different tenants and customers. It is possible to group
+the objects in many different ways. This use case is to show you the
+customization and the power of Loop.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Root</a></li>
+<li><a class="reference internal" href="#tenant">Tenant</a></li>
+<li><a class="reference internal" href="#customer">Customer</a></li>
+<li><a class="reference internal" href="#site">Site</a></li>
+<li><a class="reference internal" href="#other-groupings">Other Groupings</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/loop/object-management-hierarchy.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/loop/object-management-hierarchy.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

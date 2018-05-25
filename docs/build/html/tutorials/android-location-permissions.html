@@ -1,0 +1,147 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Background &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="background">
+<h1>Background<a class="headerlink" href="#background" title="Permalink to this headline">¶</a></h1>
+<p>Android 6.0 introduces a new permission model which changes the way
+Location Services permissions are managed. This change breaks backwards
+compatibility with versions of the BlueCats Android SDK version 1.13.6
+or earlier when the app is compiled to target Android SDK Version 23:
+<a class="reference external" href="http://android-developers.blogspot.com.au/2015/09/google-play-services-81-and-android-60.html">http://android-developers.blogspot.com.au/2015/09/google-play-services-81-and-android-60.html</a></p>
+<p>Android 6 disables by default the app’s permissions (specifically
+Location Services permissions) if the app’s targetSdkVersion is 23. To
+scan for beacons while the app is not active, the app will need to
+display a dialog to the end user to choose Deny or Allow this app to
+access the permission. It is the app developer’s responsibility to
+request this permission by displaying the system request dialog at the
+appropriate time.</p>
+<p>Location services permission is required for BLE scanning on Android 6
+and so is required for the BlueCats SDK to function. In previous
+versions of Android, users had no ability to disable the location
+services permission.</p>
+</div>
+<div class="section" id="impact">
+<h1>Impact<a class="headerlink" href="#impact" title="Permalink to this headline">¶</a></h1>
+<p>If the app integrated with Bluecats SDK up to and including version
+1.13.6 and is targeting to android SDK version 23 and the end user’s
+device is running Android 6.0, the Bluecats SDK may encounter a fatal
+crash if startPurring()/startPurringWithAppToken() is called before the
+location permission is granted by user (i.e.&nbsp;if location permission is
+not requested or while waiting for user selection of Deny/Allow).</p>
+</div>
+<div class="section" id="for-apps-using-bluecats-sdk-version-1-13-6-or-lower">
+<h1>For Apps Using BlueCats SDK version 1.13.6 or lower<a class="headerlink" href="#for-apps-using-bluecats-sdk-version-1-13-6-or-lower" title="Permalink to this headline">¶</a></h1>
+<p>A workaround for apps using Bluecats SDK up to and including version
+1.13.6 is to target the Android SDK 22 (Android 5.1 Lollipop) or lower.
+This will allow support of Android end user devices up to and including
+6.0 without experiencing this error.</p>
+<p>Declare the permissions as usual in AndroidManifest.xml of your app, but
+change</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;users-sdk</span> <span class="pre">android:minSdkVersion=&quot;18&quot;</span> <span class="pre">android:targetSdkVersion=&quot;23&quot;</span> <span class="pre">/&gt;</span></code></p>
+<p>to</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;users-sdk</span> <span class="pre">android:minSdkVersion=&quot;18&quot;</span> <span class="pre">android:targetSdkVersion=&quot;22&quot;</span> <span class="pre">/&gt;</span></code></p>
+<p>To enable scanning for beacons while the app is in a background state
+the app will need to be updated to request the permission:</p>
+<p><code class="docutils literal notranslate"><span class="pre">Manifest.permission.ACCESS_FINE_LOCATION</span></code></p>
+<p>An example of requesting permissions in Android 6.0 is available here:
+<a class="reference external" href="http://developer.android.com/training/permissions/requesting.html">http://developer.android.com/training/permissions/requesting.html</a></p>
+</div>
+<div class="section" id="for-apps-using-bluecats-sdk-version-1-13-7-or-later">
+<h1>For Apps Using BlueCats SDK version 1.13.7 or later<a class="headerlink" href="#for-apps-using-bluecats-sdk-version-1-13-7-or-later" title="Permalink to this headline">¶</a></h1>
+<p>BlueCats SDK version 1.13.7 add support for location permissions in apps
+compiled to target Android SDK version 23. To enable scanning for
+beacons while the app is in a background state the app will need to be
+updated to request the permission:</p>
+<p><code class="docutils literal notranslate"><span class="pre">Manifest.permission.ACCESS_FINE_LOCATION</span></code></p>
+<p>An example of requesting permissions in Android 6.0 is available here:
+<a class="reference external" href="http://developer.android.com/training/permissions/requesting.html">http://developer.android.com/training/permissions/requesting.html</a></p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Background</a></li>
+<li><a class="reference internal" href="#impact">Impact</a></li>
+<li><a class="reference internal" href="#for-apps-using-bluecats-sdk-version-1-13-6-or-lower">For Apps Using BlueCats SDK version 1.13.6 or lower</a></li>
+<li><a class="reference internal" href="#for-apps-using-bluecats-sdk-version-1-13-7-or-later">For Apps Using BlueCats SDK version 1.13.7 or later</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorials/android-location-permissions.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/tutorials/android-location-permissions.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

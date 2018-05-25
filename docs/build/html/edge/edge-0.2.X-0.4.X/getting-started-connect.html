@@ -1,0 +1,315 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>BlueCats Edge Relay Guide &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="bluecats-edge-relay-guide">
+<h1>BlueCats Edge Relay Guide<a class="headerlink" href="#bluecats-edge-relay-guide" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference external" href="getting-started-connect#connecting-to-the-edge">Connecting</a></li>
+<li><a class="reference external" href="getting-started-connect#logging-in">Logging In</a></li>
+<li><a class="reference external" href="getting-started-connect#connecting-to-internet-via-wifi">Connecting to
+WiFi</a></li>
+<li><a class="reference external" href="getting-started-connect#register-with-bluecats-cloud">Registering the
+device</a></li>
+</ul>
+<!--
+<img width="100px" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/EdgeDocuments/Edge.png"/>
+---><div class="section" id="in-the-box">
+<h2>In the Box<a class="headerlink" href="#in-the-box" title="Permalink to this headline">¶</a></h2>
+<p>The BlueCats Edge kit contains:</p>
+<ul class="simple">
+<li>BlueCats Edge Bluetooth Scanner and Wireless Access Point</li>
+<li>Micro USB cable for power</li>
+<li>External Bluetooth antenna</li>
+</ul>
+</div>
+<div class="section" id="technical-specifications">
+<h2>Technical Specifications<a class="headerlink" href="#technical-specifications" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="39%" />
+<col width="61%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>Processor</strong></td>
+<td>Atheros 9331 CPU &#64;400MHz</td>
+</tr>
+<tr class="row-even"><td><strong>Memory / Storage</strong></td>
+<td>DDR 64MB / FLASH 16MB</td>
+</tr>
+<tr class="row-odd"><td><strong>Wireless</strong></td>
+<td>WiFi 2.4 b/g/n, BLE 4.2 (TI CC2640R2)</td>
+</tr>
+<tr class="row-even"><td><strong>Transmission Rate</strong></td>
+<td>150Mbps</td>
+</tr>
+<tr class="row-odd"><td><strong>Max Tx Power</strong></td>
+<td>18dBm</td>
+</tr>
+<tr class="row-even"><td><strong>Protocol</strong></td>
+<td>802.11 b/g/n</td>
+</tr>
+<tr class="row-odd"><td><strong>WAN / LAN</strong></td>
+<td>10 / 100 Mbps</td>
+</tr>
+<tr class="row-even"><td><strong>Power Input</strong></td>
+<td>5V / 1A</td>
+</tr>
+<tr class="row-odd"><td><strong>Power Consumption</strong></td>
+<td>&lt;1.5W</td>
+</tr>
+<tr class="row-even"><td><strong>Dimension / Weight</strong></td>
+<td>58 x 58 x 25 mm / 60g</td>
+</tr>
+<tr class="row-odd"><td><strong>GPIO Count</strong></td>
+<td>4</td>
+</tr>
+<tr class="row-even"><td><strong>Working Temperature</strong></td>
+<td>0-45°C (32 - 113°F)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="connecting-to-the-edge-with-ethernet">
+<h2>Connecting to the Edge (With Ethernet)<a class="headerlink" href="#connecting-to-the-edge-with-ethernet" title="Permalink to this headline">¶</a></h2>
+<p>The easiest way to configure the Edge is to connect it directly to your
+computer via Ethernet.</p>
+<ol class="arabic simple">
+<li>Connect an ethernet cable to your computer and to the LAN port of the
+Edge.</li>
+<li>Attach the external bluetooth antenna.</li>
+<li>Plug in the supplied micro-usb cable into the edge to power up the
+device. (Note that it may take 20-30 seconds to complete startup.)</li>
+<li>Then go to this address <a class="reference external" href="http://192.168.8.1">192.168.8.1</a>.</li>
+</ol>
+</div>
+<div class="section" id="connecting-to-the-edge-through-wifi-without-ethernet">
+<h2>Connecting to the Edge Through WiFi (Without Ethernet)<a class="headerlink" href="#connecting-to-the-edge-through-wifi-without-ethernet" title="Permalink to this headline">¶</a></h2>
+<p>Start by plugging the supplied micro-usb cable into the edge and any USB
+port to power up the device and attach the external bluetooth antenna.
+Note that it may take 20-30 seconds to complete startup.</p>
+<ol class="arabic simple">
+<li>Look at the bottom of your Edge. There should be an SSID
+(i.e.&nbsp;bluecats-230).</li>
+<li>Then look in your WiFi connections and find that WiFi Name.</li>
+<li>Connect to it.</li>
+<li>Then go to this address <a class="reference external" href="http://192.168.8.1">192.168.8.1</a>.</li>
+</ol>
+</div>
+<div class="section" id="sending-your-data-protocols-and-formats">
+<h2>Sending your Data (Protocols and Formats)<a class="headerlink" href="#sending-your-data-protocols-and-formats" title="Permalink to this headline">¶</a></h2>
+<p>For sending data to your endpoints. We currently support the data
+formats:</p>
+<ul class="simple">
+<li>JSON</li>
+<li>CSV</li>
+<li>binary-format</li>
+</ul>
+<p>We support the protocols:</p>
+<ul class="simple">
+<li>MQTT</li>
+<li>UDP</li>
+<li>HTTP</li>
+</ul>
+</div>
+<div class="section" id="logging-in">
+<h2>Logging In<a class="headerlink" href="#logging-in" title="Permalink to this headline">¶</a></h2>
+<p>Each edge runs a local web configuration tool to manage both network
+configuration and BlueCats BLE scanning settings. After your computer
+has connected to the Edge over Ethernet, navigate to the Edge’s IP
+address <a class="reference external" href="http://192.168.8.1">192.168.8.1</a> using your web browser.</p>
+<p>You will be prompted to log in with the root user credentials.</p>
+<p>Username: <code class="docutils literal notranslate"><span class="pre">root</span></code></p>
+<p>Password is blank (unset) by default. After logging in without supplying
+a password, the Web UI will prompt to configure one.</p>
+<div class="figure" id="id1">
+<img alt="Log in" src="https://s3.amazonaws.com/bluecats-downloads/documentation/bluecats-edge-features/Login.png" />
+<p class="caption"><span class="caption-text">Log in to Edge Web Configuration</span></p>
+</div>
+</div>
+<div class="section" id="edge-web-interface-checking-your-firmware-version">
+<h2>Edge Web Interface / Checking your Firmware Version<a class="headerlink" href="#edge-web-interface-checking-your-firmware-version" title="Permalink to this headline">¶</a></h2>
+<p>Once logged in to the web configuration tool you will land on the System
+Overview screen. Here you can see what Edge firmware version. It should
+have a firmware version range from (0.2.X-0.4.X). If your Edge’s
+firmware is out of date or if you want to update it , you should update
+it following one of the two procedures
+<a class="reference external" href="https://bluecats.github.io/documentation/edge/edge-0.2.X-0.4.X/edge-update-firmware">here</a>.</p>
+<div class="figure" id="id2">
+<img alt="System Overview" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/EdgeDocuments/EdgeMainView.png" />
+<p class="caption"><span class="caption-text">Log in to Edge Web Configuration</span></p>
+</div>
+<p>There are a considerable number of configuration menu items but only a
+couple will require any changes. Some of the additional useful features
+are listed at the end of this document under
+<a class="reference external" href="#troubleshooting">Troubleshooting</a>. All of the options to configure
+bluetooth scanning can be found under the ‘BlueCats’ main menu item.</p>
+<div class="figure" id="id3">
+<img alt="System Overview" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/EdgeDocuments/EdgeRegisterBlueCatsCloud.png" />
+<p class="caption"><span class="caption-text">BlueCats Live View</span></p>
+</div>
+</div>
+<div class="section" id="connecting-to-internet-via-wifi">
+<h2>Connecting to Internet via WiFi<a class="headerlink" href="#connecting-to-internet-via-wifi" title="Permalink to this headline">¶</a></h2>
+<p>The Edge can be configured to send data to another machine on the local
+WiFi network, or connected to the internet to enable communication to
+the BlueCats Cloud or to download updated software.</p>
+<p>Navigate to <code class="docutils literal notranslate"><span class="pre">Network</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Wireless</span></code> in the main menu and scan for
+available networks.</p>
+<div class="figure" id="id4">
+<img alt="Wireless" src="https://s3.amazonaws.com/bluecats-downloads/documentation/bluecats-edge-getting-started/070-Configure-Wireless.png" />
+<p class="caption"><span class="caption-text">Wireless</span></p>
+</div>
+<p>Join an available network</p>
+<div class="figure" id="id5">
+<img alt="Join network" src="https://s3.amazonaws.com/bluecats-downloads/documentation/bluecats-edge-getting-started/070-Configure-Wireless-2.png" />
+<p class="caption"><span class="caption-text">Join network</span></p>
+</div>
+<p>Enter network key and submit</p>
+<div class="figure" id="id6">
+<img alt="Enter key" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/EdgeDocuments/EdgeConnectingWiFi.png" />
+<p class="caption"><span class="caption-text">Enter key</span></p>
+</div>
+<p>Save and apply changes</p>
+<div class="figure" id="id7">
+<img alt="Save and apply" src="https://s3.amazonaws.com/bluecats-downloads/documentation/bluecats-edge-getting-started/070-Configure-Wireless-4.png" />
+<p class="caption"><span class="caption-text">Save and apply changes</span></p>
+</div>
+<p>Once connected to the local WiFi network, the Edge can be <a class="reference external" href="#configuring-ble-scanner">configured to
+send to an IP address</a> on that network and
+the ethernet cable can then be disconnected as the Edge will continue
+sending data over the local WiFi connection while powered.</p>
+</div>
+<div class="section" id="register-with-bluecats-cloud">
+<h2>Register with BlueCats Cloud<a class="headerlink" href="#register-with-bluecats-cloud" title="Permalink to this headline">¶</a></h2>
+<p>By registering the edge device with BlueCats cloud, you can monitor
+uptime and request the latest available firmware.</p>
+<p>Navigate to <code class="docutils literal notranslate"><span class="pre">BlueCats</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">and</span> <span class="pre">Manage</span></code>. If the ‘Device
+Register Status’ is ‘Registered’ then the edge device is successfully
+connected with the BlueCats cloud services.</p>
+<p align="center"></p><p>If the status is ‘Invalid’, then follow the steps below to register the
+device. Make sure your device is also connected to the internet through
+either ethernet or <a class="reference external" href="getting-started-connect#connecting-to-internet-via-wifi">Connecting to
+WiFi</a></p>
+<ul>
+<li><p class="first">If you have your Edge, but don’t yet have a BlueCats account follow
+these steps to create an account and <a class="reference external" href="http://support.bluecats.com/customer/portal/articles/2345533-what-is-a-claim-code-">claim your
+devices</a></p>
+</li>
+<li><p class="first">Log into <a class="reference external" href="https://app.bluecats.com/devices">https://app.bluecats.com/devices</a></p>
+<p align="center"></p></li>
+<li><p class="first">Find the Edge you are updating under Devices (you can search by the
+serial number printed on the label of each Edge) and view its
+details.</p>
+<p align="center"></p></li>
+<li><p class="first">Click the ‘Revoke Access Token’ button.</p>
+<p align="center"></p></li>
+<li><p class="first">Go back to the Edge UI and click the ‘Re-Register’ button.</p>
+<p align="center"></p></li>
+<li><p class="first">You can test the connectivity to BlueCats Cloud by clicking the ‘Test
+Connection’ button. The status will be ‘Unknown’ when there is no
+connection and ‘Unauthorized’ when not registerd.</p>
+</li>
+</ul>
+<p>Now that your Edge is connected to your local machine or network, you
+can <a class="reference external" href="edge-update-firmware">update edge firmware</a>, <a class="reference external" href="edge-update-bluetooth-firmware">update BLE module
+firmware</a> and start configuring <a class="reference external" href="getting-started-edge-applications#bluecats-edge-applications---overview">Edge
+Applications</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">BlueCats Edge Relay Guide</a><ul>
+<li><a class="reference internal" href="#in-the-box">In the Box</a></li>
+<li><a class="reference internal" href="#technical-specifications">Technical Specifications</a></li>
+<li><a class="reference internal" href="#connecting-to-the-edge-with-ethernet">Connecting to the Edge (With Ethernet)</a></li>
+<li><a class="reference internal" href="#connecting-to-the-edge-through-wifi-without-ethernet">Connecting to the Edge Through WiFi (Without Ethernet)</a></li>
+<li><a class="reference internal" href="#sending-your-data-protocols-and-formats">Sending your Data (Protocols and Formats)</a></li>
+<li><a class="reference internal" href="#logging-in">Logging In</a></li>
+<li><a class="reference internal" href="#edge-web-interface-checking-your-firmware-version">Edge Web Interface / Checking your Firmware Version</a></li>
+<li><a class="reference internal" href="#connecting-to-internet-via-wifi">Connecting to Internet via WiFi</a></li>
+<li><a class="reference internal" href="#register-with-bluecats-cloud">Register with BlueCats Cloud</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/edge/edge-0.2.X-0.4.X/getting-started-connect.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../_sources/edge/edge-0.2.X-0.4.X/getting-started-connect.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

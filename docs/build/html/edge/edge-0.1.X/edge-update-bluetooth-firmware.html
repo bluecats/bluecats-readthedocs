@@ -1,0 +1,137 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Using Web Interface &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>There are two ways to update the edge bluetooth firmware, manually
+uploading a file or via the web UI. Use manual firmware updates when a
+connection to the internet and BlueCats Cloud is not available.</p>
+<div class="section" id="using-web-interface">
+<h1>Using Web Interface<a class="headerlink" href="#using-web-interface" title="Permalink to this headline">¶</a></h1>
+<p>This requires the edge to be internet connected which you can do by
+configuring the WIFI as described in the getting started doc.</p>
+<p>Then navigate to <code class="docutils literal notranslate"><span class="pre">Bluecats</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Connect</span> <span class="pre">and</span> <span class="pre">Manage</span></code>. If the ‘Device
+Register Status’ is ‘Registered’ then the edge device is successfully
+connected with the Bluecats cloud services. If the status is ‘Invalid’
+or you need to re-register the device, refer <a class="reference external" href="getting-started-connect#register-with-bluecats-cloud">registering the
+device</a>.</p>
+<p align="center"></p><p>Once registered in bluecats cloud, click <code class="docutils literal notranslate"><span class="pre">Update</span></code> button on the
+<code class="docutils literal notranslate"><span class="pre">Update</span> <span class="pre">to</span> <span class="pre">Latest</span> <span class="pre">BLE</span> <span class="pre">Module</span> <span class="pre">Firmware</span></code> section to update the edge BLE
+module to the latest firmware.</p>
+</div>
+<div class="section" id="manually-uploading-a-file">
+<h1>Manually Uploading a File<a class="headerlink" href="#manually-uploading-a-file" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="downloading-the-new-firmware">
+<h2>Downloading the New Firmware<a class="headerlink" href="#downloading-the-new-firmware" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Go to our BlueCats App and log in with your BlueCats account
+<a class="reference external" href="https://app.bluecats.com/login">https://app.bluecats.com/login</a></li>
+<li>On the left-hand side, click on the “Devices” tab</li>
+<li>Find your Edge and click on the “Settings” or the gear icon in the
+upper right corner</li>
+<li>Click and download the latest BLE firmware file to your local machine</li>
+</ol>
+<p align="center"></p></div>
+<div class="section" id="upload-and-update">
+<h2>Upload and update<a class="headerlink" href="#upload-and-update" title="Permalink to this headline">¶</a></h2>
+<p>Navigate to <code class="docutils literal notranslate"><span class="pre">Bluecats</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">Conenct</span> <span class="pre">and</span> <span class="pre">Manage</span></code> and then select
+<code class="docutils literal notranslate"><span class="pre">Local</span></code> tab.</p>
+<p align="center"></p><p>CLick <code class="docutils literal notranslate"><span class="pre">Get</span> <span class="pre">Info</span></code> button to request all the available configuration and
+version information from the BLE module.</p>
+<p align="center"></p><p>To update the BLE firmaware to the latest version, select the dowloaded
+image file from the local machine by clicking the <code class="docutils literal notranslate"><span class="pre">Choose</span> <span class="pre">File</span></code> button
+in the <code class="docutils literal notranslate"><span class="pre">Upload</span> <span class="pre">BLE</span> <span class="pre">Module</span> <span class="pre">Firmware</span></code> section and click <code class="docutils literal notranslate"><span class="pre">Upload...</span></code>
+button.</p>
+<p align="center"></p><p>To apply the new version, click <code class="docutils literal notranslate"><span class="pre">Update</span></code> button in the
+<code class="docutils literal notranslate"><span class="pre">Apply</span> <span class="pre">Uploaded</span> <span class="pre">BLE</span> <span class="pre">Module</span> <span class="pre">Firmware</span></code> section.</p>
+<p align="center"></p></div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Using Web Interface</a></li>
+<li><a class="reference internal" href="#manually-uploading-a-file">Manually Uploading a File</a><ul>
+<li><a class="reference internal" href="#downloading-the-new-firmware">Downloading the New Firmware</a></li>
+<li><a class="reference internal" href="#upload-and-update">Upload and update</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/edge/edge-0.1.X/edge-update-bluetooth-firmware.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../_sources/edge/edge-0.1.X/edge-update-bluetooth-firmware.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

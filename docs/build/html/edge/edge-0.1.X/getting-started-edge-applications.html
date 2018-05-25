@@ -1,0 +1,799 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Edge Configuration &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <ul class="simple">
+<li><a class="reference external" href="#bluecats-edge-applications---overview">BlueCats Edge
+Applications</a></li>
+<li><a class="reference external" href="#live-view">Live View</a></li>
+<li><a class="reference external" href="#configure-endpoints">Configure Endpoints</a></li>
+<li><a class="reference external" href="#configure-applications">Configure Applications</a><ul>
+<li><a class="reference external" href="#application---scan-and-forward">Scan and Forward</a></li>
+<li><a class="reference external" href="#application---proximity">Proximity</a></li>
+<li><a class="reference external" href="#application---sensor-measurement">Sensor Measurement</a></li>
+<li><a class="reference external" href="#application---bluecats-beacon-health">BlueCats Beacon Health</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="getting-started-edge-applications#example---receiving-data-with-a-simple-udp-server">Example UDP
+Server</a></li>
+</ul>
+<p>BlueCats Edge provides default applications for common BLE scanning use
+cases. This ranges from simple scan and forward of any BLE advertisments
+in range of the Edge to detection, filtering and parsing of
+advertisements ready to apply to proximity, sensor measurement or beacon
+network monitoring solutions. With the Edge you can:</p>
+<ul class="simple">
+<li>Configure network settings for connectivity to local network and the
+internet. The BlueCats Edge is a Wireless Access Point providing
+advanced network configuration options if required.</li>
+<li>View beacons in range of the Edge with Live View</li>
+<li>Configure global BLE scan filters. This provides a configurable
+minimum signal strength threshold for beacon detection or to match a
+specific Bluetooth address or BLE advertisement format - useful for
+reducing noise during testing</li>
+<li>Configure default applications. Detect and forward BLE advertisements
+for these common use cases:<ul>
+<li>Raw BLE advertisement payload scan and forward</li>
+<li>Scan for beacon proximity for asset or personnel tracking</li>
+<li>Scan for BlueCats sensor measurement data</li>
+<li>Scan for BlueCats beacon health data including battery level and
+configuration status</li>
+</ul>
+</li>
+</ul>
+<p>For each application the endpoint type (UDP or MQTT), message format
+(CSV or JSON) and message throttle limits for can be independently
+configured or the application can be disabled if not required.</p>
+<div class="section" id="edge-configuration">
+<h1>Edge Configuration<a class="headerlink" href="#edge-configuration" title="Permalink to this headline">¶</a></h1>
+<p>Once you have <a class="reference external" href="getting-started-connect">connected to the Edge and configured network
+settings</a> you can manage bluetooth scanning
+applications on the Edge.</p>
+<div class="section" id="live-view">
+<h2>Live View<a class="headerlink" href="#live-view" title="Permalink to this headline">¶</a></h2>
+<p>Live view provides a simple list of BLE devices detected in range of the
+Edge along with their current RSSI (signal strength).</p>
+<p style="text-align:center" align="center"></p></div>
+<div class="section" id="configure-endpoints">
+<h2>Configure Endpoints<a class="headerlink" href="#configure-endpoints" title="Permalink to this headline">¶</a></h2>
+<p>To make use of the data collected by the Edge, you will need to send it
+somewhere. The default Edge applications support two types of endpoint -
+UDP or MQTT.</p>
+<p style="text-align:center" align="center"></p><p>Configure one or both of the endpoint options. Currently the Edge only
+supports a single endpoint for each type. Data will only be sent the
+configured endpoint when an Edge application has been enabled and that
+endpoint type selected.</p>
+</div>
+<div class="section" id="udp">
+<h2>UDP<a class="headerlink" href="#udp" title="Permalink to this headline">¶</a></h2>
+<p>To configure UDP simply enter the PORT and IP where the data should be
+sent.</p>
+<p align="center"></p><p>A simple MQTT endpoint without TLS enabled just requires the host/IP and
+port of the MQTT server and the ‘TLS Enabled’ set to <code class="docutils literal notranslate"><span class="pre">0</span></code>. Some MQTT
+endpoints such as AWS IoT require TLS for connections. Here you will
+need to upload the Certificate, Private Key and Certificate Authority
+<a class="reference external" href="http://docs.aws.amazon.com/iot/latest/developerguide/create-device-certificate.html">generated in the AWS
+console</a>.</p>
+<p style="text-align:center" align="center"></p></div>
+</div>
+<div class="section" id="configure-applications">
+<h1>Configure Applications<a class="headerlink" href="#configure-applications" title="Permalink to this headline">¶</a></h1>
+<p>The BlueCats Edge provides four default applications plus some global
+BLE device filter rules. One or more of these can be enabled and
+configured individually.</p>
+<p align="center"></p><div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This sectionshows an overview of which message types are enabled, their
+end points and formats. And also it shows the status of global filters.</p>
+<p align="center"></p></div>
+<div class="section" id="application-scan-and-forward">
+<h2>Application - Scan and Forward<a class="headerlink" href="#application-scan-and-forward" title="Permalink to this headline">¶</a></h2>
+<p align="center"></p><p>Any BLE packet matching packet filters will be forwarded with the
+following data:</p>
+<ul class="simple">
+<li>EdgeMAC - Hardware MAC address of the Edge</li>
+<li>EdgeName - A user defined name for the Edge</li>
+<li>BeaconMAC - Scanned (public) BT Address of the detected BLE device</li>
+<li>RSSI - Received Signal Strength Indicator in dBm</li>
+<li>RSSI Smooth - Received Signal Strength Indicator in dBm. Signal
+fluctuations are filtered to provide a more stable value.</li>
+<li>Timestamp - Nanoseconds since Epoch</li>
+<li>AdData - Full advertisement data payload</li>
+</ul>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Message Type</td>
+<td>BCAdData (CSV only)</td>
+</tr>
+<tr class="row-odd"><td>Message Version</td>
+<td>1 (CSV only to track format
+changes)</td>
+</tr>
+<tr class="row-even"><td>Edge MAC Address</td>
+<td>E4956E40DFCF</td>
+</tr>
+<tr class="row-odd"><td>Edge Name</td>
+<td>Edge-abc</td>
+</tr>
+<tr class="row-even"><td>BLE MAC Address</td>
+<td>A0E6F854703A</td>
+</tr>
+<tr class="row-odd"><td>RSSI</td>
+<td>-63</td>
+</tr>
+<tr class="row-even"><td>RSSI Smooth</td>
+<td>-62</td>
+</tr>
+<tr class="row-odd"><td>Timestamp</td>
+<td>1480314352373689</td>
+</tr>
+<tr class="row-even"><td>AdData</td>
+<td>0201061AFF4C00021561687109905F443
+691F8E602F514C96D00040F82BD</td>
+</tr>
+</tbody>
+</table>
+<p>Example: CSV (for UDP)</p>
+<p>e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BCAdData</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">Edge</span><span class="o">-</span><span class="n">abc</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="o">-</span><span class="mi">62</span><span class="p">,</span><span class="mi">1480314351666436</span><span class="p">,</span><span class="mi">02010617</span><span class="n">FF0401050413012600040F82BD640391F8E602F514C96D0302C4FE</span>
+</pre></div>
+</div>
+<p>Example: Serialised C Struct (for UDP)</p>
+<p>Example: JSON (for MQTT,UDP)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;edgeMAC:&quot;</span><span class="n">E4956E40DFCF</span><span class="s2">&quot;,</span>
+    <span class="s2">&quot;edgeName:&quot;</span><span class="n">Edge</span><span class="o">-</span><span class="n">abc</span><span class="s2">&quot;,</span>
+    <span class="s2">&quot;beaconMAC&quot;</span><span class="p">:</span><span class="s2">&quot;A0E6F854703A&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rssi&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span>
+    <span class="s2">&quot;rssiSmooth&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">62</span><span class="p">,</span>
+    <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span><span class="mi">1480314351666436</span>
+    <span class="s2">&quot;adData&quot;</span><span class="p">:</span><span class="s2">&quot;02010617FF0401050413012600040F82BD640391F8E602F514C96D0302C4FE&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="application-proximity">
+<h2>Application - Proximity<a class="headerlink" href="#application-proximity" title="Permalink to this headline">¶</a></h2>
+<p align="center"></p><p>BLE packet matching packet filters will be forwarded with the following
+data:</p>
+<ul class="simple">
+<li>Message Type (CSV only)</li>
+<li>Message Version | 1 (CSV only to track format changes)</li>
+<li>EdgeMAC - Hardware MAC address of the Edge</li>
+<li>EdgeName - User defined description for the Edge</li>
+<li>BeaconMAC - Scanned (public) BT Address of the detected BLE device,
+or MAC in payload if available</li>
+<li>BeaconIdentifier - iBeacon key, Eddystone UID, private MAC address,
+BlueCats Custom Identifier (JSON format can include multiple
+identifiers if available)</li>
+<li>RSSI - Received Signal Strength Indicator in dBm</li>
+<li>RSSI Smooth - Received Signal Strength Indicator in dBm. Signal
+fluctuations are filtered to provide a more stable value.</li>
+<li>MPow - Measured power at 1 metre</li>
+<li>Accuracy - Calculated accuracy (estimated distance in metres) based
+on smooth RSSI and measured power</li>
+<li>Timestamp - Nanoseconds since Epoch</li>
+</ul>
+<p>Example: CSV (for UDP)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BCProximity</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">Level</span> <span class="mi">6</span> <span class="n">North</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="mi">61687109905</span><span class="n">F443691F8E602F514C96D00040F82</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="o">-</span><span class="mi">62</span><span class="p">,</span><span class="o">-</span><span class="mi">62</span><span class="p">,</span><span class="mf">1.00</span><span class="p">,</span><span class="mi">1480314351666436</span>
+</pre></div>
+</div>
+<p>Example: JSON (for MQTT,UDP)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;edgeMAC&quot;</span><span class="p">:</span><span class="s2">&quot;E4956E40DFCF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;edgeName&quot;</span><span class="p">:</span><span class="s2">&quot;Level 6 North&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;beaconMAC&quot;</span><span class="p">:</span><span class="s2">&quot;A0E6F854703A&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;iBeacon&quot;</span><span class="p">:</span> <span class="s2">&quot;61687109905F443691F8E602F514C96D00040F82&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;eddyUID&quot;</span><span class="p">:</span> <span class="s2">&quot;61687109E602F514C96D000000000001&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;privateMAC&quot;</span><span class="p">:</span> <span class="s2">&quot;A0E6F854703A&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bcIdentifier&quot;</span><span class="p">:</span> <span class="s2">&quot;61687109905F443691F8E602F514C96D00040F82&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rssi&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span>
+    <span class="s2">&quot;rssiSmooth&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">62</span><span class="p">,</span>
+    <span class="s2">&quot;mPow&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">62</span><span class="p">,</span>
+    <span class="s2">&quot;accuracy&quot;</span><span class="p">:</span><span class="mf">1.00</span>
+    <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span><span class="mi">1480314351666436</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="application-sensor-measurement">
+<h2>Application - Sensor Measurement<a class="headerlink" href="#application-sensor-measurement" title="Permalink to this headline">¶</a></h2>
+<p>BLE packet matching packet filters will be forwarded with the following
+data:</p>
+<ul class="simple">
+<li>Message Type (CSV only)</li>
+<li>Message Version | 1 (CSV only to track format changes)</li>
+<li>EdgeMAC - Hardware MAC address of the Edge</li>
+<li>EdgeName - User defined description for the Edge</li>
+<li>BeaconMAC - Scanned (public) BT Address of the detected BLE device,
+or MAC in payload if available</li>
+<li>BeaconIdentifier - iBeacon key, Eddystone UID, private MAC address,
+BlueCats Custom Identifier (JSON format can include multiple
+identifiers if available)</li>
+<li>RSSI - Received Signal Strength Indicator in dBm</li>
+<li>RSSI Smooth - Received Signal Strength Indicator in dBm. Signal
+fluctuations are filtered to provide a more stable value.</li>
+<li>MeasurementData - sensor measurement received from the beacon</li>
+<li>Timestamp - Nanoseconds since Epoch</li>
+</ul>
+<p>Example: CSV (for UDP)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BCMeasurement</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">Level</span><span class="o">-</span><span class="mi">6</span><span class="o">-</span><span class="n">North</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="mi">61687109905</span><span class="n">F443691F8E602F514C96D00040F82</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="mh">0x07</span><span class="p">,[</span><span class="mf">22.50</span><span class="p">]:[</span><span class="mf">0.050</span><span class="p">:</span><span class="mf">0.050</span><span class="p">:</span><span class="mf">0.050</span><span class="p">]:[</span><span class="mf">270.00</span><span class="p">:</span><span class="mf">90.00</span><span class="p">],</span><span class="mi">1480314351666436</span>
+</pre></div>
+</div>
+<p>Example: JSON (for MQTT,UDP)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;edgeMAC&quot;</span><span class="p">:</span> <span class="s2">&quot;E4956E40DFCF&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;edgeName&quot;</span><span class="p">:</span> <span class="s2">&quot;Level 6 North&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;beaconMAC&quot;</span><span class="p">:</span> <span class="s2">&quot;A0E6F854703A&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;iBeacon&quot;</span><span class="p">:</span> <span class="s2">&quot;61687109905F443691F8E602F514C96D00040F82&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;eddyUID&quot;</span><span class="p">:</span> <span class="s2">&quot;61687109E602F514C96D000000000001&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;privateMAC&quot;</span><span class="p">:</span> <span class="s2">&quot;A0E6F854703A&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;bcIdentifier&quot;</span><span class="p">:</span> <span class="s2">&quot;61687109905F443691F8E602F514C96D00040F82&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;rssi&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">63</span><span class="p">,</span>
+  <span class="s2">&quot;rssiSmooth&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">63</span><span class="p">,</span>
+  <span class="s2">&quot;measurements&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="mf">22.50</span>
+      <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="mf">0.050</span><span class="p">,</span>
+        <span class="mf">0.050</span><span class="p">,</span>
+        <span class="mf">0.050</span>
+      <span class="p">]</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+      <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="mf">270.00</span><span class="p">,</span>
+        <span class="mf">90.00</span>
+      <span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="mi">1480314351666436</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="application-bluecats-beacon-health">
+<h2>Application - BlueCats Beacon Health<a class="headerlink" href="#application-bluecats-beacon-health" title="Permalink to this headline">¶</a></h2>
+<p>BLE packet matching packet filters will be forwarded with the following
+data:</p>
+<ul class="simple">
+<li>EdgeMAC - Hardware MAC address of the Edge</li>
+<li>EdgeName - User defined description for the Edge</li>
+<li>BeaconMAC - Scanned (public) BT Address of the detected BLE device,
+or MAC in payload if available</li>
+<li>BeaconIdentifier - iBeacon key, Eddystone UID, private MAC address,
+BlueCats Custom Identifier (JSON format can include multiple
+identifiers if available)</li>
+<li>RSSI - Received Signal Strength Indicator in dBm</li>
+<li>BatteryLevel - Current battery level %</li>
+<li>FirmwareIdentifier - unique identifier for the firmware currently
+installed on the beacon</li>
+<li>SettingsVersion - incrementing version number of beacon configuration
+changes (0-255)</li>
+<li>Timestamp - Nanoseconds since Epoch</li>
+</ul>
+<p>Example: CSV (for UDP)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BCManagement</span><span class="p">,</span> <span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">Level</span><span class="o">-</span><span class="mi">6</span><span class="o">-</span><span class="n">North</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="mi">61687109905</span><span class="n">F443691F8E602F514C96D00040F82</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="mi">87</span><span class="p">,</span><span class="mi">500000</span><span class="n">A1</span><span class="p">,</span><span class="mi">13</span><span class="p">,</span><span class="mi">1480314351666436</span>
+</pre></div>
+</div>
+<p>Example: JSON (for MQTT,UDP)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;edgeMAC&quot;</span><span class="p">:</span><span class="s2">&quot;E4956E40DFCF&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;edgeName&quot;</span><span class="p">:</span><span class="s2">&quot;Level 6 North&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;beaconMAC&quot;</span><span class="p">:</span><span class="s2">&quot;A0E6F854703A&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;iBeacon&quot;</span><span class="p">:</span> <span class="s2">&quot;61687109905F443691F8E602F514C96D00040F82&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;eddyUID&quot;</span><span class="p">:</span> <span class="s2">&quot;61687109E602F514C96D000000000001&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;privateMAC&quot;</span><span class="p">:</span> <span class="s2">&quot;A0E6F854703A&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bcIdentifier&quot;</span><span class="p">:</span> <span class="s2">&quot;61687109905F443691F8E602F514C96D00040F82&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;rssi&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span>
+    <span class="s2">&quot;rssiSmooth&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span>
+    <span class="s2">&quot;batteryLevel&quot;</span><span class="p">:</span> <span class="mi">87</span><span class="p">,</span>
+    <span class="s2">&quot;firmwareIdentifier&quot;</span><span class="p">:</span> <span class="s2">&quot;500000A1&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;settingsVersion&quot;</span><span class="p">:</span><span class="mi">13</span><span class="p">,</span>
+    <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span><span class="mi">1480314351666436</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="bluecats-edge-supported-ble-ad-types">
+<h1>BlueCats Edge Supported BLE Ad Types<a class="headerlink" href="#bluecats-edge-supported-ble-ad-types" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="16%" />
+<col width="8%" />
+<col width="10%" />
+<col width="13%" />
+<col width="15%" />
+<col width="24%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Protocol</th>
+<th class="head">Type</th>
+<th class="head">Id</th>
+<th class="head">Payload</th>
+<th class="head">Proximity</th>
+<th class="head">Measurement</th>
+<th class="head">BlueCats Management</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Apple</td>
+<td>iBeacon</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>For Id</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>Eddystone</td>
+<td>UID</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>For Id</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>URL</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>TLM</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>EID</td>
+<td>YES*</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>eTLM</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>BlueCats</td>
+<td>iBeacon</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>For Id</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>Secure</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>For Id</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>Data</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>Newborn</td>
+<td>YES</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>Unconfigured</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>Management</td>
+<td>*</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>eManagement</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>Identifier</td>
+<td>YES</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>For Id</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>eIdentifier</td>
+<td>YES</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>For Id</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>Measurement</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>Data</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="using-beacon-detection-data">
+<h1>Using Beacon Detection Data<a class="headerlink" href="#using-beacon-detection-data" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="beacon-identification">
+<h2>Beacon Identification<a class="headerlink" href="#beacon-identification" title="Permalink to this headline">¶</a></h2>
+<p>A scanned beacon may be identified by either its manufacturer assigned
+MAC address (private Bluetooth Address) or a custom identifier included
+in the advertisement payload. This identifier may be encrypted (BlueCats
+Verified) or a plain-text/static component of the payload.</p>
+<ul class="simple">
+<li>MAC - BT Address for any beacon where BT address privacy is disabled</li>
+<li>MAC - Included in payload in BC Ads including Secure (obfuscated),
+Newborn, Unconfigured, Management, eManagement (encrypted)</li>
+<li>Custom Identifer (Included in payload by iBeacon, Eddy-UID,
+BC-Identifier, BC-eIdentifier)</li>
+</ul>
+<p>MAC or Custom Identifier included in the payload may be either encrypted
+or plain/static</p>
+</div>
+<div class="section" id="proximity-location-data">
+<h2>Proximity / Location Data<a class="headerlink" href="#proximity-location-data" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>RSSI (Received Signal Strength Indicator)</li>
+<li>RSSI Smooth. This filters multiple signal strength readings to
+produce a signal strength reading which is more stable.</li>
+<li>MeasuredPower / Tx Power</li>
+<li>Accuracy (calculated from RSSI Smooth and MPower). This is an
+approximate conversion of signal strength to a distance in metres.</li>
+</ul>
+</div>
+<div class="section" id="sensor-measurement-data">
+<h2>Sensor Measurement Data<a class="headerlink" href="#sensor-measurement-data" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Temperature</li>
+<li>Accelerometer (real-time sampling)</li>
+<li>Accelerometer (motion event)</li>
+<li>Tilt (Degrees from vertical)</li>
+</ul>
+</div>
+<div class="section" id="bc-management">
+<h2>BC Management<a class="headerlink" href="#bc-management" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Remaining battery</li>
+<li>Settings version</li>
+<li>Firmware Identifier</li>
+</ul>
+<div class="section" id="apply-global-ble-scan-filters">
+<h3>Apply Global BLE Scan Filters<a class="headerlink" href="#apply-global-ble-scan-filters" title="Permalink to this headline">¶</a></h3>
+<p>When BLE advertisements are received from each scan they can be filtered
+using one or more rules.</p>
+<ul class="simple">
+<li>Only ads with a minimum received signal strength indicator (RSSI)</li>
+<li>BT Address Pattern/Mask e.g.&nbsp;0007/FFFF would match any beacon with a
+public Bluetooth address starting with 0007</li>
+<li>Generic BLE Advertisement Pattern/Mask e.g.&nbsp;000000FF/00000041 for BC
+Ads</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="section" id="example-receiving-data-with-a-simple-udp-server">
+<h1>Example - Receiving data with a simple UDP server<a class="headerlink" href="#example-receiving-data-with-a-simple-udp-server" title="Permalink to this headline">¶</a></h1>
+<p>Once the Edge has been configured to send messages over UDP to a port
+and IP, a simple server applicaiton can be set up to listen for the
+messages.</p>
+<p>To receive the data we will need to set up a local UDP server to listen
+on the port configured for the UDP endpoint. Here is an example in
+Python:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+
+<span class="n">UDP_IP</span> <span class="o">=</span> <span class="s2">&quot;0.0.0.0&quot;</span>
+<span class="n">UDP_PORT</span> <span class="o">=</span> <span class="mi">9942</span>
+
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="c1"># Internet</span>
+                     <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span> <span class="c1"># UDP</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">UDP_IP</span><span class="p">,</span> <span class="n">UDP_PORT</span><span class="p">))</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recvfrom</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span> <span class="c1"># buffer size is 1024 bytes</span>
+    <span class="nb">print</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="s2">&quot; -UDP- &quot;</span><span class="p">,</span> <span class="n">data</span>
+</pre></div>
+</div>
+<p>After <a class="reference external" href="https://www.python.org/downloads/">installing python</a> (this
+example is for Python 2.7) and saving this script to a text file name
+<code class="docutils literal notranslate"><span class="pre">udp-server.py</span></code> this can then be run from the console using:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;path</span> <span class="pre">to</span> <span class="pre">your</span> <span class="pre">python</span> <span class="pre">installation&gt;/python.exe</span> <span class="pre">udp-server.py</span></code></p>
+<p>and each received message will be printed to the console e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2016</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">28</span> <span class="mi">17</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mf">51.569708</span>  <span class="o">-</span><span class="n">UDP</span><span class="o">-</span>  <span class="n">BCAdData</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="mi">1480314351666436</span><span class="p">,</span><span class="mi">02010617</span><span class="n">FF0401050413012600040F82BD640391F8E602F514C96D0302C4FE</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">28</span> <span class="mi">17</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mf">51.673411</span>  <span class="o">-</span><span class="n">UDP</span><span class="o">-</span>  <span class="n">BCAdData</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="o">-</span><span class="mi">51</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="mi">1480314351770220</span><span class="p">,</span><span class="mi">02010617</span><span class="n">FF0401050413012600040F82BD640391F8E602F514C96D0302C4FE</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">28</span> <span class="mi">17</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mf">51.788579</span>  <span class="o">-</span><span class="n">UDP</span><span class="o">-</span>  <span class="n">BCAdData</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="o">-</span><span class="mi">51</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="mi">1480314351885285</span><span class="p">,</span><span class="mi">02010617</span><span class="n">FF0401050413012600040F82BD640391F8E602F514C96D0302C4FE</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">28</span> <span class="mi">17</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mf">51.898095</span>  <span class="o">-</span><span class="n">UDP</span><span class="o">-</span>  <span class="n">BCAdData</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="o">-</span><span class="mi">54</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="mi">1480314351994814</span><span class="p">,</span><span class="mi">02010617</span><span class="n">FF0401050413012600040F82BD640391F8E602F514C96D0302C4FE</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">28</span> <span class="mi">17</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mf">51.956482</span>  <span class="o">-</span><span class="n">UDP</span><span class="o">-</span>  <span class="n">BCAdData</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="o">-</span><span class="mi">57</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="mi">1480314352053244</span><span class="p">,</span><span class="mi">02010617</span><span class="n">FF0401050413012600040F82BD640391F8E602F514C96D0302C4FE</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">28</span> <span class="mi">17</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mf">52.074793</span>  <span class="o">-</span><span class="n">UDP</span><span class="o">-</span>  <span class="n">BCAdData</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="o">-</span><span class="mi">62</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="mi">1480314352171590</span><span class="p">,</span><span class="mi">02010614</span><span class="n">FF04010997BD34DB5E40A7346BC6F681F1D3D50A</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-3rd-party-udp-servers-to-view-ble-traffic">
+<h1>Using 3rd party UDP servers to view BLE traffic<a class="headerlink" href="#using-3rd-party-udp-servers-to-view-ble-traffic" title="Permalink to this headline">¶</a></h1>
+<p>If you don’t have a coding background, then a free UDP server
+application like <a class="reference external" href="https://packetsender.com/">PacketSender</a> will show
+you all the data being sent from the Edge Relay to your computer
+<em>(remember to set the IP address and port in</em><a class="reference external" href="#udp">end point
+configuration</a><em>)</em>.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Edge Configuration</a><ul>
+<li><a class="reference internal" href="#live-view">Live View</a></li>
+<li><a class="reference internal" href="#configure-endpoints">Configure Endpoints</a></li>
+<li><a class="reference internal" href="#udp">UDP</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#configure-applications">Configure Applications</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#application-scan-and-forward">Application - Scan and Forward</a></li>
+<li><a class="reference internal" href="#application-proximity">Application - Proximity</a></li>
+<li><a class="reference internal" href="#application-sensor-measurement">Application - Sensor Measurement</a></li>
+<li><a class="reference internal" href="#application-bluecats-beacon-health">Application - BlueCats Beacon Health</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bluecats-edge-supported-ble-ad-types">BlueCats Edge Supported BLE Ad Types</a></li>
+<li><a class="reference internal" href="#using-beacon-detection-data">Using Beacon Detection Data</a><ul>
+<li><a class="reference internal" href="#beacon-identification">Beacon Identification</a></li>
+<li><a class="reference internal" href="#proximity-location-data">Proximity / Location Data</a></li>
+<li><a class="reference internal" href="#sensor-measurement-data">Sensor Measurement Data</a></li>
+<li><a class="reference internal" href="#bc-management">BC Management</a><ul>
+<li><a class="reference internal" href="#apply-global-ble-scan-filters">Apply Global BLE Scan Filters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example-receiving-data-with-a-simple-udp-server">Example - Receiving data with a simple UDP server</a></li>
+<li><a class="reference internal" href="#using-3rd-party-udp-servers-to-view-ble-traffic">Using 3rd party UDP servers to view BLE traffic</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/edge/edge-0.1.X/getting-started-edge-applications.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../_sources/edge/edge-0.1.X/getting-started-edge-applications.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,258 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Static Library Installation &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="static-library-installation">
+<h1>Static Library Installation<a class="headerlink" href="#static-library-installation" title="Permalink to this headline">¶</a></h1>
+<p>The BlueCatsSDK static library is installed using CocoaPods. CocoaPods
+is an Objective-C library dependency manager. You can learn more about
+CocoaPods from <a class="reference external" href="https://cocoapods.org/">cocoapods.org</a>.</p>
+<p>Add the BlueCatsSDK static library dependency to your Podfile in your
+Xcode project directory:</p>
+<div class="code ruby highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pod</span> <span class="s1">&#39;BlueCatsSDK&#39;</span><span class="p">,</span> <span class="p">:</span><span class="n">git</span> <span class="o">=&gt;</span> <span class="s1">&#39;https://github.com/bluecats/bluecats-ios-sdk.git&#39;</span>
+</pre></div>
+</div>
+<p>Now you can install the BlueCatsSDK dependency in your project:</p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span>$ pod install
+</pre></div>
+</div>
+<p>To update the installed BlueCatsSDK dependency in your project, run the
+following command after ensuring <code class="docutils literal notranslate"><span class="pre">libBlueCatsSDK</span></code> is used:</p>
+<div class="code sh highlight-default notranslate"><div class="highlight"><pre><span></span>$ pod update
+</pre></div>
+</div>
+<p><em>Remember</em>, after installing the SDK into your project with cocoapods,
+open your project from the newly created <code class="docutils literal notranslate"><span class="pre">.xcworkspace</span></code> file.</p>
+<div class="section" id="swift-bridging-header">
+<h2>Swift Bridging Header<a class="headerlink" href="#swift-bridging-header" title="Permalink to this headline">¶</a></h2>
+<p>To import the BlueCatsSDK’s headers into a Swift project, add
+<code class="docutils literal notranslate"><span class="pre">#import</span> <span class="pre">&quot;BlueCatsSDK.h&quot;</span></code> to your bridging header.</p>
+</div>
+<div class="section" id="now-you-are-ready-to-startpurring">
+<h2>Now you are ready to <a class="reference external" href="https://developer.bluecats.com/guides/startpurring#ios">startPurring</a>!<a class="headerlink" href="#now-you-are-ready-to-startpurring" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="requirements">
+<h1>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h1>
+<p><strong>Important Note: iOS 11.0 introduces breaking changes on how location
+permission is requested for background ‘Always’ scanning</strong>. See below
+for details on new NSLocationAlwaysAndWhenInUseUsageDescription plist
+key.</p>
+<p>When using BlueCats SDK in an iOS app there are a number of static
+descriptions required to explain how the app will use Bluetooth and
+Beacon technology. These are used by iOS to customise permission prompts
+when requested by the app. These are included in the application plist
+file as explained below.</p>
+<p>Required for App Store submission (not currently displayed to app
+users):</p>
+<ul class="simple">
+<li><a class="reference external" href="https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/plist/info/NSBluetoothPeripheralUsageDescription">NSBluetoothPeripheralUsageDescription</a>
+(Privacy - Bluetooth Peripheral Usage Description)</li>
+</ul>
+<p>Location prompt to app users requesting permission to detect beacons
+either when the app is in use or also when it is closed:</p>
+<p>Required when requesting <strong>When in Use</strong> permission only:</p>
+<ul class="simple">
+<li>for iOS 8.0 to iOS 11.0 support
+<a class="reference external" href="https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/plist/info/NSLocationWhenInUseUsageDescription">NSLocationWhenInUseUsageDescription</a></li>
+</ul>
+<p>or required when requesting <strong>Always and/or When in Use</strong> permission:</p>
+<ul class="simple">
+<li>for iOS 8.0 to iOS 10.0 support
+<a class="reference external" href="https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/plist/info/NSLocationAlwaysUsageDescription">NSLocationAlwaysUsageDescription</a>
+and</li>
+<li>for iOS 11.0 support
+<a class="reference external" href="https://developer.apple.com/documentation/corelocation/choosing_the_authorization_level_for_location_services/requesting_always_authorization">NSLocationAlwaysAndWhenInUseUsageDescription</a></li>
+</ul>
+<p>Additional Apple documentation on requesting location authorization
+including <a class="reference external" href="https://developer.apple.com/documentation/corelocation/choosing_the_authorization_level_for_location_services/requesting_always_authorization">escalating your app’s authorization level from When in Use to
+Always</a>.</p>
+<div class="section" id="privacy-bluetooth-peripheral-usage-description-in-ios-10-0">
+<h2>Privacy - Bluetooth Peripheral Usage Description in iOS 10.0<a class="headerlink" href="#privacy-bluetooth-peripheral-usage-description-in-ios-10-0" title="Permalink to this headline">¶</a></h2>
+<p>Starting in iOS 10 any app using CoreBluetooth is required to include a
+static
+<a class="reference external" href="https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/plist/info/NSBluetoothPeripheralUsageDescription">NSBluetoothPeripheralUsageDescription</a>
+plist value in the application plist file (displayed as ‘Privacy -
+Bluetooth Peripheral Usage Description’). This is a requirement for
+submission to the App Store for any app that includes the BlueCats SDK
+or other code that interacts with Bluetooth devices using the
+CoreBluetooth APIs. The BlueCats SDK uses CoreBluetooth to monitor
+beacon battery life, apply remote secure settings updates, verify beacon
+ownership and detect secure beacons. Currently this description is not
+displayed to app users but could be used in the future so should include
+appropriate messaging about how beacons are being used by the app.</p>
+<p>In case of a failed app submission, for example a rejection stating
+“Missing Info.plist key - This app attempts to access privacy-sensitive
+data without a usage description. The app’s Info.plist must contain an
+NSBluetoothPeripheralUsageDescription key with a string value explaining
+to the user how the app uses this data.” inclusion of the required key
+containing a message similar to that used for the location Always or
+While in Use descriptions should be sufficient to proceed with the
+submission process.</p>
+</div>
+<div class="section" id="location-access-description">
+<h2>Location Access Description<a class="headerlink" href="#location-access-description" title="Permalink to this headline">¶</a></h2>
+<p>Starting in iOS8, iOS requires a description to be presented to the user
+when an app requests access to a user’s location. It is also recommended
+that a description be provided when requesting access to a user’s
+location on iOS7 devices.</p>
+<p>Descriptions are provided by adding a Plist entry corresponding to the
+level of location use requested. Add a description for each level of
+location access you wish to request. These can easily be entered from
+the ‘Info’ section of your project target (see below) or directly into
+your Plist file.</p>
+<p>Keys: - NSLocationWhenInUseUsageDescription -
+NSLocationAlwaysUsageDescription -
+NSLocationAlwaysAndWhenInUseUsageDescription</p>
+<div class="figure" id="id1">
+<img alt="NSLocationAlwaysUsageDescription" src="https://i.imgur.com/G55cRZi.png" />
+<p class="caption"><span class="caption-text">NSLocationAlwaysUsageDescription</span></p>
+</div>
+<div class="line-block">
+<div class="line">See the links below for more information on the different location
+access types:</div>
+<div class="line">-
+<a class="reference external" href="https://developer.apple.com/documentation/corelocation/choosing_the_authorization_level_for_location_services/requesting_always_authorization">NSLocationAlwaysAndWhenInUseUsageDescription</a>
+-
+<a class="reference external" href="https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/plist/info/NSLocationAlwaysUsageDescription">NSLocationAlwaysUsageDescription</a></div>
+<div class="line">-
+<a class="reference external" href="https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/plist/info/NSLocationWhenInUseUsageDescription">NSLocationWhenInUseUsageDescription</a>
+-
+<a class="reference external" href="https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/plist/info/NSLocationUsageDescription">NSLocationUsageDescription</a>.</div>
+</div>
+</div>
+<div class="section" id="requesting-location-access">
+<h2>Requesting Location Access<a class="headerlink" href="#requesting-location-access" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">To request location use from the user, you can call:</div>
+<div class="line">##### Objective-C
+<code class="docutils literal notranslate"><span class="pre">[BlueCatsSDK</span> <span class="pre">requestAlwaysLocationAuthorization]</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">[BlueCatsSDK</span> <span class="pre">requestWhenInUseLocationAuthorization]</span></code>.</div>
+<div class="line">##### Swift</div>
+<div class="line"><code class="docutils literal notranslate"><span class="pre">BlueCatsSDK.requestAlwaysLocationAuthorization()</span></code>, or
+<code class="docutils literal notranslate"><span class="pre">BlueCatsSDK.requestWhenInUseLocationAuthorization()</span></code>.</div>
+</div>
+<p>If the OS is pre-iOS8 <code class="docutils literal notranslate"><span class="pre">requestLocationAuthorization</span></code> will be called.</p>
+</div>
+<div class="section" id="ranging-secure-mode-beacons-in-the-background-in-ios">
+<h2>Ranging Secure Mode Beacons in the Background in iOS<a class="headerlink" href="#ranging-secure-mode-beacons-in-the-background-in-ios" title="Permalink to this headline">¶</a></h2>
+<p>In order to range secure beacons while an app in the background, you
+must select “Uses Bluetooth LE accessories” as a required background
+mode. This can be done easily from within Xcode. This is a setting that
+can be used to enable improved scanning capabilities of secure beacons
+while an app is in the background.</p>
+<p>Note: A demonstration of the functionality provided by this setting in
+the form of a video may be requested as part of the app store review
+submission process to explain why the background mode is required. An
+example may be a video recording demonstrating location based
+notifications from the app triggered by beacons.</p>
+<div class="figure" id="id2">
+<img alt="Uses bluetooth LE accessories checkbox" src="https://s3-us-west-1.amazonaws.com/sdk-guide/gelato/usesLEAccessories.png" />
+<p class="caption"><span class="caption-text">Uses bluetooth LE accessories checkbox</span></p>
+</div>
+<p>For more information please see <a class="reference external" href="https://developer.apple.com/library/ios/documentation/General/Reference/InfoPlistKeyReference/Articles/iPhoneOSKeys.html#//apple_ref/doc/uid/TP40009252-SW22">UIBackground
+Modes</a>.</p>
+<p>The SDK limits total background scanning time to manage battery
+efficiency. These can be customised with the following <a class="reference external" href="https://developer.bluecats.com/docs/versions/3.0/sdk-options#ios-specific">SDK
+Options</a>:</p>
+<p><code class="docutils literal notranslate"><span class="pre">BCOptionBackgroundSessionTimeIntervalInSeconds</span></code>,
+<code class="docutils literal notranslate"><span class="pre">BCOptionMaximumDailyBackgroundUsageInMinutes</span></code> and
+<code class="docutils literal notranslate"><span class="pre">BCScanInBackground</span></code></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Static Library Installation</a><ul>
+<li><a class="reference internal" href="#swift-bridging-header">Swift Bridging Header</a></li>
+<li><a class="reference internal" href="#now-you-are-ready-to-startpurring">Now you are ready to startPurring!</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#requirements">Requirements</a><ul>
+<li><a class="reference internal" href="#privacy-bluetooth-peripheral-usage-description-in-ios-10-0">Privacy - Bluetooth Peripheral Usage Description in iOS 10.0</a></li>
+<li><a class="reference internal" href="#location-access-description">Location Access Description</a></li>
+<li><a class="reference internal" href="#requesting-location-access">Requesting Location Access</a></li>
+<li><a class="reference internal" href="#ranging-secure-mode-beacons-in-the-background-in-ios">Ranging Secure Mode Beacons in the Background in iOS</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorials/ios-sdk-installation.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/tutorials/ios-sdk-installation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,173 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Teams &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="teams">
+<h1>Teams<a class="headerlink" href="#teams" title="Permalink to this headline">¶</a></h1>
+<p>A Team is the topmost identifier in the BlueCats hierarchy. Teams can be
+used to separate beacons by client, brand or into non-related beacon
+networks. Every team has an owner with advanced management capabilities
+over the team.</p>
+<p>Other than Teammates, all entities in the BlueCats platform belong to a
+specific team. Information can be shared across teams in a variety of
+ways, but entities such as Apps, Sites and Categories are contained
+within a particular team.</p>
+</div>
+<div class="section" id="apps">
+<h1>Apps<a class="headerlink" href="#apps" title="Permalink to this headline">¶</a></h1>
+<p>Android, iOS and API client applications are represented by Apps. Every
+app is assigned an app token or client ID to associate it with a
+particular BlueCats Team. Create an app for every application that will
+be accessing your beacon network. Insights, or beacon visits, are
+sortable by app and network access can be granted to specific apps from
+other teams.</p>
+</div>
+<div class="section" id="teammates">
+<h1>Teammates<a class="headerlink" href="#teammates" title="Permalink to this headline">¶</a></h1>
+<p>Teammates are BlueCats management system users. Teammates can act as
+contributors or consumers. Contributors can manage beacon settings,
+create and alter categories and sites, and invite other teammates.
+Consumers have limited access rights to view Insights and update beacons
+with BlueCats Reveal. Certain management actions, such as deleting a
+category, can only be performed by a team’s owner.</p>
+</div>
+<div class="section" id="sites">
+<h1>Sites<a class="headerlink" href="#sites" title="Permalink to this headline">¶</a></h1>
+<p>Groups of beacons that share a common geo-location are located in a
+single site. Sites can contain a postal address or GPS coordinates and
+maps. In addition to helping the SDK with the caching of Beacon
+hierarchical data, sites can contain custom values (key-value pairs) and
+can be used to trigger macro-location entry and exit notifications.</p>
+<p>Sites within your BlueCats network can be marked private or public.
+Beacon metadata in private sites can only be used by apps in your team
+or by other teams to which you have explicitly granted access. Metadata
+from beacons in public sites is accessible to other BlueCats platform
+users unless the beacons are in a non-public advertising mode
+(i.e.&nbsp;Secure Mode).</p>
+</div>
+<div class="section" id="categories">
+<h1>Categories<a class="headerlink" href="#categories" title="Permalink to this headline">¶</a></h1>
+<p>Categories are used to add high-level context to multiple beacons across
+an entire team. They can be used to notify your app of valuable location
+information such as ‘Entrance’, ‘Endcap’ or ‘Menswear’.</p>
+</div>
+<div class="section" id="zones">
+<h1>Zones<a class="headerlink" href="#zones" title="Permalink to this headline">¶</a></h1>
+<p>Zones are dynamic groupings of beacons that can be composed of multiple
+categories, sites or individual beacons. Zones are used to trigger
+entry, exit, and dwell time events within a site across your entire
+team.</p>
+</div>
+<div class="section" id="maps">
+<h1>Maps<a class="headerlink" href="#maps" title="Permalink to this headline">¶</a></h1>
+<p>Maps are layouts or floor plans assigned to a site. Maps can be used for
+deployment mapping, rendering user location and heat mapping. Beacons
+are added to maps via the web app and can help when configuring beacon
+settings by estimating beacon range and the number of beacons needed to
+cover a location.</p>
+</div>
+<div class="section" id="regions">
+<h1>Regions<a class="headerlink" href="#regions" title="Permalink to this headline">¶</a></h1>
+<p>Regions define the available iBeacon and/or Eddystone-UID values that
+are available to your beacons. Regions can be used for organization or
+to enhance beacon detection in iOS when a app is closed.</p>
+</div>
+<div class="section" id="beacons">
+<h1>Beacons<a class="headerlink" href="#beacons" title="Permalink to this headline">¶</a></h1>
+<p>Beacons are…beacons! Beacons can only be assigned a single site, team
+and map, but can be assigned multiple categories and can carry
+individual data in the form of custom values.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Teams</a></li>
+<li><a class="reference internal" href="#apps">Apps</a></li>
+<li><a class="reference internal" href="#teammates">Teammates</a></li>
+<li><a class="reference internal" href="#sites">Sites</a></li>
+<li><a class="reference internal" href="#categories">Categories</a></li>
+<li><a class="reference internal" href="#zones">Zones</a></li>
+<li><a class="reference internal" href="#maps">Maps</a></li>
+<li><a class="reference internal" href="#regions">Regions</a></li>
+<li><a class="reference internal" href="#beacons">Beacons</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/libraries/mobileSDK/usage/hierarchy.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../../_sources/libraries/mobileSDK/usage/hierarchy.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

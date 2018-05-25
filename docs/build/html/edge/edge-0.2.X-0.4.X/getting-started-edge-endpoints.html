@@ -1,0 +1,969 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Forwarding Data &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="forwarding-data">
+<h1>Forwarding Data<a class="headerlink" href="#forwarding-data" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference external" href="getting-started-edge-endpoints#bluecats-edge-endpoints---overview">BlueCats Edge
+Endpoints</a></li>
+<li><a class="reference external" href="getting-started-edge-endpoints#live-view">Live View</a></li>
+<li><a class="reference external" href="getting-started-edge-endpoints#forwarding-data1">Forwarding Data</a><ul>
+<li><em>Endpoint Types</em><ul>
+<li><a class="reference external" href="getting-started-edge-endpoints#udp">UDP</a></li>
+<li><a class="reference external" href="getting-started-edge-endpoints#mqtt">MQTT</a></li>
+<li><a class="reference external" href="getting-started-edge-endpoints#http">HTTP</a></li>
+</ul>
+</li>
+<li><em>Data Types</em><ul>
+<li><a class="reference external" href="getting-started-edge-endpoints#csv">CSV</a></li>
+<li><a class="reference external" href="getting-started-edge-endpoints#json">JSON</a></li>
+<li><a class="reference external" href="getting-started-edge-endpoints#binary">Binary</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference external" href="getting-started-edge-endpoints#example---udp">Example UDP Server</a></li>
+<li><a class="reference external" href="getting-started-edge-endpoints#example---mqtt">Example MQTT</a></li>
+<li><a class="reference external" href="getting-started-edge-endpoints#example---http">Example HTTP</a></li>
+</ul>
+<p>The Edge Relay provides the ability to send your data that you want to
+various endpoint types (UDP, MQTT, or HTTP) and message formats (CSV,
+JSON, or Binary). With the Edge you can:</p>
+<ul class="simple">
+<li>Configure network settings for connectivity to local network and the
+internet. The BlueCats Edge is a Wireless Access Point providing
+advanced network configuration options if required.</li>
+<li>View beacons in range of the Edge with Live View.</li>
+<li>Configure filters for your endpoints. This provides a way to filter
+meaningful data to your endpoints.</li>
+</ul>
+<p>For endpoint type (UDP, MQTT, or HTTP), message format (CSV, JSON, or
+Binary) and message throttle limits for can be independently configured
+or the application can be disabled if not required.</p>
+</div>
+<div class="section" id="edge-configuration">
+<h1>Edge Configuration<a class="headerlink" href="#edge-configuration" title="Permalink to this headline">¶</a></h1>
+<p>Once you have <a class="reference external" href="getting-started-connect">connected to the Edge and configured network
+settings</a> you can manage sending data to
+your specified endpoints on the Edge.</p>
+<div class="section" id="live-view">
+<h2>Live View<a class="headerlink" href="#live-view" title="Permalink to this headline">¶</a></h2>
+<p>Live view provides a simple list of BLE devices detected in range of the
+Edge along with their current RSSI (signal strength).</p>
+<p style="text-align:center" align="center"></p></div>
+</div>
+<div class="section" id="forwarding-data-1">
+<span id="id1"></span><h1>Forwarding Data<a class="headerlink" href="#forwarding-data-1" title="Permalink to this headline">¶</a></h1>
+<p>To make use of the data collected by the Edge, you will need to send it
+somewhere. The default Edge applications support three types of endpoint
+- UDP, MQTT, or HTTP. Configure one or all three of the endpoint
+options. Currently, the Edge supports a as many endpoints for each type.
+Data will be sent to the configured endpoints when an Edge application
+has been enabled.</p>
+<ul class="simple">
+<li>Click on <em>Add New Addpoint</em> to start configuring endpoints</li>
+</ul>
+<p style="text-align:center" align="center"></p><div class="section" id="forwarding-parameters">
+<h2>Forwarding Parameters<a class="headerlink" href="#forwarding-parameters" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Name - This is what to name the endpoint</li>
+<li>Enabled - This check box is what enables forwarding data. It can be
+checked or unchecked.</li>
+<li>Event Type - The type of “messages” or data the Edge is scanning for:<ul>
+<li>BLE Scan Event: Everytime it sees the Beacon in range, it forwards
+the data.</li>
+<li>Location Zone Event: Whenever there is an Enter or Exit Zone,
+Change Zone, Timestamp. Applies to our Location Engine</li>
+<li>Heartbeat Event: Sending the Edges information to an Endpoint</li>
+</ul>
+</li>
+<li>Protocol - This is what protocol you can configure discuessed below
+how to configure.<ul>
+<li>MQTT</li>
+<li>UDP</li>
+<li>HTTP</li>
+</ul>
+</li>
+<li>Ad Type to identify beacon in JSON<ul>
+<li>Secure</li>
+<li>Eddy UID</li>
+<li>iBeacon</li>
+<li>bcId</li>
+</ul>
+</li>
+<li>Enable TLS - This enables the ability for TLS connections</li>
+<li>Host or IP address - Where the data is sent to</li>
+<li>Port - What port to send the data to</li>
+<li>RSSI threshold - Changing this number filters what RSSI values the
+Edge will Scan for. Enter -127 to effectively disable rssi throttle</li>
+<li>Number per Interval - Number of devices, maximum number it can send
+per interval</li>
+<li>Interval length - Length of the interval in seconds</li>
+<li>Enable Filtering - will apply allow you to apply any filters you
+created to the Edges</li>
+</ul>
+</div>
+<div class="section" id="udp">
+<h2>UDP<a class="headerlink" href="#udp" title="Permalink to this headline">¶</a></h2>
+<p>To configure UDP:</p>
+<ol class="arabic simple">
+<li>Name your endpoint</li>
+<li>Click the <em>Enabled</em> checkbox to enable your endpoint</li>
+<li>Select UDP for your Protocol</li>
+<li>Enter the IP and PORT where the data should be sent.</li>
+<li>Select the format for which your data will come in: JSON, CSV, or
+Binary</li>
+<li>Click <em>Save and Apply</em></li>
+</ol>
+<p align="center"></p></div>
+<div class="section" id="mqtt">
+<h2>MQTT<a class="headerlink" href="#mqtt" title="Permalink to this headline">¶</a></h2>
+<p>A simple MQTT endpoint without TLS enabled just requires the host/IP and
+port of the MQTT server and the ‘TLS Enabled’ set to <code class="docutils literal notranslate"><span class="pre">0</span></code>. Some MQTT
+endpoints such as AWS IoT require TLS for connections. Here you will
+need to upload the Certificate, Private Key and Certificate Authority
+<a class="reference external" href="http://docs.aws.amazon.com/iot/latest/developerguide/create-device-certificate.html">generated in the AWS
+console</a>.</p>
+<p style="text-align:center" align="center"></p></div>
+<div class="section" id="http">
+<h2>HTTP<a class="headerlink" href="#http" title="Permalink to this headline">¶</a></h2>
+<p>To configure a HTTP endpoint:</p>
+<ol class="arabic simple">
+<li>Name your endpoint</li>
+<li>Click the <em>Enabled</em> checkbox to enable your endpoint</li>
+<li>Select HTTP for your Protocol</li>
+<li>Enter the IP and PORT where the data should be sent.</li>
+<li>You will only be able to receive JSON data for HTTP</li>
+<li>Add any other features you want to implement</li>
+<li>Click <em>Save and Apply</em></li>
+</ol>
+<p>What you can configure is what Ad-type to indentify the beacon in JSON
+* Secure * Eddystone UID * iBeacon * bcId (bluecats identifier)</p>
+<p align="center"></p></div>
+<div class="section" id="csv">
+<h2>CSV<a class="headerlink" href="#csv" title="Permalink to this headline">¶</a></h2>
+<p>Example: CSV (for UDP, MQTT)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BCAdData</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">Edge</span><span class="o">-</span><span class="n">abc</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="o">-</span><span class="mi">62</span><span class="p">,</span><span class="mi">1480314351666436</span><span class="p">,</span><span class="mi">02010617</span><span class="n">FF0401050413012600040F82BD640391F8E602F514C96D0302C4FE</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Message Type</td>
+<td>BCAdData (CSV only)</td>
+</tr>
+<tr class="row-odd"><td>Message Version</td>
+<td>1 (CSV only to track format
+changes)</td>
+</tr>
+<tr class="row-even"><td>Edge MAC Address</td>
+<td>E4956E40DFCF</td>
+</tr>
+<tr class="row-odd"><td>Edge Name</td>
+<td>Edge-abc</td>
+</tr>
+<tr class="row-even"><td>BLE MAC Address</td>
+<td>A0E6F854703A</td>
+</tr>
+<tr class="row-odd"><td>RSSI</td>
+<td>-63</td>
+</tr>
+<tr class="row-even"><td>RSSI Smooth</td>
+<td>-62</td>
+</tr>
+<tr class="row-odd"><td>Timestamp</td>
+<td>1480314352373689</td>
+</tr>
+<tr class="row-even"><td>AdData</td>
+<td>0201061AFF4C00021561687109905F443
+691F8E602F514C96D00040F82BD</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>Message Type (CSV only)</li>
+<li>Message Version - 1 (CSV only to track format changes)</li>
+<li>EdgeMAC - Hardware MAC address of the Edge</li>
+<li>EdgeName - A user defined name for the Edge</li>
+<li>BeaconMAC - Scanned (public) BT Address of the detected BLE device</li>
+<li>RSSI - Received Signal Strength Indicator in dBm</li>
+<li>RSSI Smooth - Received Signal Strength Indicator in dBm. Signal
+fluctuations are filtered to provide a more stable value.</li>
+<li>Timestamp - Nanoseconds since Epoch</li>
+<li>AdData - Full advertisement data payload</li>
+</ul>
+</div>
+<div class="section" id="json">
+<h2>JSON<a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h2>
+<p>Example: JSON (for MQTT,UDP)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;edgeMAC&quot;</span><span class="p">:</span><span class="s2">&quot;E4956E4CC101&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;devId&quot;</span><span class="p">:</span><span class="mi">5063816</span><span class="p">,</span>
+    <span class="s2">&quot;mac&quot;</span><span class="p">:</span><span class="s2">&quot;98072D06813B&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mPow&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">67</span><span class="p">,</span>
+    <span class="s2">&quot;rssi&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">74</span><span class="p">,</span>
+    <span class="s2">&quot;rssiSmooth&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">72</span><span class="p">,</span>
+    <span class="s2">&quot;adMsk&quot;</span><span class="p">:</span><span class="mi">512</span><span class="p">,</span>
+    <span class="s2">&quot;channel&quot;</span><span class="p">:</span><span class="mi">37</span><span class="p">,</span>
+    <span class="s2">&quot;adType&quot;</span><span class="p">:</span><span class="mi">512</span><span class="p">,</span>
+    <span class="s2">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2017-10-03T18:19:13.230952Z&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;pBatt&quot;</span><span class="p">:</span><span class="mi">83</span><span class="p">,</span>
+    <span class="s2">&quot;btAddr&quot;</span><span class="p">:</span><span class="s2">&quot;98072D06813B&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;vSett&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span>
+    <span class="s2">&quot;fwUID&quot;</span><span class="p">:</span><span class="s2">&quot;5000006e&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;adData&quot;</span><span class="p">:</span><span class="s2">&quot;02010611FF04010098072D06813B5000006E02BD53&quot;</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Edge MAC Address</td>
+<td>E4956E40DFCF</td>
+</tr>
+<tr class="row-odd"><td>Device-ID</td>
+<td>5063816 (ignore)</td>
+</tr>
+<tr class="row-even"><td>MAC Address</td>
+<td>98072D06813B</td>
+</tr>
+<tr class="row-odd"><td>Measured Power</td>
+<td>-67</td>
+</tr>
+<tr class="row-even"><td>RSSI</td>
+<td>-63</td>
+</tr>
+<tr class="row-odd"><td>RSSI Smooth</td>
+<td>-62</td>
+</tr>
+<tr class="row-even"><td>Ad mask</td>
+<td>512</td>
+</tr>
+<tr class="row-odd"><td>Channel</td>
+<td>37</td>
+</tr>
+<tr class="row-even"><td>Timestamp</td>
+<td>2017-10-03T18:19:13.230952Z</td>
+</tr>
+<tr class="row-odd"><td>Battery Power</td>
+<td>83</td>
+</tr>
+<tr class="row-even"><td>BLE MAC Address</td>
+<td>98072D06813B</td>
+</tr>
+<tr class="row-odd"><td>Version Setting</td>
+<td>2</td>
+</tr>
+<tr class="row-even"><td>Firmware UID</td>
+<td>5000006e</td>
+</tr>
+<tr class="row-odd"><td>AdData</td>
+<td>0201061AFF4C00021561687109905F443
+691F8E602F514C96D00040F82BD</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>EdgeMAC - Hardware MAC address of the Edge</li>
+<li>Device-ID - For internal use, not a constant (ignore)</li>
+<li>MAC Address - The MAC Adress of the Beacon</li>
+<li>Measured Power - Measured power at 1 metre</li>
+<li>RSSI - Received Signal Strength Indicator in dBm</li>
+<li>RSSI Smooth - Received Signal Strength Indicator in dBm. Signal
+fluctuations are filtered to provide a more stable value.</li>
+<li>Ad Mask - The advertisement mask</li>
+<li>Channel - The Ad channel the Beacon Ad was received on</li>
+<li>Timestamp - Nanoseconds since Epoch</li>
+<li>Battery Power - Measured Battery power</li>
+<li>BLE MAC Address - Scanned (public) BT Address of the detected BLE
+device</li>
+<li>Version Setting - Version Setting the Beacon is on</li>
+<li>Firmware UID - Firmware unique identifier (Beacon Serial Number)</li>
+<li>AdData - Full advertisement data payload</li>
+</ul>
+<p>For all of the protocols with JSON, you can add additional Key, Values.
+For HTTP, you can also add Additional HTTP Headers.</p>
+<p style="text-align:center" align="center"></p><p>Example: JSON for HTTP</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;edgeMAC&quot;</span><span class="p">:</span><span class="s2">&quot;E4956E4CC101&quot;</span><span class="p">,</span>
+     <span class="s2">&quot;loc&quot;</span><span class="p">:{},</span><span class="s2">&quot;devices&quot;</span><span class="p">:[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;mac&quot;</span><span class="p">:</span><span class="s2">&quot;73118A97ACC0&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;mPow&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">67</span><span class="p">,</span>
+                <span class="s2">&quot;rssi&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">77</span><span class="p">,</span>
+                <span class="s2">&quot;rssiSmooth&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">77</span><span class="p">,</span>
+                <span class="s2">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2017-10-04T21:37:43.793701Z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;pBatt&quot;</span><span class="p">:</span><span class="mi">46</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;mac&quot;</span><span class="p">:</span><span class="s2">&quot;5332F1D19772&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;mPow&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">67</span><span class="p">,</span>
+                <span class="s2">&quot;rssi&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">83</span><span class="p">,</span>
+                <span class="s2">&quot;rssiSmooth&quot;</span><span class="p">:</span><span class="o">-</span><span class="mi">82</span><span class="p">,</span>
+                <span class="s2">&quot;ts&quot;</span><span class="p">:</span><span class="s2">&quot;2017-10-04T21:37:41.099714Z&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;pBatt&quot;</span><span class="p">:</span><span class="mi">95</span>
+            <span class="p">}]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Field</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Edge MAC Address</td>
+<td>E4956E40DFCF</td>
+</tr>
+<tr class="row-odd"><td>Location</td>
+<td>(ignore)</td>
+</tr>
+<tr class="row-even"><td>—</td>
+<td>—</td>
+</tr>
+<tr class="row-odd"><td><strong>Devices</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>MAC Address</td>
+<td>98072D06813B</td>
+</tr>
+<tr class="row-odd"><td>Measured Power</td>
+<td>-67</td>
+</tr>
+<tr class="row-even"><td>RSSI</td>
+<td>-63</td>
+</tr>
+<tr class="row-odd"><td>RSSI Smooth</td>
+<td>-62</td>
+</tr>
+<tr class="row-even"><td>Timestamp</td>
+<td>2017-10-03T18:19:13.230952Z</td>
+</tr>
+<tr class="row-odd"><td>Battery Power</td>
+<td>83</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>EdgeMAC - Hardware MAC address of the Edge</li>
+<li>Location - Ignore</li>
+<li>Devices- - JSON List of all seen devices</li>
+<li>MAC Address - The MAC Address of the Beacon</li>
+<li>Measured Power - Measured power at 1 metre</li>
+<li>RSSI - Received Signal Strength Indicator in dBm</li>
+<li>RSSI Smooth - Received Signal Strength Indicator in dBm. Signal
+fluctuations are filtered to provide a more stable value.</li>
+<li>Timestamp - Nanoseconds since Epoch</li>
+<li>Battery Power - Measured Battery power</li>
+</ul>
+</div>
+<div class="section" id="binary">
+<h2>Binary<a class="headerlink" href="#binary" title="Permalink to this headline">¶</a></h2>
+<p>Example: UDP or MQTT</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">193</span><span class="p">,</span> <span class="mi">76</span><span class="p">,</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">149</span><span class="p">,</span> <span class="mi">228</span><span class="p">,</span> <span class="mi">193</span><span class="p">,</span> <span class="mi">233</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">152</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">74</span><span class="p">,</span> <span class="o">-</span><span class="mi">71</span><span class="p">,</span> <span class="mi">127</span><span class="p">,</span> <span class="mi">38</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">52</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\x14</span><span class="s1">ah&#39;</span>
+</pre></div>
+</div>
+<p>*fields are little-endian</p>
+</div>
+<div class="section" id="rssi-packet-packet-type-0x0003">
+<h2>RSSI Packet: Packet Type 0x0003<a class="headerlink" href="#rssi-packet-packet-type-0x0003" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="header">
+<h3>Header<a class="headerlink" href="#header" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="19%" />
+<col width="26%" />
+<col width="37%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Offset</th>
+<th class="head">Length</th>
+<th class="head">Type</th>
+<th class="head">Field</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>2</td>
+<td>uint16_t</td>
+<td>Packet Type</td>
+</tr>
+<tr class="row-odd"><td>2</td>
+<td>6</td>
+<td>uint8_t[]</td>
+<td>Edge MAC</td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>6</td>
+<td>uint8_t[]</td>
+<td>Device MAC</td>
+</tr>
+<tr class="row-odd"><td>14</td>
+<td>1</td>
+<td>uint8_t</td>
+<td>Device Type</td>
+</tr>
+<tr class="row-even"><td>15</td>
+<td>1</td>
+<td>int8_t</td>
+<td>RSSI</td>
+</tr>
+<tr class="row-odd"><td>16</td>
+<td>1</td>
+<td>int8_t</td>
+<td>Measured Power</td>
+</tr>
+<tr class="row-even"><td>17</td>
+<td>1</td>
+<td>uint8_t</td>
+<td>Sequnce Number</td>
+</tr>
+<tr class="row-odd"><td>18</td>
+<td>1</td>
+<td>uint8_t</td>
+<td>BLE Channel</td>
+</tr>
+<tr class="row-even"><td>19</td>
+<td>1</td>
+<td>uint8_t</td>
+<td>Battery Level</td>
+</tr>
+<tr class="row-odd"><td>20</td>
+<td>1</td>
+<td>uint8_t</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>21</td>
+<td>1-255</td>
+<td>uint8_t[]</td>
+<td>Payload Data</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section" id="bluecats-edge-supported-ble-ad-types">
+<h1>BlueCats Edge Supported BLE Ad Types<a class="headerlink" href="#bluecats-edge-supported-ble-ad-types" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="16%" />
+<col width="8%" />
+<col width="10%" />
+<col width="13%" />
+<col width="15%" />
+<col width="24%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Protocol</th>
+<th class="head">Type</th>
+<th class="head">Id</th>
+<th class="head">Payload</th>
+<th class="head">Proximity</th>
+<th class="head">Measurement</th>
+<th class="head">BlueCats Management</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Apple</td>
+<td>iBeacon</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>For Id</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>Eddystone</td>
+<td>UID</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>For Id</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>URL</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>TLM</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>EID</td>
+<td>YES*</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>eTLM</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>BlueCats</td>
+<td>iBeacon</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>For Id</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>Secure</td>
+<td>YES</td>
+<td>YES</td>
+<td>YES</td>
+<td>For Id</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>Data</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>Newborn</td>
+<td>YES</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>Unconfigured</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>Management</td>
+<td>*</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>eManagement</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>Identifier</td>
+<td>YES</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>For Id</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>eIdentifier</td>
+<td>YES</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>For Id</td>
+<td>YES</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td>Measurement</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td>Data</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li></li>
+</ul>
+</td>
+<td>YES</td>
+</tr>
+</tbody>
+</table>
+<p>Under BlueCats &gt; Forwarding &gt; Filters, you can add filters to your data.
+When BLE advertisements are received from each scan they can be filtered
+using one or more rules.</p>
+<ol class="arabic simple">
+<li>Use RSSI threshold: Only ads with a minimum received signal strength
+indicator (RSSI). <a class="reference external" href="getting-started-edge-endpoints#forwarding-parameters">This is under the Forwarding
+parameters</a>.</li>
+<li>Or these Forwarding Filters:<ul>
+<li>iBeacon Data</li>
+<li>Eddystone UID</li>
+<li>MAC</li>
+<li>BT Address</li>
+<li>Ad Type</li>
+<li>Ad Data</li>
+<li>BC Id</li>
+<li>BC Measurement Type</li>
+</ul>
+</li>
+</ol>
+</div>
+<div class="section" id="testing-your-endpoints">
+<h1>Testing Your Endpoints<a class="headerlink" href="#testing-your-endpoints" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="example-udp">
+<h2>Example - UDP<a class="headerlink" href="#example-udp" title="Permalink to this headline">¶</a></h2>
+<p>Once the Edge has been configured to send messages over UDP to a port
+and IP, a simple server application can be set up to listen for the
+messages.</p>
+<p>To receive the data we will need to set up a local UDP server to listen
+on the port configured for the UDP endpoint. Here is an example in
+Python:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="k">import</span> <span class="n">datetime</span>
+
+<span class="n">UDP_IP</span> <span class="o">=</span> <span class="s2">&quot;0.0.0.0&quot;</span>
+<span class="n">UDP_PORT</span> <span class="o">=</span> <span class="mi">9942</span>
+
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="c1"># Internet</span>
+                     <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span> <span class="c1"># UDP</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">UDP_IP</span><span class="p">,</span> <span class="n">UDP_PORT</span><span class="p">))</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recvfrom</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span> <span class="c1"># buffer size is 1024 bytes</span>
+    <span class="nb">print</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="s2">&quot; -UDP- &quot;</span><span class="p">,</span> <span class="n">data</span>
+</pre></div>
+</div>
+<p>After <a class="reference external" href="https://www.python.org/downloads/">installing python</a> (this
+example is for Python 2.7) and saving this script to a text file name
+<code class="docutils literal notranslate"><span class="pre">udp-server.py</span></code> this can then be run from the console using:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;path</span> <span class="pre">to</span> <span class="pre">your</span> <span class="pre">python</span> <span class="pre">installation&gt;/python.exe</span> <span class="pre">udp-server.py</span></code></p>
+<p>and each received message will be printed to the console e.g.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2016</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">28</span> <span class="mi">17</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mf">51.569708</span>  <span class="o">-</span><span class="n">UDP</span><span class="o">-</span>  <span class="n">BCAdData</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="mi">1480314351666436</span><span class="p">,</span><span class="mi">02010617</span><span class="n">FF0401050413012600040F82BD640391F8E602F514C96D0302C4FE</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">28</span> <span class="mi">17</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mf">51.673411</span>  <span class="o">-</span><span class="n">UDP</span><span class="o">-</span>  <span class="n">BCAdData</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="o">-</span><span class="mi">51</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="mi">1480314351770220</span><span class="p">,</span><span class="mi">02010617</span><span class="n">FF0401050413012600040F82BD640391F8E602F514C96D0302C4FE</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">28</span> <span class="mi">17</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mf">51.788579</span>  <span class="o">-</span><span class="n">UDP</span><span class="o">-</span>  <span class="n">BCAdData</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="o">-</span><span class="mi">51</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="mi">1480314351885285</span><span class="p">,</span><span class="mi">02010617</span><span class="n">FF0401050413012600040F82BD640391F8E602F514C96D0302C4FE</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">28</span> <span class="mi">17</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mf">51.898095</span>  <span class="o">-</span><span class="n">UDP</span><span class="o">-</span>  <span class="n">BCAdData</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="o">-</span><span class="mi">54</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="mi">1480314351994814</span><span class="p">,</span><span class="mi">02010617</span><span class="n">FF0401050413012600040F82BD640391F8E602F514C96D0302C4FE</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">28</span> <span class="mi">17</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mf">51.956482</span>  <span class="o">-</span><span class="n">UDP</span><span class="o">-</span>  <span class="n">BCAdData</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="o">-</span><span class="mi">57</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="mi">1480314352053244</span><span class="p">,</span><span class="mi">02010617</span><span class="n">FF0401050413012600040F82BD640391F8E602F514C96D0302C4FE</span>
+<span class="mi">2016</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">28</span> <span class="mi">17</span><span class="p">:</span><span class="mi">25</span><span class="p">:</span><span class="mf">52.074793</span>  <span class="o">-</span><span class="n">UDP</span><span class="o">-</span>  <span class="n">BCAdData</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">E4956E40DFCF</span><span class="p">,</span><span class="n">A0E6F854703A</span><span class="p">,</span><span class="o">-</span><span class="mi">62</span><span class="p">,</span><span class="o">-</span><span class="mi">63</span><span class="p">,</span><span class="mi">1480314352171590</span><span class="p">,</span><span class="mi">02010614</span><span class="n">FF04010997BD34DB5E40A7346BC6F681F1D3D50A</span>
+</pre></div>
+</div>
+<div class="section" id="using-3rd-party-udp-servers-to-view-ble-traffic">
+<h3>Using 3rd party UDP servers to view BLE traffic<a class="headerlink" href="#using-3rd-party-udp-servers-to-view-ble-traffic" title="Permalink to this headline">¶</a></h3>
+<p>If you don’t have a coding background, then a free UDP server
+application like <a class="reference external" href="https://packetsender.com/">PacketSender</a> will show
+you all the data being sent from the Edge Relay to your computer
+<em>(remember to set the IP address and port in</em><a class="reference external" href="#udp">end point
+configuration</a><em>)</em>.</p>
+</div>
+</div>
+<div class="section" id="example-mqtt">
+<h2>Example - MQTT<a class="headerlink" href="#example-mqtt" title="Permalink to this headline">¶</a></h2>
+<p>Once the Edge has been configured to send messages over MQTT to a port
+and IP, we can set up a simple MQTT server application to listen for the
+messages.</p>
+<p>Here is an example in a third party Broker MQTT client called
+<a class="reference external" href="http://www.hivemq.com/demos/websocket-client/">HiveMQ</a></p>
+<p>1.We set the Host to the IP address 192.168.8.1 2. Set the Port one
+above our port (i.e.&nbsp;our Port is 1883 we put 1884). 3. Click Connect. 4.
+Click Subscribe 5. Add “edge/#” 6. You should see messages coming in</p>
+</div>
+<div class="section" id="example-http">
+<h2>Example - HTTP<a class="headerlink" href="#example-http" title="Permalink to this headline">¶</a></h2>
+<p>Once the Edge has been configured to send messages over HTTP to a port
+and IP, a simple server application can be set up to listen for the
+messages.</p>
+<p>To receive the data we will need to set up a local HTTP server to listen
+on the port configured for the HTTP endpoint. Here is an example in
+Python:</p>
+<div class="code python highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">SimpleHTTPServer</span>
+<span class="kn">import</span> <span class="nn">SocketServer</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">cgi</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="n">PORT</span> <span class="o">=</span> <span class="mi">8010</span>
+
+<span class="k">class</span> <span class="nc">ServerHandler</span><span class="p">(</span><span class="n">SimpleHTTPServer</span><span class="o">.</span><span class="n">SimpleHTTPRequestHandler</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">do_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
+        <span class="n">SimpleHTTPServer</span><span class="o">.</span><span class="n">SimpleHTTPRequestHandler</span><span class="o">.</span><span class="n">do_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">do_POST</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
+        <span class="n">content_len</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="s1">&#39;content-length&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+        <span class="n">post_body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rfile</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">content_len</span><span class="p">)</span>
+        <span class="nb">print</span> <span class="s2">&quot;post_body(</span><span class="si">%s</span><span class="s2">)&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">post_body</span><span class="p">)</span>
+        <span class="n">SimpleHTTPServer</span><span class="o">.</span><span class="n">SimpleHTTPRequestHandler</span><span class="o">.</span><span class="n">do_GET</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<span class="n">Handler</span> <span class="o">=</span> <span class="n">ServerHandler</span>
+
+<span class="n">httpd</span> <span class="o">=</span> <span class="n">SocketServer</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">((</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">PORT</span><span class="p">),</span> <span class="n">Handler</span><span class="p">)</span>
+
+<span class="nb">print</span> <span class="s2">&quot;serving at port&quot;</span><span class="p">,</span> <span class="n">PORT</span>
+<span class="n">httpd</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Forwarding Data</a></li>
+<li><a class="reference internal" href="#edge-configuration">Edge Configuration</a><ul>
+<li><a class="reference internal" href="#live-view">Live View</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#forwarding-data-1">Forwarding Data</a><ul>
+<li><a class="reference internal" href="#forwarding-parameters">Forwarding Parameters</a></li>
+<li><a class="reference internal" href="#udp">UDP</a></li>
+<li><a class="reference internal" href="#mqtt">MQTT</a></li>
+<li><a class="reference internal" href="#http">HTTP</a></li>
+<li><a class="reference internal" href="#csv">CSV</a></li>
+<li><a class="reference internal" href="#json">JSON</a></li>
+<li><a class="reference internal" href="#binary">Binary</a></li>
+<li><a class="reference internal" href="#rssi-packet-packet-type-0x0003">RSSI Packet: Packet Type 0x0003</a><ul>
+<li><a class="reference internal" href="#header">Header</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bluecats-edge-supported-ble-ad-types">BlueCats Edge Supported BLE Ad Types</a></li>
+<li><a class="reference internal" href="#testing-your-endpoints">Testing Your Endpoints</a><ul>
+<li><a class="reference internal" href="#example-udp">Example - UDP</a><ul>
+<li><a class="reference internal" href="#using-3rd-party-udp-servers-to-view-ble-traffic">Using 3rd party UDP servers to view BLE traffic</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#example-mqtt">Example - MQTT</a></li>
+<li><a class="reference internal" href="#example-http">Example - HTTP</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/edge/edge-0.2.X-0.4.X/getting-started-edge-endpoints.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../_sources/edge/edge-0.2.X-0.4.X/getting-started-edge-endpoints.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

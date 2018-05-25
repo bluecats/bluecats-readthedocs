@@ -1,0 +1,195 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Trigger Creation and Usage &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>Triggers and events allow you to trigger actions in specific
+micro-locations. Combine BCEventFilters into a BCTrigger to trigger
+events easily after your filters are satisfied.</p>
+<p>BCEventFilters are applied in the order they’re inserted. If any of them
+fail, the trigger won’t fire.</p>
+<p>Filters include: * proximity, accuracy and RSSI filtering * category
+and site filtering * closest beacon changed * accuracy and RSSI
+smoothing * dwell based triggers</p>
+<p>The examples below cover using triggers at a high level, for a more
+through explanation see our guide <a class="reference external" href="https://developer.bluecats.com/guides/using-triggers-and-events">Using Triggers and
+Events</a>.</p>
+<div class="section" id="trigger-creation-and-usage">
+<h1>Trigger Creation and Usage<a class="headerlink" href="#trigger-creation-and-usage" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="java">
+<h2>Java<a class="headerlink" href="#java" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">private</span> <span class="n">void</span> <span class="n">createBasicTrigger</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="o">//</span><span class="n">generate</span> <span class="n">a</span> <span class="n">trigger</span> <span class="k">with</span> <span class="n">a</span> <span class="n">random</span> <span class="n">identifier</span>
+    <span class="n">final</span> <span class="n">BCTrigger</span> <span class="n">trigger</span> <span class="o">=</span> <span class="n">new</span> <span class="n">BCTrigger</span><span class="p">();</span>
+
+    <span class="o">//</span><span class="n">add</span> <span class="n">your</span> <span class="n">filters</span>
+    <span class="o">//</span><span class="nb">filter</span> <span class="n">by</span> <span class="n">sites</span>
+    <span class="n">trigger</span><span class="o">.</span><span class="n">addFilter</span><span class="p">(</span> <span class="n">BCEventFilter</span><span class="o">.</span><span class="n">filterBySitesNamed</span><span class="p">(</span> <span class="n">Arrays</span><span class="o">.</span><span class="n">asList</span><span class="p">(</span>
+        <span class="s2">&quot;BlueCats Cafe&quot;</span>
+    <span class="p">)</span> <span class="p">)</span> <span class="p">);</span>
+
+    <span class="o">//</span><span class="nb">filter</span> <span class="n">to</span> <span class="n">within</span> <span class="mi">10</span><span class="n">cm</span>
+    <span class="n">trigger</span><span class="o">.</span><span class="n">addFilter</span><span class="p">(</span> <span class="n">BCEventFilter</span><span class="o">.</span><span class="n">filterByAccuracyRangeFrom</span><span class="p">(</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.1</span> <span class="p">)</span> <span class="p">);</span>
+
+    <span class="o">//</span><span class="n">repeat</span> <span class="n">indefinitely</span><span class="p">,</span> <span class="ow">or</span> <span class="n">however</span> <span class="n">many</span> <span class="n">times</span> <span class="n">you</span> <span class="n">want</span>
+    <span class="n">trigger</span><span class="o">.</span><span class="n">setRepeatCount</span><span class="p">(</span> <span class="n">Integer</span><span class="o">.</span><span class="n">MAX_VALUE</span> <span class="p">);</span>
+
+    <span class="o">//</span><span class="n">add</span> <span class="n">your</span> <span class="n">trigger</span> <span class="n">to</span> <span class="n">the</span> <span class="n">event</span> <span class="n">manager</span>
+    <span class="n">BCEventManager</span><span class="o">.</span><span class="n">getInstance</span><span class="p">()</span><span class="o">.</span><span class="n">monitorEventWithTrigger</span><span class="p">(</span> <span class="n">trigger</span><span class="p">,</span> <span class="n">mEventManagerCallback</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">private</span> <span class="n">final</span> <span class="n">BCEventManagerCallback</span> <span class="n">mEventManagerCallback</span> <span class="o">=</span> <span class="n">new</span> <span class="n">BCEventManagerCallback</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nd">@Override</span>
+    <span class="n">public</span> <span class="n">void</span> <span class="n">onTriggeredEvent</span><span class="p">(</span> <span class="n">final</span> <span class="n">BCTriggeredEvent</span> <span class="n">bcTriggeredEvent</span> <span class="p">)</span>
+    <span class="p">{</span>
+        <span class="o">//</span><span class="n">do</span> <span class="n">something</span> <span class="k">with</span> <span class="n">the</span> <span class="n">filtered</span> <span class="n">micro</span><span class="o">-</span><span class="n">location</span> <span class="n">here</span> <span class="n">when</span> <span class="n">the</span> <span class="n">trigger</span> <span class="ow">is</span> <span class="n">fired</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c">
+<h2>Objective-C<a class="headerlink" href="#objective-c" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">createBasicTrigger</span>
+<span class="p">{</span>
+    <span class="o">//</span><span class="n">generates</span> <span class="n">a</span> <span class="n">trigger</span> <span class="k">with</span> <span class="n">a</span> <span class="n">random</span> <span class="n">identifier</span>
+    <span class="n">BCTrigger</span> <span class="o">*</span><span class="n">trigger</span> <span class="o">=</span> <span class="p">[[</span><span class="n">BCTrigger</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+
+    <span class="o">//</span><span class="n">add</span> <span class="n">your</span> <span class="n">filters</span>
+    <span class="o">//</span><span class="nb">filter</span> <span class="n">by</span> <span class="n">site</span>
+    <span class="p">[</span><span class="n">trigger</span> <span class="n">addFilter</span><span class="p">:[</span><span class="n">BCEventFilter</span> <span class="n">filterBySitesNamed</span><span class="p">:</span><span class="o">@</span><span class="p">[</span><span class="o">@</span><span class="s2">&quot;Cat Cafe&quot;</span><span class="p">]]];</span>
+    <span class="o">//</span><span class="nb">filter</span> <span class="n">to</span> <span class="n">within</span> <span class="mi">10</span><span class="n">cm</span>
+    <span class="p">[</span><span class="n">trigger</span> <span class="n">addFilter</span><span class="p">:[</span><span class="n">BCEventFilter</span> <span class="n">filterByAccuracyRangeFrom</span><span class="p">:</span><span class="mf">0.0</span> <span class="n">to</span><span class="p">:</span><span class="mf">0.1</span><span class="p">]];</span>
+
+    <span class="o">//</span><span class="n">repeat</span> <span class="n">indefinitely</span><span class="p">,</span> <span class="ow">or</span> <span class="n">however</span> <span class="n">many</span> <span class="n">times</span> <span class="n">you</span> <span class="n">want</span>
+    <span class="n">trigger</span><span class="o">.</span><span class="n">repeatCount</span> <span class="o">=</span> <span class="n">NSIntegerMax</span><span class="p">;</span>
+
+    <span class="o">//</span><span class="n">add</span> <span class="n">your</span> <span class="n">trigger</span> <span class="n">to</span> <span class="n">the</span> <span class="n">event</span> <span class="n">manager</span>
+    <span class="p">[[</span><span class="n">BCEventManager</span> <span class="n">sharedManager</span><span class="p">]</span> <span class="n">monitorEventWithTrigger</span><span class="p">:</span><span class="n">trigger</span><span class="p">];</span>
+<span class="p">}</span>
+
+<span class="o">-</span><span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">eventManager</span><span class="p">:(</span><span class="n">BCEventManager</span> <span class="o">*</span><span class="p">)</span><span class="n">eventManager</span> <span class="n">triggeredEvent</span><span class="p">:(</span><span class="n">BCTriggeredEvent</span> <span class="o">*</span><span class="p">)</span><span class="n">triggeredEvent</span>
+<span class="p">{</span>
+    <span class="o">//</span><span class="n">do</span> <span class="n">something</span> <span class="k">with</span> <span class="n">the</span> <span class="n">filtered</span> <span class="n">micro</span><span class="o">-</span><span class="n">location</span> <span class="n">here</span> <span class="n">when</span> <span class="n">the</span> <span class="n">trigger</span> <span class="ow">is</span> <span class="n">fired</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift">
+<h2>Swift<a class="headerlink" href="#swift" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func createBasicTrigger(){
+
+        //generates a trigger with a random identifier
+        let trigger: BCTrigger! = BCTrigger()
+
+        //add your filters
+        //filter by site
+        trigger.addFilter(BCEventFilter.filterBySitesNamed([&quot;Cat Cafe&quot;])))
+        //filter to within 10cm
+        trigger.addFilter(BCEventFilter.BCEventFilter.filterByAccuracyRangeFrom(0.0, to: 0.1))
+
+        //repeat indefinitely, or however many times you want
+        trigger.repeatCount = NSIntegerMax
+
+        //add your trigger to the event manager
+        BCEventManager.sharedManager().monitorEventWithTrigger(trigger)
+}
+
+func eventManager(eventManager: BCEventManager!, triggeredEvent: BCTriggeredEvent!) {
+        //do something with the filtered micro-location here when the trigger is fired
+}
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Trigger Creation and Usage</a><ul>
+<li><a class="reference internal" href="#java">Java</a></li>
+<li><a class="reference internal" href="#objective-c">Objective-C</a></li>
+<li><a class="reference internal" href="#swift">Swift</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/libraries/mobileSDK/usage/triggers.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../../_sources/libraries/mobileSDK/usage/triggers.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

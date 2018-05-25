@@ -1,0 +1,406 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Beacon Manager Set-up &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>The beacon manager is the central point for configuring the delivery of
+beacon ranging events to your app. Use this class if you wish to create
+reactions to individual beacons or beacons in particular modes.</p>
+<p>If you haven’t installed our SDK, head over to the installation pages
+for <a class="reference external" href="https://github.com/bluecats/bluecats-android-sdk">Android</a> or
+<a class="reference external" href="https://github.com/bluecats/bluecats-ios-sdk">iOS</a>.</p>
+<p><strong>Note: The beacon manager is only available in SDK versions &gt; 2.0.0.</strong></p>
+<p>Once purring, the BlueCats SDK begins scanning for all beacons the app
+has been granted access to. If you wish to scan for beacons outside of
+the BlueCats platform, create new BCBeaconRegions and use the
+<code class="docutils literal notranslate"><span class="pre">startMonitoringBeaconRegion</span></code> method.</p>
+<div class="section" id="beacon-manager-set-up">
+<h1>Beacon Manager Set-up<a class="headerlink" href="#beacon-manager-set-up" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="java">
+<h2>Java<a class="headerlink" href="#java" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">protected</span> <span class="n">void</span> <span class="n">onCreate</span><span class="p">(</span> <span class="n">final</span> <span class="n">Bundle</span> <span class="n">savedInstanceState</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+    <span class="o">//</span><span class="n">Pass</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">callback</span> <span class="n">to</span> <span class="n">the</span> <span class="n">SDK</span> <span class="n">to</span> <span class="n">call</span> <span class="k">for</span> <span class="n">the</span> <span class="n">relevant</span> <span class="n">events</span> <span class="ow">in</span> <span class="n">BCBeaconManagerCallback</span><span class="o">.</span>
+    <span class="o">//</span><span class="n">Each</span> <span class="n">beacon</span> <span class="n">manager</span> <span class="n">can</span> <span class="n">only</span> <span class="n">have</span> <span class="n">one</span> <span class="n">callback</span>
+    <span class="n">final</span> <span class="n">BCBeaconManager</span> <span class="n">beaconManager</span> <span class="o">=</span> <span class="n">new</span> <span class="n">BCBeaconManager</span><span class="p">();</span>
+    <span class="n">beaconManager</span><span class="o">.</span><span class="n">registerCallback</span><span class="p">(</span> <span class="n">mBeaconManagerCallback</span> <span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">private</span> <span class="n">final</span> <span class="n">BCBeaconManagerCallback</span> <span class="n">mBeaconManagerCallback</span> <span class="o">=</span> <span class="n">new</span> <span class="n">BCBeaconManagerCallback</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="o">...</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c">
+<h2>Objective-C<a class="headerlink" href="#objective-c" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#import &quot;BlueCatsSDK/BlueCatsSDK.h&quot; //import the main header or individual headers</span>
+
+<span class="nd">@interface</span> <span class="n">ViewController</span> <span class="p">()</span> <span class="o">&lt;</span><span class="n">BCBeaconManagerDelegate</span><span class="o">&gt;</span>
+<span class="nd">@property</span> <span class="p">(</span><span class="n">strong</span><span class="p">,</span> <span class="n">nonatomic</span><span class="p">)</span> <span class="n">BCBeaconManager</span> <span class="o">*</span><span class="n">beaconManager</span><span class="p">;</span>
+<span class="nd">@end</span>
+
+<span class="nd">@implementation</span> <span class="n">ViewController</span>
+
+<span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">viewDidLoad</span> <span class="p">{</span>
+    <span class="p">[</span><span class="nb">super</span> <span class="n">viewDidLoad</span><span class="p">];</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">beaconManager</span> <span class="o">=</span> <span class="p">[[</span><span class="n">BCBeaconManager</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">initWithDelegate</span><span class="p">:</span><span class="bp">self</span> <span class="n">queue</span><span class="p">:</span><span class="n">nil</span><span class="p">];</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift">
+<h2>Swift<a class="headerlink" href="#swift" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">BlueCatsSDK</span> <span class="o">//</span><span class="k">if</span> <span class="n">using</span> <span class="n">the</span> <span class="n">framework</span><span class="p">,</span> <span class="n">otherwise</span> <span class="n">this</span> <span class="ow">is</span> <span class="n">unneeded</span>
+
+<span class="k">class</span> <span class="nc">ViewController</span><span class="p">:</span> <span class="n">UIViewController</span><span class="p">,</span> <span class="n">BCBeaconManagerDelegate</span> <span class="p">{</span>
+
+    <span class="n">var</span> <span class="n">beaconManager</span> <span class="o">=</span> <span class="n">BCBeaconManager</span><span class="p">()</span>
+
+    <span class="n">override</span> <span class="n">func</span> <span class="n">viewDidLoad</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nb">super</span><span class="o">.</span><span class="n">viewDidLoad</span><span class="p">()</span>
+
+        <span class="n">beaconManager</span> <span class="o">=</span> <span class="n">BCBeaconManager</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">delegate</span><span class="p">:</span> <span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">:</span> <span class="n">nil</span><span class="p">)</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="get-notified-when-the-device-comes-into-the-range-of-beacons">
+<h1>Get notified when the device comes into the range of beacons<a class="headerlink" href="#get-notified-when-the-device-comes-into-the-range-of-beacons" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="java-1">
+<span id="id1"></span><h2>Java<a class="headerlink" href="#java-1" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">void</span> <span class="n">didEnterBeacons</span><span class="p">(</span> <span class="n">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">BCBeacon</span><span class="o">&gt;</span> <span class="n">beacons</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Log</span><span class="o">.</span><span class="n">d</span><span class="p">(</span> <span class="n">TAG</span><span class="p">,</span> <span class="s2">&quot;didEnterBeacons: &quot;</span> <span class="o">+</span> <span class="n">beacons</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c-1">
+<span id="id2"></span><h2>Objective-C<a class="headerlink" href="#objective-c-1" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">beaconManager</span><span class="p">:(</span><span class="n">BCBeaconManager</span> <span class="o">*</span><span class="p">)</span><span class="n">beaconManager</span> <span class="n">didEnterBeacons</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">BCBeacon</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="n">beacons</span> <span class="p">{</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="o">@</span><span class="s2">&quot;didEnterBeacons: </span><span class="si">%lu</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">unsigned</span> <span class="n">long</span><span class="p">)[</span><span class="n">beacons</span> <span class="n">count</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-1">
+<span id="id3"></span><h2>Swift<a class="headerlink" href="#swift-1" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func beaconManager(beaconManager: BCBeaconManager!, didEnterBeacons beacons: [BCBeacon]!) {
+    print(&quot;didEnterBeacons: \(beacons.count)&quot;)
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="get-notified-when-new-beacon-ranging-information-is-available">
+<h1>Get notified when new beacon ranging information is available<a class="headerlink" href="#get-notified-when-new-beacon-ranging-information-is-available" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="java-2">
+<span id="id4"></span><h2>Java<a class="headerlink" href="#java-2" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">void</span> <span class="n">didRangeBeacons</span><span class="p">(</span> <span class="n">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">BCBeacon</span><span class="o">&gt;</span> <span class="n">beacons</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Log</span><span class="o">.</span><span class="n">d</span><span class="p">(</span> <span class="n">TAG</span><span class="p">,</span> <span class="s2">&quot;didRangeBeacons: &quot;</span> <span class="o">+</span> <span class="n">beacons</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c-2">
+<span id="id5"></span><h2>Objective-C<a class="headerlink" href="#objective-c-2" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">beaconManager</span><span class="p">:(</span><span class="n">BCBeaconManager</span> <span class="o">*</span><span class="p">)</span><span class="n">beaconManager</span> <span class="n">didRangeBeacons</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">BCBeacon</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="n">beacons</span> <span class="p">{</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="o">@</span><span class="s2">&quot;didRangeBeacons: </span><span class="si">%lu</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">unsigned</span> <span class="n">long</span><span class="p">)[</span><span class="n">beacons</span> <span class="n">count</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-2">
+<span id="id6"></span><h2>Swift<a class="headerlink" href="#swift-2" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func beaconManager(beaconManager: BCBeaconManager!, didRangeBeacons beacons: [BCBeacon]!) {
+    print(&quot;didRangeBeacons: \(beacons.count)&quot;)
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="get-notified-when-the-device-exits-the-range-of-beacons">
+<h1>Get notified when the device exits the range of beacons<a class="headerlink" href="#get-notified-when-the-device-exits-the-range-of-beacons" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="java-3">
+<span id="id7"></span><h2>Java<a class="headerlink" href="#java-3" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">void</span> <span class="n">didExitBeacons</span><span class="p">(</span> <span class="n">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">BCBeacon</span><span class="o">&gt;</span> <span class="n">beacons</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Log</span><span class="o">.</span><span class="n">d</span><span class="p">(</span> <span class="n">TAG</span><span class="p">,</span> <span class="s2">&quot;didExitBeacons: &quot;</span> <span class="o">+</span> <span class="n">beacons</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c-3">
+<span id="id8"></span><h2>Objective-C<a class="headerlink" href="#objective-c-3" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">beaconManager</span><span class="p">:(</span><span class="n">BCBeaconManager</span> <span class="o">*</span><span class="p">)</span><span class="n">beaconManager</span> <span class="n">didExitBeacons</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">BCBeacon</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="n">beacons</span> <span class="p">{</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="o">@</span><span class="s2">&quot;didExitBeacons: </span><span class="si">%lu</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">unsigned</span> <span class="n">long</span><span class="p">)[</span><span class="n">beacons</span> <span class="n">count</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-3">
+<span id="id9"></span><h2>Swift<a class="headerlink" href="#swift-3" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func beaconManager(beaconManager: BCBeaconManager!, didExitBeacons beacons: [BCBeacon]!) {
+    print(&quot;didExitBeacons: \(beacons.count)&quot;)
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="get-notified-when-the-device-enters-a-site">
+<h1>Get notified when the device enters a site<a class="headerlink" href="#get-notified-when-the-device-enters-a-site" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="java-4">
+<span id="id10"></span><h2>Java<a class="headerlink" href="#java-4" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">void</span> <span class="n">didEnterSite</span><span class="p">(</span> <span class="n">final</span> <span class="n">BCSite</span> <span class="n">site</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Log</span><span class="o">.</span><span class="n">d</span><span class="p">(</span> <span class="n">TAG</span><span class="p">,</span> <span class="s2">&quot;didEnterSite: &quot;</span> <span class="o">+</span> <span class="n">site</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c-4">
+<span id="id11"></span><h2>Objective-C<a class="headerlink" href="#objective-c-4" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">beaconManager</span><span class="p">:(</span><span class="n">BCBeaconManager</span> <span class="o">*</span><span class="p">)</span><span class="n">beaconManager</span> <span class="n">didEnterSite</span><span class="p">:(</span><span class="n">BCSite</span> <span class="o">*</span><span class="p">)</span><span class="n">site</span> <span class="p">{</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="o">@</span><span class="s2">&quot;didExitBeacons: </span><span class="si">%lu</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">unsigned</span> <span class="n">long</span><span class="p">)[</span><span class="n">beacons</span> <span class="n">count</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-4">
+<span id="id12"></span><h2>Swift<a class="headerlink" href="#swift-4" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func beaconManager(beaconManager: BCBeaconManager!, didEnterSite site: [BCSite]!) {
+    print(&quot;didEnterSite: \(beacons.count)&quot;)
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="get-notified-when-the-device-exits-a-site">
+<h1>Get notified when the device exits a site<a class="headerlink" href="#get-notified-when-the-device-exits-a-site" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="java-5">
+<span id="id13"></span><h2>Java<a class="headerlink" href="#java-5" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">void</span> <span class="n">didExitSite</span><span class="p">(</span> <span class="n">final</span> <span class="n">BCSite</span> <span class="n">site</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Log</span><span class="o">.</span><span class="n">d</span><span class="p">(</span> <span class="n">TAG</span><span class="p">,</span> <span class="s2">&quot;didExitSite: &quot;</span> <span class="o">+</span> <span class="n">site</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c-5">
+<span id="id14"></span><h2>Objective-C<a class="headerlink" href="#objective-c-5" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">beaconManager</span><span class="p">:(</span><span class="n">BCBeaconManager</span> <span class="o">*</span><span class="p">)</span><span class="n">beaconManager</span> <span class="n">didExitSite</span><span class="p">:(</span><span class="n">BCSite</span> <span class="o">*</span><span class="p">)</span><span class="n">site</span> <span class="p">{</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="o">@</span><span class="s2">&quot;didExitSite: </span><span class="si">%lu</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">unsigned</span> <span class="n">long</span><span class="p">)[</span><span class="n">beacons</span> <span class="n">count</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-5">
+<span id="id15"></span><h2>Swift<a class="headerlink" href="#swift-5" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func beaconManager(beaconManager: BCBeaconManager!, didExitSite site: [BCSite]!) {
+    print(&quot;didExitSite: \(beacons.count)&quot;)
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="get-notified-when-the-sdk-ranges-an-eddystone-beacon">
+<h1>Get notified when the SDK ranges an Eddystone beacon<a class="headerlink" href="#get-notified-when-the-sdk-ranges-an-eddystone-beacon" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="java-6">
+<span id="id16"></span><h2>Java<a class="headerlink" href="#java-6" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">void</span> <span class="n">didRangeEddystoneBeacons</span><span class="p">(</span> <span class="n">final</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">BCBeacon</span><span class="o">&gt;</span> <span class="n">eddystoneBeacons</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Log</span><span class="o">.</span><span class="n">d</span><span class="p">(</span> <span class="n">TAG</span><span class="p">,</span> <span class="s2">&quot;didRangeEddystoneBeacons: &quot;</span> <span class="o">+</span> <span class="n">eddystoneBeacons</span><span class="o">.</span><span class="n">size</span><span class="p">()</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c-6">
+<span id="id17"></span><h2>Objective-C<a class="headerlink" href="#objective-c-6" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">beaconManager</span><span class="p">:(</span><span class="n">BCBeaconManager</span> <span class="o">*</span><span class="p">)</span><span class="n">beaconManager</span> <span class="n">didRangeEddystoneBeacons</span><span class="p">:(</span><span class="n">NSArray</span><span class="o">&lt;</span><span class="n">BCBeacon</span> <span class="o">*&gt;</span> <span class="o">*</span><span class="p">)</span><span class="n">beacons</span> <span class="p">{</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="o">@</span><span class="s2">&quot;didExitSite: </span><span class="si">%lu</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">unsigned</span> <span class="n">long</span><span class="p">)[</span><span class="n">beacons</span> <span class="n">count</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-6">
+<span id="id18"></span><h2>swift<a class="headerlink" href="#swift-6" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func beaconManager(beaconManager: BCBeaconManager!, didRangeEddystoneBeacons beacons: [BCBeacon]!) {
+  print(&quot;didRangeEddystoneBeacons: \(beacons.count)&quot;)
+}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="get-notified-when-the-sdk-discovers-an-eddystone-url">
+<h1>Get notified when the SDK discovers an Eddystone URL<a class="headerlink" href="#get-notified-when-the-sdk-discovers-an-eddystone-url" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="java-7">
+<span id="id19"></span><h2>Java<a class="headerlink" href="#java-7" title="Permalink to this headline">¶</a></h2>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">public</span> <span class="n">void</span> <span class="n">didDiscoverEddystoneURL</span><span class="p">(</span> <span class="n">final</span> <span class="n">URL</span> <span class="n">eddystoneUrl</span> <span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Log</span><span class="o">.</span><span class="n">d</span><span class="p">(</span> <span class="n">TAG</span><span class="p">,</span> <span class="s2">&quot;didDiscoverEddystoneURL: &quot;</span> <span class="o">+</span> <span class="n">eddystoneUrl</span> <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c-7">
+<span id="id20"></span><h2>Objective-C<a class="headerlink" href="#objective-c-7" title="Permalink to this headline">¶</a></h2>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="p">(</span><span class="n">void</span><span class="p">)</span><span class="n">beaconManager</span><span class="p">:(</span><span class="n">BCBeaconManager</span> <span class="o">*</span><span class="p">)</span><span class="n">beaconManager</span> <span class="n">didDiscoverEddystoneURL</span><span class="p">:(</span><span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="n">eddystoneURL</span> <span class="p">{</span>
+  <span class="n">NSLog</span><span class="p">(</span><span class="o">@</span><span class="s2">&quot;didDiscoverEddystoneURL: %@&quot;</span><span class="p">,</span> <span class="p">[</span><span class="n">eddystoneURL</span> <span class="n">absoluteString</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift-7">
+<span id="id21"></span><h2>Swift<a class="headerlink" href="#swift-7" title="Permalink to this headline">¶</a></h2>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>func beaconManager(beaconManager: BCBeaconManager!, didDiscoverEddystoneURL eddystoneURL: NSURL!) {
+  print(&quot;didDiscoverEddystoneURL: \(eddystoneURL.absoluteString)&quot;)
+}
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Beacon Manager Set-up</a><ul>
+<li><a class="reference internal" href="#java">Java</a></li>
+<li><a class="reference internal" href="#objective-c">Objective-C</a></li>
+<li><a class="reference internal" href="#swift">Swift</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-notified-when-the-device-comes-into-the-range-of-beacons">Get notified when the device comes into the range of beacons</a><ul>
+<li><a class="reference internal" href="#java-1">Java</a></li>
+<li><a class="reference internal" href="#objective-c-1">Objective-C</a></li>
+<li><a class="reference internal" href="#swift-1">Swift</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-notified-when-new-beacon-ranging-information-is-available">Get notified when new beacon ranging information is available</a><ul>
+<li><a class="reference internal" href="#java-2">Java</a></li>
+<li><a class="reference internal" href="#objective-c-2">Objective-C</a></li>
+<li><a class="reference internal" href="#swift-2">Swift</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-notified-when-the-device-exits-the-range-of-beacons">Get notified when the device exits the range of beacons</a><ul>
+<li><a class="reference internal" href="#java-3">Java</a></li>
+<li><a class="reference internal" href="#objective-c-3">Objective-C</a></li>
+<li><a class="reference internal" href="#swift-3">Swift</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-notified-when-the-device-enters-a-site">Get notified when the device enters a site</a><ul>
+<li><a class="reference internal" href="#java-4">Java</a></li>
+<li><a class="reference internal" href="#objective-c-4">Objective-C</a></li>
+<li><a class="reference internal" href="#swift-4">Swift</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-notified-when-the-device-exits-a-site">Get notified when the device exits a site</a><ul>
+<li><a class="reference internal" href="#java-5">Java</a></li>
+<li><a class="reference internal" href="#objective-c-5">Objective-C</a></li>
+<li><a class="reference internal" href="#swift-5">Swift</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-notified-when-the-sdk-ranges-an-eddystone-beacon">Get notified when the SDK ranges an Eddystone beacon</a><ul>
+<li><a class="reference internal" href="#java-6">Java</a></li>
+<li><a class="reference internal" href="#objective-c-6">Objective-C</a></li>
+<li><a class="reference internal" href="#swift-6">swift</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#get-notified-when-the-sdk-discovers-an-eddystone-url">Get notified when the SDK discovers an Eddystone URL</a><ul>
+<li><a class="reference internal" href="#java-7">Java</a></li>
+<li><a class="reference internal" href="#objective-c-7">Objective-C</a></li>
+<li><a class="reference internal" href="#swift-7">Swift</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/libraries/mobileSDK/usage/beacon-manager.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../../_sources/libraries/mobileSDK/usage/beacon-manager.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

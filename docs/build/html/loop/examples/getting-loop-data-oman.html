@@ -1,0 +1,587 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Getting Started - Getting Data into Loop &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p><em>Current as of Version 0.3.3:</em></p>
+<p>This article will talk about how to create some objects in the Loop API
+and to start receiving data. There will be times that you may want to
+create or edit a large number of objects.</p>
+<div class="section" id="getting-started-getting-data-into-loop">
+<h1>Getting Started - Getting Data into Loop<a class="headerlink" href="#getting-started-getting-data-into-loop" title="Permalink to this headline">¶</a></h1>
+<p>So let us say that you have 2 Beacons and 1 Edge that you want to put
+into Loop of an objectType. For our example we are going to make
+bcdEquipment. There are a few ways to go about this. Firstly, you want
+to make sure you have your Loop Login configuration file.</p>
+<p>To create that file you will type the below command. Filling in your
+email and password, where it says <code class="docutils literal notranslate"><span class="pre">&lt;email&gt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&lt;password&gt;</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">oman</span> <span class="n">login</span> <span class="o">--</span><span class="n">email</span><span class="o">=&lt;</span><span class="n">email</span><span class="o">&gt;</span> <span class="o">--</span><span class="n">password</span><span class="o">=&lt;</span><span class="n">password</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>If all is well, you should receive back the response:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Loop</span> <span class="n">API</span> <span class="n">Login</span> <span class="p">:</span>
+
+   <span class="n">created</span> <span class="n">file</span> <span class="n">auth</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>After you have created your Login config file, now we need to determine
+what objectTypes are available to us. So we are going to run the
+command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="s2">&quot;bcdEquipment&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bcdParcel&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bcdPerson&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bcdVehicle&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Device&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Place&quot;</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>We will need to create an objectType <code class="docutils literal notranslate"><span class="pre">Device</span></code> for the Edge, 2 Beacons
+as as the objectType <code class="docutils literal notranslate"><span class="pre">bcdEquipment</span></code>, and a <code class="docutils literal notranslate"><span class="pre">Place</span></code> for that object
+to enter and exit. So we are going to pull down the objectType templates
+for Device, bcdEquipment, and Place and then fill them out. We will run
+these three commands with OMAN:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">oman</span> <span class="n">templateType</span> <span class="n">create</span> <span class="o">--</span><span class="n">forSelectionType</span><span class="o">=</span><span class="n">Place</span> <span class="o">--</span><span class="n">fileName</span><span class="o">=</span><span class="n">Place</span><span class="o">.</span><span class="n">csv</span>
+
+<span class="n">oman</span> <span class="n">templateType</span> <span class="n">create</span> <span class="o">--</span><span class="n">forSelectionType</span><span class="o">=</span><span class="n">Device</span> <span class="o">--</span><span class="n">fileName</span><span class="o">=</span><span class="n">Device</span><span class="o">.</span><span class="n">csv</span>
+
+<span class="n">oman</span> <span class="n">templateType</span> <span class="n">create</span> <span class="o">--</span><span class="n">forSelectionType</span><span class="o">=</span><span class="n">bcdEquipment</span> <span class="o">--</span><span class="n">fileName</span><span class="o">=</span><span class="n">bcdEquipment</span><span class="o">.</span><span class="n">csv</span>
+</pre></div>
+</div>
+<p>Now we will open the file <code class="docutils literal notranslate"><span class="pre">bcdPerson.csv</span></code>. As you will see in the CSV,
+there are header for all of the keys. Below the keys, are what type of
+value type it is expecting and whether the value is required.</p>
+<p>This is shown in JSON format, because it is easier to present than CSV.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;batterySoC&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;batterySoCObservedAt&quot;</span><span class="p">:</span> <span class="s2">&quot;datetime&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;groupID&quot;</span><span class="p">:</span> <span class="s2">&quot;string editable  required &quot;</span><span class="p">,</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;lat&quot;</span><span class="p">:</span> <span class="s2">&quot;decimal&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;long&quot;</span><span class="p">:</span> <span class="s2">&quot;decimal&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mostRecentPlace&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mrPlaceChangedAt&quot;</span><span class="p">:</span> <span class="s2">&quot;datetime&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;objectType&quot;</span><span class="p">:</span> <span class="s2">&quot;bcdEquipment&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;place&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;placeChangedAt&quot;</span><span class="p">:</span> <span class="s2">&quot;datetime&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;positionObservedAt&quot;</span><span class="p">:</span> <span class="s2">&quot;datetime&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;serialNumber&quot;</span><span class="p">:</span> <span class="s2">&quot;string editable &quot;</span><span class="p">,</span>
+        <span class="s2">&quot;temp&quot;</span><span class="p">:</span> <span class="s2">&quot;int&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;tempObservedAt&quot;</span><span class="p">:</span> <span class="s2">&quot;datetime&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string editable  required &quot;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Each objectType is different, but most of the time the only thing
+required to get the object to report to Loop is to add:</p>
+<ul class="simple">
+<li>objectType: What type of object it is and what values should be
+filled out. This is important to determine what properties/values or
+properties it has.</li>
+<li>id: You do NOT need to fill in objectID. The objectID allows Loop to
+determine which object is which. The object ID can be automatically
+generated on creation.</li>
+<li>groupID: Who has ownership and can see this object and eventID (need
+object ID to create).</li>
+<li><a class="reference external" href="https://bluecats.github.io/documentation/loop/events#internal-event-types">eventID</a>:
+Object Links are what allow you to report events for a specific
+object to the Loop API. This can be bcId (bluecats identifier),
+Eddystone UID, iBeacon, bluetooth address, the Edge Mac, and more.</li>
+</ul>
+<p>Fill out all of the information, that you want. For our example, we will
+fill out groupID, Name, serialNumber, and leave objectType. In order to
+determine what groupID (what group has ownership) to use, we will need
+do a group query.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">oman</span> <span class="n">query</span> <span class="n">groups</span>
+</pre></div>
+</div>
+<p>This will return all of your groups and their groupIDs.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">Loop</span> <span class="n">groups</span> <span class="p">:</span>
+<span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;abbreviation&quot;</span><span class="p">:</span> <span class="s2">&quot;bcdatx&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3c68f2f14be643c28331a10cd91add35&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;BC ATX&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;parentID&quot;</span><span class="p">:</span> <span class="s2">&quot;a3cec63e2aa927c93567abd968677314&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;abbreviation&quot;</span><span class="p">:</span> <span class="s2">&quot;bcd&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;a3cec63e2aa927c93567abd968677314&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;BlueCats Labs&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;parentID&quot;</span><span class="p">:</span> <span class="s2">&quot;764166c0c49c4e113c62f0ca3cecd84e&quot;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Before we create our Device, we are going to create our bcdEquipment
+objectType.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;groupID&quot;</span><span class="p">:</span> <span class="s2">&quot;a3cec63e2aa927c93567abd968677314&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Loop Test Person&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;objectType&quot;</span><span class="p">:</span> <span class="s2">&quot;bcdPerson&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;serialNumber&quot;</span><span class="p">:</span> <span class="s2">&quot;50002CBA&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;eventID&quot;</span><span class="p">:</span> <span class="s2">&quot;eddystone&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-the-event-id">
+<h1>Getting the Event ID<a class="headerlink" href="#getting-the-event-id" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="eventid-for-bluecats-beacons-using-oman">
+<h2>EventID for BlueCats Beacons using Oman<a class="headerlink" href="#eventid-for-bluecats-beacons-using-oman" title="Permalink to this headline">¶</a></h2>
+<p>For eventID, you can put one of the following the fileheader: -
+<code class="docutils literal notranslate"><span class="pre">ibeacon</span></code> for the Proximity UID - <code class="docutils literal notranslate"><span class="pre">eddystone</span></code> for its Eddystone UID
+- <code class="docutils literal notranslate"><span class="pre">bluetooth</span></code> for its Bluetooth Address - <code class="docutils literal notranslate"><span class="pre">bcId</span></code> for its SN.</p>
+<p>For our case we are doing Eddystone UID, so we put eddystone at the
+eventID. We are going to pull down the Eddystone UID from BlueCats API.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">oman</span> <span class="n">createEventID</span> <span class="o">--</span><span class="n">fileName</span><span class="o">=</span><span class="n">bcdEquipment</span><span class="o">.</span><span class="n">csv</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="eventid-for-bluecats-beacons-with-bluecats-web-app">
+<h2>EventID for BlueCats Beacons with BlueCats Web App<a class="headerlink" href="#eventid-for-bluecats-beacons-with-bluecats-web-app" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Go to the <a class="reference external" href="https://app.bluecats.com/">BlueCats Web app</a></li>
+<li>Sign in</li>
+<li>Go to the Beacons Tab.</li>
+</ol>
+<p>We are going to look for eddyston UID identifier. These are the main
+types of eventIDs available
+<a class="reference external" href="https://bluecats.github.io/documentation/loop/events#event-identifiers">identifier</a>.
+It depends what mode your beacons are in:</p>
+<div class="section" id="ibeacon">
+<h3>iBeacon<a class="headerlink" href="#ibeacon" title="Permalink to this headline">¶</a></h3>
+<p>For sending iBeacon ads to Loop, look for its proximity UID. Remove all
+of the hyphens and colons. So from this
+5f2048a8-4e4d-11e8-9c2d-fa7ae01bbebc:4:25005 to this
+5f2048a84e4d11e89c2dfa7ae01bbebc425005.</p>
+<p>You would put this for eventID:
+<code class="docutils literal notranslate"><span class="pre">iBeac#5f2048a84e4d11e89c2dfa7ae01bbebc425005</span></code></p>
+</div>
+<div class="section" id="eddystone-uid">
+<h3>Eddystone UID<a class="headerlink" href="#eddystone-uid" title="Permalink to this headline">¶</a></h3>
+<p>For sending Eddystone ads to Loop, look for its namespace and instance.
+Remove all of the hyphens and colons. So from this
+AAFFAAFFAAFFAAFFAAFF00000001FC43.</p>
+<p>You would put this for your eventID:
+<code class="docutils literal notranslate"><span class="pre">eddyUID#AAFFAAFFAAFFAAFFAAFF00000001FC43</span></code></p>
+</div>
+<div class="section" id="bluetooth-address">
+<h3>Bluetooth Address<a class="headerlink" href="#bluetooth-address" title="Permalink to this headline">¶</a></h3>
+<p>For sending secure ads to Loop, look for its Bluetooth Address with it
+will look like: <code class="docutils literal notranslate"><span class="pre">A0E6F854F61B</span></code>. To use this identifier type, your
+Beacon should be in Secure mode. Note that the public mac and the BT
+Address is different when Privacy Duration is not set to 0.</p>
+<p>You would put this for your eventID: <code class="docutils literal notranslate"><span class="pre">btAddr#A0E6F854F61B</span></code></p>
+</div>
+<div class="section" id="bluecats-identifier">
+<h3>BlueCats Identifier<a class="headerlink" href="#bluecats-identifier" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>For sending the BlueCats identifier, look at the BlueCats Beacon’s
+Serial number. The serial number should be located on the side. To
+use this identifier type, your Beacon should be in Secure mode.</li>
+</ul>
+<p>You would put this for your eventID: <code class="docutils literal notranslate"><span class="pre">serNum#30000DF5</span></code></p>
+</div>
+</div>
+<div class="section" id="eventid-for-3rd-party-beacons">
+<h2>EventID for 3rd-Party Beacons<a class="headerlink" href="#eventid-for-3rd-party-beacons" title="Permalink to this headline">¶</a></h2>
+<p>For 3rd-Party Beacons, it is a little bit more involved. Each 3rd Party
+Beacon will be a little different, but these instructions will go over
+what you need to do to find out it’s information.</p>
+<p>We will need to set up our Edge Relay to determine which Beacons are
+associated with which identifiers</p>
+<ol class="arabic">
+<li><p class="first">Log into Edge Portal <a class="reference external" href="http://192.168.8.1">192.168.8.1</a></p>
+</li>
+<li><p class="first">Go to BlueCats &gt; Advanced</p>
+</li>
+<li><p class="first">Click ‘Scan Unknown Bluetooth Advertisements’. This will allow you to</p>
+<div class="figure" id="id1">
+<img alt="Scan Unknown BLE Ads" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/EdgeDocuments/scan-uknown-BT-devices.png" />
+<p class="caption"><span class="caption-text">Scan Unknown BLE Ads</span></p>
+</div>
+</li>
+<li><p class="first">Click <code class="docutils literal notranslate"><span class="pre">Save</span> <span class="pre">&amp;</span> <span class="pre">Apply</span></code></p>
+</li>
+<li><p class="first">Now, go to BlueCats &gt; Live View</p>
+</li>
+</ol>
+<div class="section" id="where-is-waldo-beacon-style">
+<h3>Where is Waldo? (Beacon style)<a class="headerlink" href="#where-is-waldo-beacon-style" title="Permalink to this headline">¶</a></h3>
+<p>Once you open Live View, if you have a ton of BLE devices near you. You
+will have to use the strongest RSSI values to determine which is
+closest. In most cases, when you do not know the identifiers. For
+3rd-Party beacons, there are three common use cases that the Beacons
+will be advertising: mac (Bluetooth MAC address), iBeac (iBeacon), UID
+(Eddystone UID), Unk (unknown).</p>
+<p>Remove other Beacons as far as reasonably possible. Now place the Beacon
+very close to the Edge Relay. In our example, we have a Milwaukee Tick.</p>
+<p align="center"></p><p>Take a look at the MAC address, RSSI, and the adTypes. So because we
+have multiple Beacons around us, you will see that one RSSI (Received
+Strength Signal Indicator) value is a very high number -45. Something to
+note is the more negative the less negative number the higher the RSSI
+value is. For example, -23 is higher than -123.</p>
+<p>From this we found this very high RSSI value and suspect that this is
+the Beacon in question.</p>
+<div class="figure" id="id2">
+<img alt="3rd Party Close Beacon RSSI" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/Loop/3rdParty-BLE-close-RSSI.png" />
+<p class="caption"><span class="caption-text">3rd Party Close Beacon RSSI</span></p>
+</div>
+<p>We are next going to move this Beacon further away similarly to the
+picture below.</p>
+<div class="figure" id="id3">
+<img alt="3rd Party Far Beacon" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/Loop/3rdParty-BLE-far-pic.jpg" />
+<p class="caption"><span class="caption-text">3rd Party Far Beacon</span></p>
+</div>
+<p>A lot of Third Party Beacons have slower ad rates, so it might take
+longer for them to update. Once it does, Then you can confirm that this
+Beacon was the one in question. As our picture below shows, the RSSI
+value increases.</p>
+<div class="figure" id="id4">
+<img alt="3rd Party Far Beacon RSSI" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/Loop/3rdParty-BLE-far-RSSI.png" />
+<p class="caption"><span class="caption-text">3rd Party Far Beacon RSSI</span></p>
+</div>
+<p>Congratulations! You found Waldo!</p>
+</div>
+<div class="section" id="plugging-waldo-into-loop">
+<h3>Plugging Waldo into Loop<a class="headerlink" href="#plugging-waldo-into-loop" title="Permalink to this headline">¶</a></h3>
+<p>Once you determine which Beacon yours is, you will need to determine,
+which Ad-type is available and the format them for your eventID. Each
+3rd-Party Beacon will be different, we cannot really recommend which
+advertisement will be best. We have found very slow rates for some of
+their advertisements (i.e.&nbsp;slow iBeacon rates), but faster in other
+cases. This is for manually adding in eventIDs for Loop.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="50%" />
+<col width="32%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Ad-Type</th>
+<th class="head">Formatted eventID</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>iBeacon</td>
+<td>iBeac#{iBeaconIDIdentifier}</td>
+<td><code class="docutils literal notranslate"><span class="pre">iBeac#5f2048a84e4d</span>
+<span class="pre">11e89c2dfa7ae01bbebc</span>
+<span class="pre">425005</span></code></td>
+</tr>
+<tr class="row-odd"><td>Eddystone
+UID</td>
+<td>eddyUID#{eddyUIDIdentifier}</td>
+<td><code class="docutils literal notranslate"><span class="pre">eddyUID#AAFFAAFFAA</span>
+<span class="pre">FFAAFFAAFF00000001FC</span>
+<span class="pre">43</span></code></td>
+</tr>
+<tr class="row-even"><td>Bluetooth
+Address</td>
+<td>btAddr#{eddyUIDIdentifier}</td>
+<td><code class="docutils literal notranslate"><span class="pre">btAddr#A0E6F854F61</span>
+<span class="pre">B</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="creating-the-object">
+<h3>Creating the Object<a class="headerlink" href="#creating-the-object" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">oman</span> <span class="n">create</span> <span class="n">objects</span> <span class="o">--</span><span class="n">objectLink</span><span class="o">=</span><span class="n">create</span> <span class="o">--</span><span class="n">fileName</span><span class="o">=</span><span class="n">bcdPerson</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>Now you should have your bcdPerson created in Loop. If it worked
+correctly, you should have received the response:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">Loop</span> <span class="n">post</span> <span class="p">:</span>
+<span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;f28769f32b94fdde64e438e4ca1d11dd&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;objectType&quot;</span><span class="p">:</span> <span class="s2">&quot;bcdPerson&quot;</span>
+<span class="p">}</span>
+
+ <span class="n">Loop</span> <span class="n">performed</span> <span class="p">[</span><span class="n">post</span><span class="p">]</span> <span class="n">on</span> <span class="n">objects</span> <span class="p">:</span>
+
+ <span class="n">created</span> <span class="n">file</span> <span class="n">bcdPerson2</span><span class="o">.</span><span class="n">json</span>
+
+ <span class="n">Loop</span> <span class="n">post</span><span class="p">(</span><span class="n">ed</span><span class="p">)</span> <span class="n">eventID</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="p">:</span>
+<span class="s2">&quot;success&quot;</span>
+</pre></div>
+</div>
+<p>For the <code class="docutils literal notranslate"><span class="pre">Places.csv</span></code>, fill out all of the information, that you want.
+For our example, we will fill out city, fullName, groupID, name, postal
+code, street, and leave objectType.</p>
+<p>In order to determine what groupID (what group has ownership) to use, we
+will need do a group query.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">oman</span> <span class="n">query</span> <span class="n">groups</span>
+</pre></div>
+</div>
+<p>This will return all of your groups.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">Loop</span> <span class="n">groups</span> <span class="p">:</span>
+<span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;abbreviation&quot;</span><span class="p">:</span> <span class="s2">&quot;bcdatx&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;3c68f2f14be643c28331a10cd91add35&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;BC ATX&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;parentID&quot;</span><span class="p">:</span> <span class="s2">&quot;a3cec63e2aa927c93567abd968677314&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;abbreviation&quot;</span><span class="p">:</span> <span class="s2">&quot;bcd&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;a3cec63e2aa927c93567abd968677314&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;BlueCats Labs&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;parentID&quot;</span><span class="p">:</span> <span class="s2">&quot;764166c0c49c4e113c62f0ca3cecd84e&quot;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Grab the groupID, in this case id: a3cec63e2aa927c93567abd968677314.
+Your groupID will be the groupID for your groups.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s2">&quot;city&quot;</span><span class="p">:</span> <span class="s2">&quot;Austin &quot;</span><span class="p">,</span>
+    <span class="s2">&quot;fullName&quot;</span><span class="p">:</span> <span class="s2">&quot;BlueCats Office Test&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;groupID&quot;</span><span class="p">:</span> <span class="s2">&quot;a3cec63e2aa927c93567abd968677314&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;BC Office&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;objectType&quot;</span><span class="p">:</span> <span class="s2">&quot;Place&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;placeType&quot;</span><span class="p">:</span> <span class="s2">&quot;Origin &quot;</span><span class="p">,</span>
+    <span class="s2">&quot;postalCode&quot;</span><span class="p">:</span> <span class="s2">&quot;78702 &quot;</span><span class="p">,</span>
+    <span class="s2">&quot;street&quot;</span><span class="p">:</span> <span class="s2">&quot;301 Chicon st, Suite A&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Now we are going to create the Place so we can get its objectID so that
+we can add it to our Device.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">oman</span> <span class="n">create</span> <span class="n">objects</span> <span class="o">--</span><span class="n">fileName</span><span class="o">=</span><span class="n">Place</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>The response will be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">Loop</span> <span class="n">post</span> <span class="p">:</span>
+<span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;bc7cc13c94aeb129819643e30e0cefe4&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;objectType&quot;</span><span class="p">:</span> <span class="s2">&quot;Place&quot;</span>
+<span class="p">}</span>
+
+ <span class="n">Loop</span> <span class="n">performed</span> <span class="p">[</span><span class="n">post</span><span class="p">]</span> <span class="n">on</span> <span class="n">objects</span> <span class="p">:</span>
+
+ <span class="n">created</span> <span class="n">file</span> <span class="n">Place</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>Now we have our objectID both in our file Place.json and in our
+terminal. We can fill out our Edge information with the deviceType,
+eventType, groupID, the objectID from our place, objectType, name, and
+eventID as edge in the <code class="docutils literal notranslate"><span class="pre">Device.json</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;deviceType&quot;</span><span class="p">:</span> <span class="s2">&quot;WiFi Edge&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;eventID&quot;</span><span class="p">:</span> <span class="s2">&quot;edge&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;groupID&quot;</span><span class="p">:</span> <span class="s2">&quot;a3cec63e2aa927c93567abd968677314&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;mac&quot;</span><span class="p">:</span> <span class="s2">&quot;E4956E4CC077&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Loop Edge Test&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;objectType&quot;</span><span class="p">:</span> <span class="s2">&quot;Device&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;place&quot;</span><span class="p">:</span> <span class="s2">&quot;bc7cc13c94aeb129819643e30e0cefe4&quot;</span>
+    <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>Adding the eventID for the Edge, you will run the OMAN command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">oman</span> <span class="n">createEventID</span> <span class="o">--</span><span class="n">fileName</span><span class="o">=</span><span class="n">Device</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>After populating, the eventID now we can create our Device using this
+command.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">oman</span> <span class="n">create</span> <span class="n">objects</span> <span class="o">--</span><span class="n">objectLink</span><span class="o">=</span><span class="n">create</span> <span class="o">--</span><span class="n">fileName</span><span class="o">=</span><span class="n">Device</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="sending-data-to-loop-with-the-edge">
+<h1>Sending Data to Loop with the Edge<a class="headerlink" href="#sending-data-to-loop-with-the-edge" title="Permalink to this headline">¶</a></h1>
+<p>Lastly, we will need to set up our Edge Relay to send its data to Loop.</p>
+<ol class="arabic simple">
+<li>Log into Edge Portal <a class="reference external" href="http://192.168.8.1">192.168.8.1</a></li>
+</ol>
+<div class="figure" id="id5">
+<img alt="Log in" src="https://s3.amazonaws.com/bluecats-downloads/documentation/bluecats-edge-features/Login.png" />
+<p class="caption"><span class="caption-text">Log in to Edge Web Configuration</span></p>
+</div>
+<ul class="simple">
+<li>Check to make sure that your Edge’s firmware version is up to date.<ol class="arabic" start="8">
+<li>Here is a link to show you how to check your <a class="reference external" href="https://bluecats.github.io/documentation/edge/edge-0.2.X-0.4.X/getting-started-connect#edge-web-interface--checking-your-firmware-version">firmware
+version</a>.</li>
+<li>It should have a firmware version range from (0.2.X-0.4.X).</li>
+<li>If your Edge’s firmware is out of date, you should update it
+following one of the two procedures
+<a class="reference external" href="https://bluecats.github.io/documentation/edge/edge-0.2.X-0.4.X/edge-update-firmware">here</a>.</li>
+</ol>
+</li>
+<li>You should also make sure that you are connected to the internet.<ol class="arabic" start="12">
+<li>Here is how to a tutorial on <a class="reference external" href="https://bluecats.github.io/documentation/edge/edge-0.2.X-0.4.X/getting-started-connect#connecting-to-internet-via-wifi">Connecting your Edge to
+WiFi</a></li>
+</ol>
+</li>
+</ul>
+<ol class="arabic simple" start="6">
+<li>Now that we checked ourFor the Edge MAC, set the zone to the
+corresponding Edge Mac that you are forwarding it to</li>
+</ol>
+<div class="figure" id="id6">
+<img alt="Shared Scan Heartbeats" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/EdgeDocuments/loop-shared-scan.png" />
+<p class="caption"><span class="caption-text">Shared Scan Heartbeats</span></p>
+</div>
+<ol class="arabic simple" start="7">
+<li>Go to BlueCats &gt; Forwarding</li>
+<li>Add a new endpoint</li>
+<li>Name it “shared hb” or “shared Heartbeat”</li>
+<li>Check Enabled</li>
+<li>Event type should be Heartbeat Events</li>
+<li>Protocol should be HTTP</li>
+<li>Ad type to identify beacon in JSON:<ol class="arabic" start="19">
+<li>Can be <code class="docutils literal notranslate"><span class="pre">Secure,</span> <span class="pre">Eddy</span> <span class="pre">UID,</span> <span class="pre">iBeacon</span> <span class="pre">or</span> <span class="pre">bcId</span></code></li>
+<li>In this case, pick Eddy UID</li>
+</ol>
+</li>
+<li>For Host IP address put: shared.api.loop.bluecats.com/events</li>
+<li>For the port, pick 443</li>
+<li>For Interval length, type: 900 seconds.</li>
+<li>Click “Save and Apply”</li>
+<li>Add a new endpoint</li>
+<li>Name it “Shared Scan” or “Shared Scan BLE”</li>
+</ol>
+<div class="figure" id="id7">
+<img alt="Shared Scan Heartbeats" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/EdgeDocuments/loop-shared-hb.png" />
+<p class="caption"><span class="caption-text">Shared Scan Heartbeats</span></p>
+</div>
+<ol class="arabic simple" start="15">
+<li>Check Enabled</li>
+<li>Event type should be BLE Scan Events</li>
+<li>Protocol should be HTTP</li>
+<li>Ad type to identify beacon in JSON:<ol class="arabic" start="19">
+<li>Can be <code class="docutils literal notranslate"><span class="pre">Secure,</span> <span class="pre">Eddy</span> <span class="pre">UID,</span> <span class="pre">iBeacon</span> <span class="pre">or</span> <span class="pre">bcId</span></code></li>
+<li>In this case, pick Eddy UID</li>
+</ol>
+</li>
+<li>For Host IP address put: shared.api.loop.bluecats.com/events</li>
+<li>For the port, pick 443</li>
+<li>Number Per Interval: Put at least 1000</li>
+<li>For Interval length, type: 300 seconds.</li>
+<li>Click “Save and Apply”</li>
+</ol>
+<p>You should now be able to send information to Loop!</p>
+<p>After the designated interval time, check Loop under Objects. Click View
+on your object.</p>
+<div class="figure" id="id8">
+<img alt="Create Things" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/Loop/object-check.png" />
+<p class="caption"><span class="caption-text">Create Things</span></p>
+</div>
+<p>After you bring up your object, you should now be able to see some
+events in Loop!</p>
+<div class="figure" id="id9">
+<img alt="Create Things" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/Loop/object-events.png" />
+<p class="caption"><span class="caption-text">Create Things</span></p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting Started - Getting Data into Loop</a></li>
+<li><a class="reference internal" href="#getting-the-event-id">Getting the Event ID</a><ul>
+<li><a class="reference internal" href="#eventid-for-bluecats-beacons-using-oman">EventID for BlueCats Beacons using Oman</a></li>
+<li><a class="reference internal" href="#eventid-for-bluecats-beacons-with-bluecats-web-app">EventID for BlueCats Beacons with BlueCats Web App</a><ul>
+<li><a class="reference internal" href="#ibeacon">iBeacon</a></li>
+<li><a class="reference internal" href="#eddystone-uid">Eddystone UID</a></li>
+<li><a class="reference internal" href="#bluetooth-address">Bluetooth Address</a></li>
+<li><a class="reference internal" href="#bluecats-identifier">BlueCats Identifier</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#eventid-for-3rd-party-beacons">EventID for 3rd-Party Beacons</a><ul>
+<li><a class="reference internal" href="#where-is-waldo-beacon-style">Where is Waldo? (Beacon style)</a></li>
+<li><a class="reference internal" href="#plugging-waldo-into-loop">Plugging Waldo into Loop</a></li>
+<li><a class="reference internal" href="#creating-the-object">Creating the Object</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#sending-data-to-loop-with-the-edge">Sending Data to Loop with the Edge</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/loop/examples/getting-loop-data-oman.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../_sources/loop/examples/getting-loop-data-oman.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

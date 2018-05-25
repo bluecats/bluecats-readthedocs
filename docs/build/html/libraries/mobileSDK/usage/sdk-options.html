@@ -1,0 +1,321 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Java &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>The BlueCatsSDKs have global options to customise their behaviour to
+best suit your deployment. <strong>Be mindful when selecting your options.</strong>
+In most cases, the default SDK options are preferred.</p>
+<p>For example, to prevent the Bluetooth power warning message in iOS, not
+pre-cache beacons based on device location, and reduce the local cache
+refresh interval to ten minutes you would set the following options.</p>
+<div class="section" id="java">
+<h1>Java<a class="headerlink" href="#java" title="Permalink to this headline">¶</a></h1>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">final</span> <span class="n">Map</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">options</span> <span class="o">=</span> <span class="n">new</span> <span class="n">HashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+<span class="n">options</span><span class="o">.</span><span class="n">put</span><span class="p">(</span> <span class="n">BlueCatsSDK</span><span class="o">.</span><span class="n">BC_OPTION_DISCOVER_BEACONS_NEARBY</span><span class="p">,</span> <span class="s2">&quot;false&quot;</span> <span class="p">);</span>
+<span class="n">options</span><span class="o">.</span><span class="n">put</span><span class="p">(</span> <span class="n">BlueCatsSDK</span><span class="o">.</span><span class="n">BC_OPTION_CACHE_REFRESH_TIME_INTERVAL_IN_MILLISECONDS</span><span class="p">,</span> <span class="s2">&quot;600000&quot;</span> <span class="p">);</span> <span class="o">//</span><span class="mi">10</span> <span class="n">minutes</span>
+
+<span class="n">BlueCatsSDK</span><span class="o">.</span><span class="n">setOptions</span><span class="p">(</span> <span class="n">options</span> <span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="objective-c">
+<h1>Objective-C<a class="headerlink" href="#objective-c" title="Permalink to this headline">¶</a></h1>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">BlueCatsSDK</span> <span class="n">setOptions</span><span class="p">:</span><span class="o">@</span><span class="p">{</span>
+        <span class="n">BCOptionShowBluetoothPowerWarningMessage</span><span class="p">:</span><span class="o">@</span><span class="s2">&quot;NO&quot;</span><span class="p">,</span>
+                   <span class="n">BCOptionDiscoverBeaconsNearby</span><span class="p">:</span><span class="o">@</span><span class="s2">&quot;NO&quot;</span><span class="p">,</span>
+       <span class="n">BCOptionCacheRefreshTimeIntervalInSeconds</span><span class="p">:</span><span class="o">@</span><span class="s2">&quot;600&quot;</span><span class="p">}];</span> <span class="o">//</span><span class="mi">10</span><span class="n">minutes</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift">
+<h1>Swift<a class="headerlink" href="#swift" title="Permalink to this headline">¶</a></h1>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BlueCatsSDK</span><span class="o">.</span><span class="n">setOptions</span><span class="p">([</span>
+    <span class="n">BCOptionShowBluetoothPowerWarningMessage</span><span class="p">:</span> <span class="s2">&quot;NO&quot;</span><span class="p">,</span>
+    <span class="n">BCOptionDiscoverBeaconsNearby</span><span class="p">:</span> <span class="s2">&quot;NO&quot;</span><span class="p">,</span>
+    <span class="n">BCOptionCacheRefreshTimeIntervalInSeconds</span><span class="p">:</span> <span class="s2">&quot;600&quot;</span><span class="p">])</span> <span class="o">//</span><span class="mi">10</span> <span class="n">minutes</span>
+</pre></div>
+</div>
+<div class="section" id="both-sdks">
+<h2>Both SDKs<a class="headerlink" href="#both-sdks" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><strong>BCOptionApiBaseURL</strong> / <strong>BC_OPTION_API_BASE_URL</strong></div>
+<div class="line">Default: Unused - Uses the standard BlueCats API URL.</div>
+<div class="line">Type: String</div>
+</div>
+<p>If using a custom URL route, input this here.</p>
+<div class="line-block">
+<div class="line"><strong>BCOptionCacheAllBeaconsForApp</strong> /
+<strong>BC_OPTION_CACHE_ALL_BEACONS_FOR_APP</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">NO</span></code> / <code class="docutils literal notranslate"><span class="pre">false</span></code></div>
+<div class="line">Type: Boolean</div>
+</div>
+<p>When enabled, the SDK will cache all the beacons and sites belonging to
+the app’s team. This is useful when you have a small number of beacons
+(e.g.&nbsp;less than a few hundred) that you want always available to the
+app, even when the device is offline or loses network connectivity.</p>
+<div class="line-block">
+<div class="line"><strong>BCOptionCacheRefreshTimeIntervalInSeconds</strong> /
+<strong>BC_OPTION_CACHE_REFRESH_TIME_INTERVAL_IN_MILLISECONDS</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">600</span></code> / <code class="docutils literal notranslate"><span class="pre">600,000</span></code> - 10 minutes</div>
+<div class="line">Minimum value: <code class="docutils literal notranslate"><span class="pre">30</span></code> / <code class="docutils literal notranslate"><span class="pre">30,000</span></code> - 30 seconds</div>
+<div class="line">Type: Integer / Long</div>
+</div>
+<p>Sets the interval in which beacons and sites are refreshed while the app
+is running. Updated beacons and sites are also requested when the app is
+launched to the foreground or when a device enters a site.</p>
+<p>See <a class="reference external" href="https://developer.bluecats.com/guides/optimising-your-caching-strategy-896007fc-4811-4584-8659-36e2f7143674">Optimising your Caching
+Strategy</a>
+for more information on choosing a caching option.</p>
+<div class="line-block">
+<div class="line"><strong>BCOptionCacheSitesNearbyByLocation</strong> /
+<strong>BC_OPTION_CACHE_SITES_NEARBY_BY_LOCATION</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">NO</span></code> / <code class="docutils literal notranslate"><span class="pre">false</span></code></div>
+<div class="line">Type: Boolean</div>
+</div>
+<p>This option controls caching of beacons in nearby sites based on
+significant location change. With this feature disabled, metadata for
+beacons in a site is cached when the first detected beacon is detected
+by the phone. Disabling this feature reduces the frequency that the app
+will be woken up for significant location changes and subsequent network
+requests when not in range of beacons.</p>
+<div class="line-block">
+<div class="line"><strong>BCOptionCrowdSourceBeaconUpdates</strong> /
+<strong>BC_OPTION_CROWD_SOURCE_BEACON_UPDATES</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">YES</span></code> / <code class="docutils literal notranslate"><span class="pre">true</span></code></div>
+<div class="line">Type: Boolean</div>
+</div>
+<p>Allows user devices to update beacon settings autonomously when in range
+of a beacon. This is useful if beacons need to be updated but is
+impractical for a single person to do manually.</p>
+<div class="line-block">
+<div class="line"><strong>BCOptionDiscoverBeaconsNearby</strong> /
+<strong>BC_OPTION_DISCOVER_BEACONS_NEARBY</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">YES</span></code> / <code class="docutils literal notranslate"><span class="pre">true</span></code></div>
+<div class="line">Type: Boolean</div>
+</div>
+<p>Beacons are loaded and cached on demand in batches relevant to a
+device’s distance from a site. This is useful when there are a large
+number of beacons spread over a large geographical region where only a
+subset of beacons are relevant to a particular users’ location.</p>
+<div class="line-block">
+<div class="line"><strong>BCOptionUseEnergySaverScanStrategy</strong> /
+<strong>BC_OPTION_ENERGY_SAVER_SCAN_STRATEGY</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">YES</span></code> / <code class="docutils literal notranslate"><span class="pre">true</span></code> Type: Boolean</div>
+</div>
+<p>A setting to help save battery life. When disabled the SDK will more
+aggressively scan for beacons.</p>
+<div class="line-block">
+<div class="line"><strong>BCOptionMonitorAllAvailableRegionsOnStartup</strong> /
+<strong>BC_OPTION_MONITOR_ALL_AVAILABLE_REGIONS_ON_STARTUP</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">YES</span></code> / <code class="docutils literal notranslate"><span class="pre">true</span></code></div>
+<div class="line">Type: Boolean</div>
+</div>
+<p>This option directs the SDK to begin ranging all regions available to
+the app on startup.</p>
+<div class="line-block">
+<div class="line"><strong>BCOptionMonitorBlueCatsRegionOnStartup</strong> /
+<strong>BC_OPTION_MONITOR_BLUE_CATS_REGION_ON_STARTUP</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">YES</span></code> / <code class="docutils literal notranslate"><span class="pre">true</span></code></div>
+<div class="line">Type: Boolean</div>
+</div>
+<p>This option enables ranging of beacons in the default BlueCats region
+(Proximity UUID: 61687109-905F-4436-91F8-E602F514C96D) on startup.</p>
+<div class="line-block">
+<div class="line"><strong>BCOptionTrackBeaconVisits</strong> /
+<strong>BC_OPTION_BEACON_VISIT_TRACKING_ENABLED</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">YES</span></code> / <code class="docutils literal notranslate"><span class="pre">true</span></code></div>
+<div class="line">Type: Boolean</div>
+</div>
+<p>Enables the tracking of beacon visits. If you do not want beacon visits
+collected set this to <code class="docutils literal notranslate"><span class="pre">NO</span></code> / <code class="docutils literal notranslate"><span class="pre">false</span></code>.</p>
+<div class="line-block">
+<div class="line"><strong>BCOptionUseLocalStorage</strong> / <strong>BC_OPTION_USE_LOCAL_STORAGE</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">YES</span></code> / <code class="docutils literal notranslate"><span class="pre">true</span></code></div>
+<div class="line">Type: Boolean</div>
+</div>
+<p>Enables ranging of previously cached beacons from the local SQLite
+database when network connectivity is not available.</p>
+<div class="line-block">
+<div class="line"><strong>BCOptionUseApi</strong> / <strong>BC_OPTION_USE_API</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">YES</span></code> / <code class="docutils literal notranslate"><span class="pre">true</span></code></div>
+<div class="line">Type: Boolean</div>
+</div>
+<p>Allows for the use of SDK interaction without interaction with the
+BlueCats API.</p>
+</div>
+<div class="section" id="android-specific">
+<h2>Android Specific<a class="headerlink" href="#android-specific" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><strong>BC_OPTION_DEEP_SLEEP_WAKEUP_TIME_INTERVAL_IN_MINUTES</strong></div>
+<div class="line">Minimum: <code class="docutils literal notranslate"><span class="pre">1</span></code> minute</div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">5</span></code> minutes</div>
+<div class="line">Type: Integer</div>
+</div>
+<p>Keeps the SDK running in the background by waking it up every <code class="docutils literal notranslate"><span class="pre">x</span></code>
+minutes to scan.</p>
+<div class="line-block">
+<div class="line"><strong>BC_OPTION_USE_RSSI_SMOOTHING</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">true</span></code></div>
+<div class="line">Type: Boolean</div>
+</div>
+<p>This uses smoothing of the RSSI value to produce a more stable RSSI
+signal strength, removing much of the jitter typically returned by the
+Bluetooth scanner. As a result there is approximately a 3 second delay
+in updating a beacons distance. You can set this to false and use
+<code class="docutils literal notranslate"><span class="pre">BCEventFilter.filterApplySmoothedRSSIOverTimeInterval(</span> <span class="pre">ms</span> <span class="pre">)</span></code> to apply
+a custom value to the smoothing if desired.</p>
+<div class="line-block">
+<div class="line"><strong>BC_OPTION_USE_STAGE_API</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">false</span></code></div>
+<div class="line">Type: Boolean</div>
+</div>
+<p>Use the BlueCats staging API rather than the regular API.</p>
+<div class="line-block">
+<div class="line"><strong>BC_OPTION_REMOTE_CONFIGURATION_EXPIRATION_TIME_INTERVAL_IN_MILLISECONDS</strong></div>
+<div class="line">Minimum: <code class="docutils literal notranslate"><span class="pre">1</span></code> Default: <code class="docutils literal notranslate"><span class="pre">259200000</span></code> (3 days) Type: Long</div>
+</div>
+<p>Use this option to set the expiration time for the remote configuration.</p>
+<div class="line-block">
+<div class="line"><strong>BC_OPTION_REMOTE_CONFIGURATION_REFRESH_TIME_INTERVAL_IN_MILLISECONDS</strong></div>
+<div class="line">Minimum: <code class="docutils literal notranslate"><span class="pre">1</span></code> Default: <code class="docutils literal notranslate"><span class="pre">600000</span></code> (10 minutes) Type: Long</div>
+</div>
+<p>Use this option to set the refresh time for the remote configuration.</p>
+</div>
+<div class="section" id="ios-specific">
+<h2>iOS Specific<a class="headerlink" href="#ios-specific" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line"><strong>BCOptionAutoTrackStandardEvents</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">YES</span></code></div>
+<div class="line">Type: Boolean</div>
+</div>
+<div class="line-block">
+<div class="line">This option directs the SDK to log the following events when they
+occur: * startPurring</div>
+<div class="line">* stopPurring</div>
+<div class="line">* applicationWillResignActive</div>
+<div class="line">* applicationDidEnterBackground</div>
+<div class="line">* applicationWillEnterForeground</div>
+</div>
+<div class="line-block">
+<div class="line"><strong>BCOptionBackgroundSessionTimeIntervalInSeconds</strong></div>
+<div class="line">Default: None - continuous ranging</div>
+<div class="line">Type: Integer</div>
+</div>
+<p>Sets the maximum length of a continuous background session. This is used
+to limit the amount of time the SDK is ranging beacons while the app is
+in the background to preserve battery life.</p>
+<div class="line-block">
+<div class="line"><strong>BCOptionMaximumDailyBackgroundUsageInMinutes</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">1,440</span></code> (one day) Type: Integer</div>
+</div>
+<p>If set, the SDK will limit the daily background usage to this value. Use
+this setting to help conserve battery usage for users who may be in
+range of your beacons for significant periods of time.</p>
+<div class="line-block">
+<div class="line"><strong>BCOptionScanInBackground</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">YES</span></code></div>
+<div class="line">Type: Boolean</div>
+</div>
+<p>This option enables the SDK to scan for beacons in the background.
+Leaving this option as <code class="docutils literal notranslate"><span class="pre">YES</span></code> is especially important if you want to
+trigger actions when an app is closed or in the background.</p>
+<div class="line-block">
+<div class="line"><strong>BCOptionShowBluetoothPowerWarningMessage</strong></div>
+<div class="line">Default: <code class="docutils literal notranslate"><span class="pre">YES</span></code></div>
+<div class="line">Type: Boolean</div>
+</div>
+<p>iOS only. This will prompt the user to turn on their Bluetooth.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Java</a></li>
+<li><a class="reference internal" href="#objective-c">Objective-C</a></li>
+<li><a class="reference internal" href="#swift">Swift</a><ul>
+<li><a class="reference internal" href="#both-sdks">Both SDKs</a></li>
+<li><a class="reference internal" href="#android-specific">Android Specific</a></li>
+<li><a class="reference internal" href="#ios-specific">iOS Specific</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/libraries/mobileSDK/usage/sdk-options.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../../_sources/libraries/mobileSDK/usage/sdk-options.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,225 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Ready to startPurring? &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ready-to-startpurring">
+<h1>Ready to <code class="docutils literal notranslate"><span class="pre">startPurring</span></code>?<a class="headerlink" href="#ready-to-startpurring" title="Permalink to this headline">¶</a></h1>
+<p>To begin ranging your beacons, call the startPurring or
+startPurringWithAppToken methods of the BlueCatsSDK. App tokens can be
+obtained from the apps section of the <a class="reference external" href="https://app.bluecats.com/apps">BlueCats web
+app</a>. The login used for
+app.bluecats.com is not the same login used to access our developer
+portal. If you did not receive a login with your beacons contact
+<a class="reference external" href="mailto:support&#37;&#52;&#48;bluecats&#46;com">support<span>&#64;</span>bluecats<span>&#46;</span>com</a>.</p>
+<div class="section" id="android">
+<h2>Android<a class="headerlink" href="#android" title="Permalink to this headline">¶</a></h2>
+<p>Fire up the BlueCats SDK in your main activity’s onCreate() method:</p>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BlueCatsSDK</span><span class="o">.</span><span class="n">startPurringWithAppToken</span><span class="p">(</span> <span class="n">getApplicationContent</span><span class="p">(),</span> <span class="s2">&quot;YOUR_APP_TOKEN&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p>Verification status can be checked using the following code snippets:</p>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span>final BlueCatsSDK.BCAppTokenVerificationStatus appTokenVerificationStatus = BlueCatsSDK.getAppTokenVerificationStatus();
+if( appTokenVerificationStatus == BlueCatsSDK.BCAppTokenVerificationStatus.BC_APP_TOKEN_VERIFICATION_STATUS_NOT_PROVIDED )
+{
+    //The app token hasn&#39;t been provided; do something.
+}
+
+if( !BlueCatsSDK.isLocationAuthorized() )
+{
+    //No GPS available; enable GPS.
+}
+
+if( !BlueCatsSDK.isNetworkReachable() )
+{
+    //No network reachable; enable network connection.
+}
+
+if( !BlueCatsSDK.isBluetoothEnabled() )
+{
+    //Bluetooth is turned off; enable it.
+}
+</pre></div>
+</div>
+<p>To ensure that the SDK knows about your app state,
+<code class="docutils literal notranslate"><span class="pre">didEnterBackground()</span></code> and <code class="docutils literal notranslate"><span class="pre">didEnterForeground()</span></code> should be called
+when the app pauses and resumes, like below:</p>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@Override</span>
+<span class="n">protected</span> <span class="n">void</span> <span class="n">onPause</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nb">super</span><span class="o">.</span><span class="n">onPause</span><span class="p">();</span>
+
+    <span class="n">BlueCatsSDK</span><span class="o">.</span><span class="n">didEnterBackground</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="nd">@Override</span>
+<span class="n">protected</span> <span class="n">void</span> <span class="n">onResume</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nb">super</span><span class="o">.</span><span class="n">onResume</span><span class="p">();</span>
+
+    <span class="n">BlueCatsSDK</span><span class="o">.</span><span class="n">didEnterForeground</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You can also enable the SDK Service to run from boot by adding the
+following to your AndroidManifest.xml:</p>
+<div class="code xml highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="p">:</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;android.permission.RECEIVE_BOOT_COMPLETED&quot;</span> <span class="o">/&gt;</span>
+
+<span class="o">&lt;</span><span class="n">application</span> <span class="o">...&gt;</span>
+    <span class="o">...</span>
+
+    <span class="o">&lt;</span><span class="n">receiver</span> <span class="n">android</span><span class="p">:</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;com.bluecats.sdk.BlueCatsSDKServiceReceiver&quot;</span> <span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">intent</span><span class="o">-</span><span class="nb">filter</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">action</span> <span class="n">android</span><span class="p">:</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;android.intent.action.BOOT_COMPLETED&quot;</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;/</span><span class="n">intent</span><span class="o">-</span><span class="nb">filter</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">receiver</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">application</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ios">
+<h2>iOS<a class="headerlink" href="#ios" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="objective-c">
+<h3>Objective-C<a class="headerlink" href="#objective-c" title="Permalink to this headline">¶</a></h3>
+<div class="code objectivec highlight-default notranslate"><div class="highlight"><pre><span></span>[BlueCatsSDK startPurringWithAppToken:@&quot;&lt;#BLueCaTs-Apps-toKN-fRom-webDashBoarD#&gt;&quot; completion:^(BCStatus status) {
+    if (status == kBCStatusPurringWithErrors) {
+        BCAppTokenVerificationStatus appTokenVerificationStatus = [BlueCatsSDK appTokenVerificationStatus];
+        if (appTokenVerificationStatus == kBCAppTokenVerificationStatusNotProvided || appTokenVerificationStatus == kBCAppTokenVerificationStatusInvalid) {
+            //kBCAppTokenVerificationStatusNotProvided - Use setAppToken to set the app token. Get an app token from app.bluecats.com
+            //kBCAppTokenVerificationStatusInvalid - App token invalid.
+        }
+        if (![BlueCatsSDK isLocationAuthorized]) {
+            [BlueCatsSDK requestAlwaysLocationAuthorization]; //Requests location use from the user even when the app is not in use.
+            //[BlueCatsSDK requestWhenInUseLocationAuthorization]; //Requests location use when the app is in use.
+        }
+        if (![BlueCatsSDK isNetworkReachable]) {
+            //The BlueCats SDK must have network connectivity at least once before ranging beacons. If this is the only error and the SDK has never reached the network purring will occur with network connectivity.
+        }
+        if (![BlueCatsSDK isBluetoothEnabled]) {
+            //Prompt user to enable bluetooth in settings. If BLE is required for current functionality a modal is recommended.
+        }
+    }
+}];
+</pre></div>
+</div>
+</div>
+<div class="section" id="swift">
+<h3>Swift<a class="headerlink" href="#swift" title="Permalink to this headline">¶</a></h3>
+<div class="code swift highlight-default notranslate"><div class="highlight"><pre><span></span>BlueCatsSDK.startPurringWithAppToken(&quot;&lt;#BLueCaTs-Apps-toKN-fRom-webDashBoarD#&gt;&quot;, completion: { (BCStatus) -&gt; Void in
+    let appTokenVerificationStatus: BCAppTokenVerificationStatus = BlueCatsSDK.appTokenVerificationStatus()
+    if (appTokenVerificationStatus == .NotProvided || appTokenVerificationStatus == .Invalid){
+        //NotProvided - Use setAppToken to set the app token. Get an app token from app.bluecats.com/apps
+        //Invalid - App token invalid.
+    }
+    if (!BlueCatsSDK.isLocationAuthorized()){
+        BlueCatsSDK.requestAlwaysLocationAuthorization() //Requests location use from the user even when the app is not in use.
+        //BlueCatsSDK.requestWhenInUseLocationAuthorization() //Requests location use when the app is in use.
+    }
+    if (!BlueCatsSDK.isNetworkReachable()){
+        //The BlueCats SDK must have network connectivity at least once before ranging beacons. If this is the only error and the SDK has never reached the network purring will occur with network connectivity.
+    }
+    if (!BlueCatsSDK.isBluetoothEnabled()){
+       //Prompt user to enable bluetooth in settings. If BLE is required for current functionality a modal is recommended.
+    }
+})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="now-that-youve-startedpurring-check-out-our-tutorials">
+<h2>Now that you’ve <code class="docutils literal notranslate"><span class="pre">startedPurring</span></code>, check out our <a class="reference external" href="https://developer.bluecats.com/guides/categories/tutorials">tutorials</a>.<a class="headerlink" href="#now-that-youve-startedpurring-check-out-our-tutorials" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Ready to <code class="docutils literal notranslate"><span class="pre">startPurring</span></code>?</a><ul>
+<li><a class="reference internal" href="#android">Android</a></li>
+<li><a class="reference internal" href="#ios">iOS</a><ul>
+<li><a class="reference internal" href="#objective-c">Objective-C</a></li>
+<li><a class="reference internal" href="#swift">Swift</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#now-that-youve-startedpurring-check-out-our-tutorials">Now that you’ve <code class="docutils literal notranslate"><span class="pre">startedPurring</span></code>, check out our tutorials.</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorials/startPurring.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/tutorials/startPurring.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

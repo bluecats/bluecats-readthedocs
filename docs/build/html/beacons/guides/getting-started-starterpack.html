@@ -1,0 +1,205 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Welcome to BlueCats! &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome-to-bluecats">
+<h1>Welcome to BlueCats!<a class="headerlink" href="#welcome-to-bluecats" title="Permalink to this headline">¶</a></h1>
+<p>This guide will show you how to get your new kittens purring.</p>
+<!--
+<div style="text-align:center">
+<img src="https://s3-us-west-1.amazonaws.com/sdk-guide/gelato/flatpack_1024x1024.jpg">
+</div>
+--><div class="section" id="installing-batteries-in-aa-beacons">
+<h2>Installing Batteries in AA Beacons<a class="headerlink" href="#installing-batteries-in-aa-beacons" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">The mounting plate is removed by depressing the tab on the top of the
+mounting plate and 2) turning the plate counter-clockwise.</p>
+<div style="text-align:center"></div></li>
+<li><p class="first">The battery bay can be accessed by removing the two Phillips-head
+screws on the back of the beacon and 4) removing the mounting plate.
+<img alt="image0" src="https://s3-us-west-1.amazonaws.com/sdk-guide/gelato/soloStep2.png" /></p>
+</li>
+<li><p class="first">Insert the positive side of the battery into the beacon first. There
+are small imprints within each section of the battery bay to indicate
+the correct battery orientation. <img alt="image1" src="https://s3-us-west-1.amazonaws.com/sdk-guide/gelato/batteryOrientation.png" /></p>
+</li>
+</ol>
+<p><em>Note</em>: If you are unsure if you have put the mounting plate on
+correctly remember that the plate locks into place with a click by
+turning clockwise. The mounting plate will be flat against your mounting
+surface except for the small indentation for double sided sticky tape.</p>
+</div>
+<div class="section" id="powering-usb-beacons">
+<h2>Powering USB Beacons<a class="headerlink" href="#powering-usb-beacons" title="Permalink to this headline">¶</a></h2>
+<p>To feed your USB beacon, simply plug it into any standard USB port! This
+includes USB wall adapters or battery powered phone chargers with USB
+ports.</p>
+</div>
+<div class="section" id="what-are-my-beacons-doing-now">
+<h2>What are my beacons doing now?<a class="headerlink" href="#what-are-my-beacons-doing-now" title="Permalink to this headline">¶</a></h2>
+<p>Your beacons have been pre-configured and once powered, your beacons
+will begin advertising in iBeacon mode - no setup required. To find the
+iBeacon keys for your beacons or change their values or mode, create a
+management account. The default Proximity UUID of BlueCats beacons is:
+61687109-905F-4436-91F8-E602F514C96D.</p>
+</div>
+<div class="section" id="create-your-management-account">
+<h2>Create Your Management Account<a class="headerlink" href="#create-your-management-account" title="Permalink to this headline">¶</a></h2>
+<p><img alt="image2" src="https://s3-us-west-1.amazonaws.com/sdk-guide/gelato/spSignup.png" /> Enter the StarterPack Code contained in your StarterPack into
+app.bluecats.com/join/starterpack to establish your management account.
+This step will create your first team and site to which all of your
+beacons will be initially placed. For more information on the BlueCats
+hierarchy, please see this article.</p>
+</div>
+<div class="section" id="logging-into-the-web-app-and-viewing-your-beacons">
+<h2>Logging into the Web App and Viewing Your Beacons<a class="headerlink" href="#logging-into-the-web-app-and-viewing-your-beacons" title="Permalink to this headline">¶</a></h2>
+<p>Log into the BlueCats’ web app via app.bluecats.com with your email or
+BlueCats username. A guide to the web app is available here.</p>
+<p>Information regarding your beacons is located in the Beacons section of
+the web app. Here you can create new versions for your beacons or view
+their battery life. <img alt="image3" src="https://s3-us-west-1.amazonaws.com/sdk-guide/gelato/beaconCell-1-13-16.png" /></p>
+</div>
+<div class="section" id="how-does-the-web-app-talk-to-my-beacons">
+<h2>How does the web app talk to my beacons?<a class="headerlink" href="#how-does-the-web-app-talk-to-my-beacons" title="Permalink to this headline">¶</a></h2>
+<p>BlueCats beacons do not send battery life or visit information directly
+to the web app. This is collected and posted to the BlueCats Platform by
+the BlueCatsSDKs and then is visible in the web app. Apps such as
+BlueCats Tour contain the BlueCatsSDK and will collect this information.
+BlueCats Reveal does not collect this information or generate visits.</p>
+</div>
+<div class="section" id="bluecats-software-development-kits-sdks">
+<h2>BlueCats Software Development Kits (SDKs)<a class="headerlink" href="#bluecats-software-development-kits-sdks" title="Permalink to this headline">¶</a></h2>
+<p>The BlueCatsSDKs are located on github: Android SDK - SDK Documentation
+iOS SDK - SDK Documentation</p>
+</div>
+<div class="section" id="beacon-management">
+<h2>Beacon Management<a class="headerlink" href="#beacon-management" title="Permalink to this headline">¶</a></h2>
+<p>Available for
+<a class="reference external" href="https://itunes.apple.com/us/app/bc-reveal/id852676494?mt=8">iOS</a> and
+<a class="reference external" href="https://play.google.com/store/apps/details?id=com.bluecats.bcreveal">Android</a>,
+BlueCats Reveal is the BlueCats beacon management app. BlueCats Reveal
+has most of the functionality of the web app with the ability to connect
+directly to BlueCats beacons to update their settings or firmware.</p>
+<p>Guides to using BlueCats Reveal can be found
+<a class="reference external" href="http://support.bluecats.com/customer/en/portal/topics/667683-bluecats-reveal/articles">here</a>.</p>
+</div>
+<div class="section" id="demo-apps">
+<h2>Demo Apps<a class="headerlink" href="#demo-apps" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://itunes.apple.com/us/app/bc-litterbox/id807946568?mt=8">BlueCats
+LitterBox</a>
+(iOS) is a demo app using Sites, Categories, and Proximities. A guide to
+using BC LitterBox is available
+<a class="reference external" href="http://support.bluecats.com/customer/en/portal/articles/1495603-playing-with-bluecats-litterbox-ios-">here</a>.</p>
+<p>BlueCats Tour
+(<a class="reference external" href="https://itunes.apple.com/us/app/bluecats-tour/id912105747?mt=8">iOS</a>
+and
+<a class="reference external" href="https://play.google.com/store/apps/details?id=com.bluecats.bctour&amp;hl=en">Android</a>)
+works with the default categories on your StarterPack beacons. BlueCats
+tour demonstrates different ways you can use beacons to interact with
+users by altering the view or rendering their location on a floor plan
+or map. A guide to using BlueCats Tour is available
+<a class="reference external" href="http://support.bluecats.com/customer/en/portal/articles/2038418-taking-a-bluecats-tour">here</a>.</p>
+</div>
+<div class="section" id="sample-code">
+<h2>Sample Code!<a class="headerlink" href="#sample-code" title="Permalink to this headline">¶</a></h2>
+<p>Check out the BlueCats Github <a class="reference external" href="https://github.com/bluecats">page</a> for
+iOS and Android sample code.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to BlueCats!</a><ul>
+<li><a class="reference internal" href="#installing-batteries-in-aa-beacons">Installing Batteries in AA Beacons</a></li>
+<li><a class="reference internal" href="#powering-usb-beacons">Powering USB Beacons</a></li>
+<li><a class="reference internal" href="#what-are-my-beacons-doing-now">What are my beacons doing now?</a></li>
+<li><a class="reference internal" href="#create-your-management-account">Create Your Management Account</a></li>
+<li><a class="reference internal" href="#logging-into-the-web-app-and-viewing-your-beacons">Logging into the Web App and Viewing Your Beacons</a></li>
+<li><a class="reference internal" href="#how-does-the-web-app-talk-to-my-beacons">How does the web app talk to my beacons?</a></li>
+<li><a class="reference internal" href="#bluecats-software-development-kits-sdks">BlueCats Software Development Kits (SDKs)</a></li>
+<li><a class="reference internal" href="#beacon-management">Beacon Management</a></li>
+<li><a class="reference internal" href="#demo-apps">Demo Apps</a></li>
+<li><a class="reference internal" href="#sample-code">Sample Code!</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/beacons/guides/getting-started-starterpack.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../_sources/beacons/guides/getting-started-starterpack.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

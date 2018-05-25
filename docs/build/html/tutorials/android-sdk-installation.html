@@ -1,0 +1,219 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Step 1 - Installation &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p><a class="reference external" href="https://bintray.com/bluecats/maven/bluecats-android-sdk/_latestVersion">Download</a></p>
+<div class="section" id="step-1-installation">
+<h1>Step 1 - Installation<a class="headerlink" href="#step-1-installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="a-using-android-studio">
+<h2>a) Using Android Studio<a class="headerlink" href="#a-using-android-studio" title="Permalink to this headline">¶</a></h2>
+<p>Add the following to your build.gradle:</p>
+<p>Add the following to your proguard rules:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">keep</span> <span class="k">class</span> <span class="nc">com</span><span class="o">.</span><span class="n">bluecats</span><span class="o">.</span><span class="n">sdk</span><span class="o">.**</span> <span class="p">{</span><span class="o">*</span><span class="p">;}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="b-using-eclipse">
+<h2>b) Using Eclipse<a class="headerlink" href="#b-using-eclipse" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Download .aar file from
+<a class="reference external" href="https://bintray.com/bluecats/maven/bluecats-android-sdk/_latestVersion">bintray</a>,
+you will get an .aar file: bluecats-android-sdk-${version}.aar</li>
+<li>Change the extension to .zip from .aar, and unzip it into
+bluecats-android-sdk folder, for example.</li>
+<li>In the folder bluecats-android-sdk, you will see a .jar file:
+classes.jar, change the name to a meaningful name, like
+bluecats-android-sdk.jar, copy it to your Eclipse project’s “libs”
+folder.</li>
+<li>In the folder bluecats-android-sdk/jni, you will see several ABI
+folders, copy all the folders into your Eclipse project’s “libs”
+folder.</li>
+<li>Your “libs” folder of eclipse project looks like this:</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">libs</span><span class="o">/</span>
+    <span class="n">bluecats</span><span class="o">-</span><span class="n">android</span><span class="o">-</span><span class="n">sdk</span><span class="o">.</span><span class="n">jar</span>
+    <span class="n">armebi</span><span class="o">/</span>
+          <span class="n">libbluecats_sdk</span><span class="o">.</span><span class="n">so</span>
+    <span class="n">armebi</span><span class="o">-</span><span class="n">v7a</span><span class="o">/</span>
+              <span class="n">libbluecats_sdk</span><span class="o">.</span><span class="n">so</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Add bluecats-android-sdk.jar to your build path of eclipse project.</li>
+<li>Merge manually the AndroidManifest.xml into your own
+AndroidManifest.xml to include the permission and service
+declarations.</li>
+<li>add necessary 3rd party libraries: Gson, android Support</li>
+</ul>
+</div>
+</div>
+<div class="section" id="step-2-getting-an-app-token">
+<h1>Step 2 - Getting an App Token<a class="headerlink" href="#step-2-getting-an-app-token" title="Permalink to this headline">¶</a></h1>
+<p>Get an app token from
+<a class="reference external" href="https://app.bluecats.com/apps">app.bluecats.com/apps</a> by clicking
+“Create New App” and giving your new app a name. Once created, your new
+app should appear in the list and you’ll be able to access your app
+token by clicking the “Show App Token / Secret” button below it.</p>
+<p>NOTE: The login used for the developer portal is not the same login used
+for app.bluecats.com. If you don’t already have an account on
+<a class="reference external" href="https://app.bluecats.com/">app.bluecats.com</a>, you will need to
+create one in order to progress past this point. If you’re unsure of
+what to do, send an email to <a class="reference external" href="mailto:sales&#37;&#52;&#48;bluecats&#46;com">sales<span>&#64;</span>bluecats<span>&#46;</span>com</a> and we’ll gladly help
+you out!</p>
+</div>
+<div class="section" id="step-3-startpurring">
+<h1>Step 3 - startPurring<a class="headerlink" href="#step-3-startpurring" title="Permalink to this headline">¶</a></h1>
+<p>Start purring!</p>
+<div class="code java highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BlueCatsSDK</span><span class="o">.</span><span class="n">startPurringWithAppToken</span><span class="p">(</span> <span class="n">getApplicationContext</span><span class="p">(),</span> <span class="s2">&quot;YOUR_APP_TOKEN&quot;</span> <span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>More tips and
+tweaks</strong><a class="reference external" href="https://developer.bluecats.com/guides/startpurring#android">here</a><strong>!</strong></p>
+</div>
+<div class="section" id="requirements">
+<h1>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="androidmanifest-xml">
+<h2>AndroidManifest.xml<a class="headerlink" href="#androidmanifest-xml" title="Permalink to this headline">¶</a></h2>
+<p>A number of permissions and dependencies are added automatically by the
+SDK, and can be found
+<a class="reference external" href="https://developer.bluecats.com/guides/android-migrating-from-1-13-8-to-2-0-0-2-0-1">here</a>.</p>
+<p>If you want the SDK to start when the device starts, you may add this to
+your xml:</p>
+<div class="code xml highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">uses</span><span class="o">-</span><span class="n">permission</span> <span class="n">android</span><span class="p">:</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;android.permission.RECEIVE_BOOT_COMPLETED&quot;</span><span class="o">/&gt;</span>
+
+<span class="o">&lt;</span><span class="n">application</span> <span class="o">...&gt;</span>
+    <span class="o">...</span>
+
+    <span class="o">&lt;</span><span class="n">receiver</span> <span class="n">android</span><span class="p">:</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;com.bluecats.sdk.BlueCatsSDKServiceReceiver&quot;</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">intent</span><span class="o">-</span><span class="nb">filter</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="n">action</span> <span class="n">android</span><span class="p">:</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;android.intent.action.BOOT_COMPLETED&quot;</span><span class="o">/&gt;</span>
+        <span class="o">&lt;/</span><span class="n">intent</span><span class="o">-</span><span class="nb">filter</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">receiver</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">application</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="android-6-0-marshmallow-location-permissions">
+<h2>Android 6.0+ (Marshmallow) Location Permissions<a class="headerlink" href="#android-6-0-marshmallow-location-permissions" title="Permalink to this headline">¶</a></h2>
+<p>Android 6.0 introduces a new permission model which changes the way
+Location Services permissions are managed. Before scanning for beacons
+the app is required to request location permissions from the user via a
+system dialogue. Detailed information on implementing location
+permission support in Android 6.0 can be found
+<a class="reference external" href="https://developer.bluecats.com/guides/android-6-0-and-location-services-permissions">here</a>.</p>
+</div>
+<div class="section" id="android-sdk-4-3-api-level-18">
+<h2>Android SDK 4.3+ (API Level 18+)<a class="headerlink" href="#android-sdk-4-3-api-level-18" title="Permalink to this headline">¶</a></h2>
+<p>The SDK will still work on lower versions of Android down to 2.3 (API
+Level 9), but Bluetooth Low Energy Scanning will be disabled. You will
+still be able to make use of the Sites Nearby functionality as this does
+not involve scanning for beacons.</p>
+</div>
+</div>
+<div class="section" id="any-questions">
+<h1>Any Questions?<a class="headerlink" href="#any-questions" title="Permalink to this headline">¶</a></h1>
+<p>See the sample <a class="reference external" href="https://github.com/bluecats/bluecats-scratchingpost-android">BlueCats Scratching
+Post</a>
+app for usage and integration instructions.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Step 1 - Installation</a><ul>
+<li><a class="reference internal" href="#a-using-android-studio">a) Using Android Studio</a></li>
+<li><a class="reference internal" href="#b-using-eclipse">b) Using Eclipse</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#step-2-getting-an-app-token">Step 2 - Getting an App Token</a></li>
+<li><a class="reference internal" href="#step-3-startpurring">Step 3 - startPurring</a></li>
+<li><a class="reference internal" href="#requirements">Requirements</a><ul>
+<li><a class="reference internal" href="#androidmanifest-xml">AndroidManifest.xml</a></li>
+<li><a class="reference internal" href="#android-6-0-marshmallow-location-permissions">Android 6.0+ (Marshmallow) Location Permissions</a></li>
+<li><a class="reference internal" href="#android-sdk-4-3-api-level-18">Android SDK 4.3+ (API Level 18+)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#any-questions">Any Questions?</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorials/android-sdk-installation.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/tutorials/android-sdk-installation.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

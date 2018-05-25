@@ -1,0 +1,124 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Creating an API Client &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>This guide will show you how to create a new API application and add the
+keys to your developer.bluecats.com account for interactive code
+testing.</p>
+<p>First, login to the BlueCats beacon management platform at
+<a class="reference external" href="https://app.bluecats.com">https://app.bluecats.com</a> and click Apps. Client IDs and Secrets are
+obtained in the <a class="reference external" href="https://app.bluecats.com/apps">app</a> section of the
+web app using.</p>
+<div class="section" id="creating-an-api-client">
+<h1>Creating an API Client<a class="headerlink" href="#creating-an-api-client" title="Permalink to this headline">¶</a></h1>
+<p>Navigate to the <strong>Apps</strong> section of the web app. <img alt="Apps" src="https://d16co4vs2i1241.cloudfront.net/uploads/tutorial_image/file/480045892460611400/1e9741ddaf04599001c9af5c099be6f4d84b1aa6e8e13a2b82519bbce1ab08d2/column_sized_apps.png" /></p>
+<p>Select <strong>Create New App</strong> <img alt="Create App" src="https://d16co4vs2i1241.cloudfront.net/uploads/tutorial_image/file/480045987084109641/1c1a28be9df7639aa533cfe511a210093f53502fdd91a697fb6fb06a4357db90/column_sized_createApp.png" /></p>
+<p>Name your app and select <strong>API Client</strong>. <img alt="Api Client" src="https://d16co4vs2i1241.cloudfront.net/uploads/tutorial_image/file/480045993081964362/66005e306106f37d4ae7cb434e5edcd832ad18d90a97937ef7cb315d1ffc9e6c/column_sized_apiClient.png" /></p>
+<p>Lastly, click <strong>Create App</strong> to create your app. View your app’s client
+ID and secret by pressing <strong>Show App Token/Secret</strong> from your app’s
+information.</p>
+</div>
+<div class="section" id="whats-next">
+<h1>What’s next?<a class="headerlink" href="#whats-next" title="Permalink to this headline">¶</a></h1>
+<p>Now that you have your App Token/Secret, visit the <a class="reference external" href="https://developer.bluecats.com">BlueCats Developer
+Portal</a> dashboard and click “Go to
+your Dashboard”. <img alt="Go to Dashboard" src="https://d16co4vs2i1241.cloudfront.net/uploads/tutorial_image/file/475671700130760637/8591d16b9b0641df48aecfee996935968a82c34af3d6731432fc0c67b3b49be9/column_sized_Screen_Shot_2016-04-13_at_10.47.43_AM.png" /></p>
+<p>Click “+ Add Access Token” to show the add key dialog. (It’s okay if you
+already have keys in there for other apps - just make sure you use the
+right one for your tests in the API Explorer.) <img alt="Add Access Tokens" src="https://d16co4vs2i1241.cloudfront.net/uploads/tutorial_image/file/475669125650188205/2a18f735b4fbde5a2011cd6dba9a815ba8a271fa2fc90002533505e5eb3b8c27/column_sized_Screen_Shot_2016-04-12_at_4.09.03_PM.png" /></p>
+<p>Paste your Client ID and Secret into the fields, and give your key a
+meaningful name. <img alt="Give your key a name" src="https://d16co4vs2i1241.cloudfront.net/uploads/tutorial_image/file/475672558805452776/758c6e80e9f7609c74568ebd3f2f0fc8abd15d3f3b6df84cea4ba32a52119f59/column_sized_Screen_Shot_2016-04-12_at_4.10.10_PM.png" /></p>
+<p>Once you click “Save Access Token”, your new key should be visible
+(obfuscated until you click reveal). <img alt="Save Access Token" src="https://d16co4vs2i1241.cloudfront.net/uploads/tutorial_image/file/475673179772159978/3d87cb251ab49f74259aaf5155960b70fdab5d5441cfe9f2ccb2584499e188eb/column_sized_Screen_Shot_2016-04-12_at_4.10.27_PM.png" /></p>
+<p>Click the “EXPLORER” link on the portal menu bar to test out your new
+key. <img alt="Click EXPLORER" src="https://d16co4vs2i1241.cloudfront.net/uploads/tutorial_image/file/475677719493870661/ec7cb02340f33156e6c753fa089114fa6c46fefab0fecf275fe9b3a9a95da1be/column_sized_Screen_Shot_2016-04-12_at_4.10.45_PM.png" /></p>
+<p>Test out your new API Key by doing a GET request on the Beacons
+Resource. Click “Send Request” and you should get a JSON packet back
+containing data on your beacons. <img alt="Test things out" src="https://d16co4vs2i1241.cloudfront.net/uploads/tutorial_image/file/475682499129771169/07f18ff1ec72714711580d3f89661faf78d136633d5dd5c5c0e6cb09d45dc605/column_sized_Screen_Shot_2016-04-12_at_4.11.05_PM.png" /></p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Creating an API Client</a></li>
+<li><a class="reference internal" href="#whats-next">What’s next?</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/tutorials/creating-api-client.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/tutorials/creating-api-client.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

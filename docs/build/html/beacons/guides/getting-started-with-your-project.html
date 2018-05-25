@@ -1,0 +1,192 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Getting Started With Your Project &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>Beacons are devices that use the Bluetooth Low Energy (BLE) protocol to
+repeatedly send short transmissions, called advertisements, to mobile
+devices or other Bluetooth scanning device. Advertisements can contain
+an identifier and/or sensor data and the brevity of these advertisements
+allows for battery operated use lasting several years.</p>
+<p>In their simplest form, beacons can be used to pinpoint your location.
+At their most complex, beacons can transmit and receive data from
+sensors and other beacons. Beacons enable (but are not limited to) the
+following use cases:</p>
+<ul class="simple">
+<li>triggering relevant mobile content for education and shopping
+experiences</li>
+<li>initiating data transfer between a mobile device and usb or OEM
+beacon at point of sale computer to redeem offers</li>
+<li>logging and reporting temperature data</li>
+<li>notifying a quick service restaurant of your arrival for order pickup</li>
+<li>tracking the location of assets in real time</li>
+<li>Beacons are essentially broadcasters of data. This data can be
+static, such as an identifier, public or obfuscated, or data from
+sensors.</li>
+</ul>
+<div class="section" id="getting-started-with-your-project">
+<h1>Getting Started With Your Project<a class="headerlink" href="#getting-started-with-your-project" title="Permalink to this headline">¶</a></h1>
+<p>Ready to go with your beacon project? Start here for everything you need
+to get up and running:</p>
+<ol class="arabic simple">
+<li>Choose the right beacon for your project<ul>
+<li><a class="reference external" href="https://www.bluecats.com/aa-bluetooth-beacon/">AA Beacon</a> Our
+most popular beacon. Longest battery life and full Eddystone EID
+support with dust and weather resistant options.</li>
+<li><a class="reference external" href="https://www.bluecats.com/usb-beacon/">USB Beacon</a>. More than a
+beacon. Scan for beacons nearby and two-way communication between
+a mobile device and host of BLE via the USB beacon</li>
+<li><a class="reference external" href="https://www.bluecats.com/coin-mobile-beacon/">Coin Beacon</a>.
+Compact and powerful. Supports all available Eddystone, iBeacon
+and BlueCats advertisement specifications with replaceable coin
+cell battery.</li>
+<li><a class="reference external" href="https://www.bluecats.com/bc010-ibeacon/">BC010 BLE Module</a>.
+The BC010 can be connected directly to a battery or SMT soldered
+to a host PCB and is ideal for data logging from BlueCats Sensor
+Boards while the rest of the system is in sleep mode. The module
+is perfect for application where battery life, small form factor,
+RF performance and speed to market are important.</li>
+</ul>
+</li>
+<li>Create a BlueCats account and claim your beacons with the the
+<a class="reference external" href="https://app.bluecats.com/">BlueCats Web App</a>, download the BC
+Reveal app, which is our management app on
+<a class="reference external" href="https://play.google.com/store/apps/details?id=com.bluecats.bcreveal&amp;hl=en">Android</a>
+or
+<a class="reference external" href="https://itunes.apple.com/us/app/bc-reveal/id852676494?mt=8">iOS</a></li>
+<li>Choose an advertisement format and configure your beacons with the BC
+Reveal app</li>
+<li>Every beacon project is different. Choose your beacon configuration
+and tools and start building: Install the BlueCats SDK or iOS or
+Android into your mobile app to enable cross-platform proximity
+detection and analytics Use your beacons with any iBeacon compatible
+application or library No app? Eddystone-URL and the Physical Web</li>
+</ol>
+</div>
+<div class="section" id="supported-beacon-specifications">
+<h1>Supported Beacon Specifications<a class="headerlink" href="#supported-beacon-specifications" title="Permalink to this headline">¶</a></h1>
+<p>BlueCats beacon hardware and Platform provide complete flexibility to
+choose a beacon format best suited to your application. With BlueCats
+beacons you can support any of the following open or BlueCats
+proprietary specifications:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://developer.apple.com/ibeacon/">iBeacon</a> – Apple’s release
+of the iBeacon BLE specification and deep native support in 2014
+brought beacon technology to the main stream. Still the best choice
+for many consumer mobile app use cases where support for both iOS and
+Android devices is required.</li>
+<li><a class="reference external" href="https://developers.google.com/beacons/eddystone">Eddystone</a> –
+Eddystone is an open beacon format developed by Google and designed
+with transparency and robustness in mind. Eddystone can be detected
+by both Android and iOS.<ul>
+<li>Eddystone-UID,</li>
+<li>Eddytone-URL (or Physical Web)</li>
+</ul>
+</li>
+<li>BlueCats Platform - need to do something not supported by the open
+beacon protocols? BlueCats have a range of advertisements and BLE
+libraries to fill the gaps and extend the capabilities of a Bluetooth
+beacon network.<ul>
+<li>BlueCats Secure</li>
+<li>Sensor</li>
+<li>Data Transfer</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="edge-relay">
+<h1>Edge Relay<a class="headerlink" href="#edge-relay" title="Permalink to this headline">¶</a></h1>
+<p>The Edge Relay is a customisable gateway that allows you to scan for BLE
+(Bluetooth Low Energy) traffic and send that data to different
+endpoints. Capture all of your Bluetooth devices in range using the
+popular formats: iBeacon, Eddystone, and our custom beacons. Control the
+flow of your data using signal smoothing, filtering, and throttling to
+get exactly the data you need. Once you have your data, you can
+communicate it to your endpoints using UDP or MQTT protocols.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Getting Started With Your Project</a></li>
+<li><a class="reference internal" href="#supported-beacon-specifications">Supported Beacon Specifications</a></li>
+<li><a class="reference internal" href="#edge-relay">Edge Relay</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/beacons/guides/getting-started-with-your-project.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../_sources/beacons/guides/getting-started-with-your-project.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

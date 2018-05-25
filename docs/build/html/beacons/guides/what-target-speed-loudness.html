@@ -1,0 +1,171 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>&lt;no title&gt; &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <p>BlueCats Beacons ship with two main communication settings: <em>Target
+Speed</em> and <em>Loudness</em>. Determining the correct Beacon configuration, is
+key to getting the most battery life and performance out of your Beacon.</p>
+<p><strong>Target Speed</strong>: The target speed is the advertising interval. This is
+how often frequency of which your Beacon is sending your advertisements.</p>
+<div class="line-block">
+<div class="line">Sit: 1,285 ms</div>
+<div class="line">Stroll: 760 ms</div>
+<div class="line">Walk: 319 ms</div>
+<div class="line">Jog: 153 ms</div>
+<div class="line">Run: 100 ms</div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="52%" />
+<col width="48%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Walking</th>
+<th class="head">Jog</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><img alt="Walk-Diagram" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/TargetSpeedOrLoudness/Walk-Diagram.gif" /></td>
+<td><img alt="Jog-Diagram" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/TargetSpeedOrLoudness/Jog-Diagram.gif" /></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Loudness</strong>: Loudness is the strength or intensity of which the
+advertisements are broadcasted.</p>
+<div class="line-block">
+<div class="line">Whisper: -21 dBm</div>
+<div class="line">Mutter: -15 dBm</div>
+<div class="line">Talk: -9 dBm</div>
+<div class="line">Shout: 1 dBm</div>
+<div class="line">Scream: 5 dBm</div>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Talking Area</th>
+<th class="head">Shout Area</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><img alt="Walk-Area" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/TargetSpeedOrLoudness/Talk-Area.png" /></td>
+<td><img alt="Shout-Area" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/TargetSpeedOrLoudness/Shout-Area.png" /></td>
+</tr>
+</tbody>
+</table>
+<p>It may be tempting to have your target speeds at Run and Loudness at
+Scream, but this can kill your battery life. For most use cases, we
+recommend <em>Walk</em> (Target Speed) and <em>Talk</em> (Loudness). For demos and
+quick response times, we have found that <em>Run</em> and <em>Shout</em> are the best
+for clear communication.</p>
+<p>However, we understand that for each use case is different. This is why
+we allow an array of settings to choose from for your application with
+our Beacons. Target Speed refers to the passing speed of your target
+device. Target Speed can also be used to compensate for heavy
+interference environments or be used to ensure quick app responsiveness
+by increasing the number of BLE advertisements.</p>
+<p>With this in mind we bring up a third parameter: Received Signal
+Strength Indication (RSSI) or <em>Measured Power</em>. <strong>Measured Power</strong> is
+the value communicating the expected received signal strength indication
+one meter from the beacon, as called RSSI at one meter. You can use RSSI
+along with the signal strength received by a device to approximate the
+distance of the device from the beacon.</p>
+<p>The default measured power for the respective levels of Loudness are:</p>
+<div class="line-block">
+<div class="line">Whisper: -76 dBm</div>
+<div class="line">Mutter: -71 dBm</div>
+<div class="line">Talk: -67 dBm</div>
+<div class="line">Shout: -56 dBm</div>
+<div class="line">Scream: -51 dBm</div>
+</div>
+<p><img alt="image4" src="https://s3-us-west-1.amazonaws.com/github-photos/DeveloperDocs/TargetSpeedOrLoudness/Settings-Battery-Comparison.png" /></p>
+<p>####Privacy for your Advertisements BlueCats beacons rotate their
+Bluetooth MAC Address to enhance the privacy of your network. This can
+be set within the <a class="reference external" href="http://support.bluecats.com/customer/en/portal/articles/1601784-changing-beacon-settings">Web
+Manager</a>
+and applied with BlueCats Reveal. <em>Please note</em> that low (i.e.&nbsp;value of
+1 minute) privacy duration values can hinder updating Beacons from some
+devices. When the privacy duration is set to 0, the address does not
+change.</p>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/beacons/guides/what-target-speed-loudness.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../_sources/beacons/guides/what-target-speed-loudness.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

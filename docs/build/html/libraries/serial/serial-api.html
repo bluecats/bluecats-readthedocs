@@ -1,0 +1,1825 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Table of Contents &#8212; BlueCats Docs 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="table-of-contents">
+<h1>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li><a class="reference external" href="#firmwareRelease">Firmware Release Information</a></li>
+<li><a class="reference external" href="#packetFormat">Serial Packet Format</a></li>
+<li><a class="reference external" href="#dataTypes">Data Types</a></li>
+<li><a class="reference external" href="#serialConfig">Serial Configuration</a></li>
+<li><a class="reference external" href="#commands">Commands</a></li>
+</ol>
+</div>
+<div class="section" id="firmware-release-information">
+<h1>Firmware Release Information<a class="headerlink" href="#firmware-release-information" title="Permalink to this headline">¶</a></h1>
+<p>The API calls referenced in this document relate to BlueCats firmware
+release xx.xx.xx installed on BLE modules BC010/BC011.</p>
+<p>Published xx March 2017.</p>
+</div>
+<div class="section" id="serial-packet-format">
+<h1>Serial Packet Format<a class="headerlink" href="#serial-packet-format" title="Permalink to this headline">¶</a></h1>
+<p>Commands are sent from host to module over a serial connection (SPI, I2C
+or DIO).</p>
+<p>For each command, the beacon provides a corresponding response. Each
+field in the response packet arrives over serial with most significant
+byte first (big-endian), for easier readability.</p>
+<p>The response payload’s first (or sometimes only) byte is a response
+code.</p>
+<p>The first 6 bytes of each PDU is the header. The payload is whatever
+follows.</p>
+<div class="section" id="command">
+<h2>Command<a class="headerlink" href="#command" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="41%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Length</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>1 byte</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>1 byte</td>
+<td>Class ID (0xBC)</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>1 byte</td>
+<td>Command ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>1 byte</td>
+<td>Payload length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>1 byte</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>1 byte</td>
+<td>Header CRC8</td>
+</tr>
+<tr class="row-even"><td>6-n</td>
+<td>0 to 255 bytes</td>
+<td>Payload</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="command-ids">
+<h2>Command IDs:<a class="headerlink" href="#command-ids" title="Permalink to this headline">¶</a></h2>
+<table><tr><th><p>ID</p>
+</th><th><p>Short Description</p>
+</th><th><p>Long Description</p>
+</th></tr><tr><td><p>0x01</p>
+</td><td><p>Meow</p>
+</td><td></td></tr><tr><td><p>0x02</p>
+</td><td><p>Read Bluetooth Address</p>
+</td><td></td></tr><tr><td><p>0x03</p>
+</td><td><p>Read Firmware Version</p>
+</td><td></td></tr><tr><td><p>0x04</p>
+</td><td><p>Read Firmware UID</p>
+</td><td></td></tr><tr><td><p>0x05</p>
+</td><td><p>Read Model Number</p>
+</td><td></td></tr><tr><td><p>0x06</p>
+</td><td><p>Read Status</p>
+</td><td></td></tr><tr><td><p>0x07</p>
+</td><td><p>Read Encrypted Status</p>
+</td><td></td></tr><tr><td><p>0x08</p>
+</td><td><p>Start Scan</p>
+</td><td></td></tr><tr><td><p>0x09</p>
+</td><td><p>Stop Scan</p>
+</td><td></td></tr><tr><td><p>0x0A</p>
+</td><td><p>Write Firmware Header</p>
+</td><td></td></tr><tr><td><p>0x0B</p>
+</td><td><p>Write Firmware Block</p>
+</td><td></td></tr><tr><td><p>0x0C</p>
+</td><td><p>Go DFU</p>
+</td><td></td></tr><tr><td><p>0x0D</p>
+</td><td><p>Write BLE Response</p>
+</td><td></td></tr><tr><td><p>0x0E</p>
+</td><td><p>Read Serial API Version</p>
+</td><td></td></tr><tr><td><p>0x0F</p>
+</td><td><p>Start PWM</p>
+</td><td><p>{Frequency, 0-15, (steps of 80 Hz, 1kHz - 2.2 KHz) byte}, {duration
+seconds, byte}</p>
+</td></tr><tr><td><p>0x10</p>
+</td><td><p>Stop PWM</p>
+</td><td></td></tr><tr><td><p>0x42</p>
+</td><td><p>Connect</p>
+</td><td><p>Connect to BLE device connection</p>
+</td></tr><tr><td><p>0x43</p>
+</td><td><p>Login</p>
+</td><td></td></tr><tr><td><p>0x44</p>
+</td><td><p>Update Settings</p>
+</td><td></td></tr><tr><td><p>0x45</p>
+</td><td><p>Disconnect</p>
+</td><td><p>Disconnect from BLE device connection</p>
+</td></tr><tr><td><p>0x46</p>
+</td><td><p>Write Firmware Opcode</p>
+</td><td><p>writes to control char</p>
+</td></tr><tr><td><p>0x47</p>
+</td><td><p>Write Firmware Bulk Data</p>
+</td><td><p>writes to gravy char</p>
+</td></tr></table><div class="section" id="response">
+<h3>Response<a class="headerlink" href="#response" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Length</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>1 byte</td>
+<td><a class="reference external" href="#messageType">Message
+type</a>
+_</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>1 byte</td>
+<td>Class ID (0xBC)</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>1 byte</td>
+<td>Message ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>1 byte</td>
+<td>Payload length <strong>&gt;
+0x00</strong></td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>1 byte</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>1 byte</td>
+<td>Header CRC8</td>
+</tr>
+<tr class="row-even"><td>6-n</td>
+<td>1 byte</td>
+<td>Payload starts with
+<cite>Command Response
+Code &lt;#responseCode&gt;</cite>
+__</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="response-codes">
+<h3>Response Codes<a class="headerlink" href="#response-codes" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="message-type-field">
+<h3>Message Type Field<a class="headerlink" href="#message-type-field" title="Permalink to this headline">¶</a></h3>
+<p>The message type is used to help determine if the data represents a
+command or response host initiated communication to the BLE module
+(0x00), or an event sent from the BLE module (0x80).</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="78%" />
+<col width="22%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Value</th>
+<th class="head">ID</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Command or Response</td>
+<td>0x00</td>
+</tr>
+<tr class="row-odd"><td>Event</td>
+<td>0x80</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section" id="responses">
+<h1>Responses<a class="headerlink" href="#responses" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="command-response-ids">
+<h2>Command response IDs:<a class="headerlink" href="#command-response-ids" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="57%" />
+<col width="31%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ID</th>
+<th class="head">Meaning</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0x00</td>
+<td>Success</td>
+<td>Command succeeded.</td>
+</tr>
+<tr class="row-odd"><td>0x01</td>
+<td>Busy</td>
+<td>Previous command
+needs to complete
+or be canceled
+before sending next
+command.</td>
+</tr>
+<tr class="row-even"><td>0x02</td>
+<td>Advertising Disabled</td>
+<td>Send command only
+when advertising
+enabled.</td>
+</tr>
+<tr class="row-odd"><td>0x03</td>
+<td>Buffer Overflow</td>
+<td>Buffer overflowed.</td>
+</tr>
+<tr class="row-even"><td>0x04</td>
+<td>Remote Hung Up</td>
+<td>Command not
+available when no
+device is
+connected.</td>
+</tr>
+<tr class="row-odd"><td>0x05</td>
+<td>Gatt Write</td>
+<td>Failed to write
+response to BLE
+data request.</td>
+</tr>
+<tr class="row-even"><td>0x06</td>
+<td>Invalid Parameter</td>
+<td>Parameter in
+command payload is
+invalid.</td>
+</tr>
+<tr class="row-odd"><td>0x07</td>
+<td>Not Supported</td>
+<td>Command not
+supported in this
+firmware version.</td>
+</tr>
+<tr class="row-even"><td>0x08</td>
+<td>No Pending Changes</td>
+<td>Send begin setting
+update command
+before end settings
+update command.</td>
+</tr>
+<tr class="row-odd"><td>0x09</td>
+<td>Header CRC failure</td>
+<td>Header CRC check
+failed.</td>
+</tr>
+<tr class="row-even"><td>0x0A</td>
+<td>Payload CRC failure</td>
+<td>Payload CRC check
+failed.</td>
+</tr>
+<tr class="row-odd"><td>0x0B</td>
+<td>Firmware Update Failed</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="event-ids">
+<h2>Event IDs:<a class="headerlink" href="#event-ids" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="57%" />
+<col width="31%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ID</th>
+<th class="head">Short Description</th>
+<th class="head">Long Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0x01</td>
+<td>BLE Session Connected</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>0x02</td>
+<td>BLE Session Disconnected</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>0x03</td>
+<td>BLE Debug Mode</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>0x04</td>
+<td>BLE Auth Succeeded</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>0x05</td>
+<td>BLE Auth Failed</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>0x06</td>
+<td>BLE Event Error</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>0x07</td>
+<td>BLE Settings Saved</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>0x08</td>
+<td>BLE Data Requested</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>0x09</td>
+<td>BLE Data Blocks Sent</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>0x0A</td>
+<td>BLE Data Indicated</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>0x0B</td>
+<td>BLE Scanning Started</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>0x0C</td>
+<td>BLE Scanning Stopped</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>0x0D</td>
+<td>BLE Device Ranged</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>0x0E</td>
+<td>BLE Device Entered</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>0x0F</td>
+<td>BLE Device Exited</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>0x10</td>
+<td>BLE Device Discovered</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td>0x11</td>
+<td>BLE Module Boot</td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td>0x84</td>
+<td>Unrecognized Command</td>
+<td>Command was not
+recognized</td>
+</tr>
+<tr class="row-even"><td>0x85</td>
+<td>Permission Denied</td>
+<td>Permission has been
+disabled or
+rejected for format
+device</td>
+</tr>
+<tr class="row-odd"><td>0x86</td>
+<td>UART Read Failure</td>
+<td>Error during UART
+communication</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="data-types">
+<h1>Data Types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h1>
+<p>Some payloads will include multiple data types. For instance if you are
+in scanning mode, a temperature measurement ad can include negative
+numbers.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Type</th>
+<th class="head">Description</th>
+<th class="head">Example (Human
+readable)</th>
+<th class="head">Example (Hex)</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>int8</td>
+<td>Signed integer
+stored in one
+byte 2’s
+complement form</td>
+<td>-42</td>
+<td>0xD6</td>
+</tr>
+<tr class="row-odd"><td>uint8</td>
+<td>Unsigned
+integer stored
+in 1 byte</td>
+<td>0x42</td>
+<td>0x2A</td>
+</tr>
+<tr class="row-even"><td>uint16</td>
+<td>Unsigned
+integer stored
+in 2 bytes</td>
+<td>1701</td>
+<td>0xa5 0x06</td>
+</tr>
+<tr class="row-odd"><td>uint32</td>
+<td>Unsigned
+integer stored
+in 4 bytes</td>
+<td>1000000</td>
+<td>0x40 0x42 0x0f
+0x00</td>
+</tr>
+<tr class="row-even"><td>uint8array</td>
+<td>Byte array</td>
+<td>“Hello”</td>
+<td>0x68 0x65 0x6c
+0x6c 0x6f</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="serial-configuration">
+<h1>Serial Configuration<a class="headerlink" href="#serial-configuration" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="docutils">
+<colgroup>
+<col width="26%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Setting</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Handshake</td>
+<td>RequestToSend</td>
+</tr>
+<tr class="row-odd"><td>BaudRate</td>
+<td>921600 baud (BC01X Ti Module)</td>
+</tr>
+<tr class="row-even"><td>DataBits</td>
+<td>8</td>
+</tr>
+<tr class="row-odd"><td>StopBits</td>
+<td>One</td>
+</tr>
+<tr class="row-even"><td>Parity</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div>Future release of this device will enable speed ranges from 115200 -
+921600. Lower speeds would present a issue</div></blockquote>
+</div>
+<div class="section" id="commands">
+<h1>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="calculating-crc">
+<h2>Calculating CRC<a class="headerlink" href="#calculating-crc" title="Permalink to this headline">¶</a></h2>
+<p>We use CRC’s to ensure that the high speed of our serial bursts isn’t
+causing data integrity issues (Serial protocols are allowed a small
+percentage of errors). CRCs help determine whether your received or sent
+data is in good order.</p>
+<p>During testing it’s handy to be able to send and receive sample commands
+and data. The commands shown below include CRC8s for the headers and
+payload, however if you are sending alternate payloads your code will
+need to calculate the CRC8 (8 bit CRC).</p>
+<div class="code c highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span>
+<span class="o">//</span>  <span class="n">main</span><span class="o">.</span><span class="n">c</span>
+<span class="o">//</span>  <span class="n">CRC_Sampler</span>
+<span class="o">//</span>
+<span class="o">//</span>  <span class="n">Usage</span><span class="p">:</span> <span class="n">Enter</span> <span class="n">your</span> <span class="nb">hex</span> <span class="n">string</span> <span class="k">as</span> <span class="n">concatenated</span> <span class="nb">bytes</span><span class="o">.</span>
+<span class="o">//</span>  <span class="n">E</span><span class="o">.</span><span class="n">G</span><span class="o">.</span> <span class="mi">0011</span><span class="n">AB</span>
+<span class="o">//</span>
+
+<span class="c1">#include &lt;stdio.h&gt;</span>
+<span class="c1">#include &lt;stdlib.h&gt;</span>
+
+<span class="nb">int</span> <span class="n">main</span><span class="p">(</span><span class="nb">int</span> <span class="n">argc</span><span class="p">,</span> <span class="n">const</span> <span class="n">char</span> <span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+    <span class="n">const</span> <span class="n">char</span> <span class="o">*</span><span class="n">hexData</span> <span class="o">=</span> <span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+
+    <span class="n">unsigned</span> <span class="n">long</span> <span class="n">length</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">hexData</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span>
+    <span class="n">uint8_t</span> <span class="n">pduBuf</span><span class="p">[(</span><span class="nb">int</span><span class="p">)</span><span class="n">length</span><span class="p">];</span>
+
+    <span class="n">size_t</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">printf</span> <span class="p">(</span><span class="s2">&quot;Parsing:&quot;</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">sizeof</span><span class="p">(</span><span class="n">pduBuf</span><span class="p">)</span><span class="o">/</span><span class="n">sizeof</span><span class="p">(</span><span class="n">pduBuf</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="n">count</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">sscanf</span> <span class="p">(</span><span class="n">hexData</span><span class="p">,</span> <span class="s2">&quot;%02hhx&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">pduBuf</span><span class="p">[</span><span class="n">count</span><span class="p">]);</span>
+        <span class="n">printf</span> <span class="p">(</span><span class="s2">&quot; </span><span class="si">%02X</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pduBuf</span><span class="p">[</span><span class="n">count</span><span class="p">]);</span>
+        <span class="n">hexData</span> <span class="o">+=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">printf</span> <span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">);</span>
+
+    <span class="n">const</span> <span class="n">uint8_t</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="n">pduBuf</span><span class="p">;</span>
+
+    <span class="n">unsigned</span> <span class="n">crc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="nb">int</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">j</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="n">length</span><span class="p">;</span> <span class="n">j</span><span class="p">;</span> <span class="n">j</span><span class="o">--</span><span class="p">,</span> <span class="n">data</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">crc</span> <span class="o">^=</span> <span class="p">(</span><span class="o">*</span><span class="n">data</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">8</span><span class="p">;</span> <span class="n">i</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">crc</span> <span class="o">&amp;</span> <span class="mh">0x8000</span><span class="p">)</span>
+                <span class="n">crc</span> <span class="o">^=</span> <span class="p">(</span><span class="mh">0x1070</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">);</span>
+            <span class="n">crc</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">printf</span> <span class="p">(</span><span class="s2">&quot;Calculated CRC: %02hhX</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">(</span><span class="n">uint8_t</span><span class="p">)(</span><span class="n">crc</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="p">));</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="meow">
+<h2>Meow<a class="headerlink" href="#meow" title="Permalink to this headline">¶</a></h2>
+<p>Send this command to reset your module.</p>
+</div>
+<div class="section" id="command-1">
+<span id="id1"></span><h2>Command<a class="headerlink" href="#command-1" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="24%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x01</td>
+<td>Command ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x00</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x00</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0x1B</td>
+<td>Header CRC8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="response-1">
+<span id="id2"></span><h2>Response<a class="headerlink" href="#response-1" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="19%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x01</td>
+<td>Message ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x00</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x00</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0x05</td>
+<td>Header CRC8</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>0x00</td>
+<td>Command Response Code</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="read-bt-address">
+<h2>Read BT Address<a class="headerlink" href="#read-bt-address" title="Permalink to this headline">¶</a></h2>
+<p>Send this command to retrieve the Bluetooth MAC Address of the serial
+beacon.</p>
+</div>
+<div class="section" id="command-2">
+<span id="id3"></span><h2>Command<a class="headerlink" href="#command-2" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="24%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x02</td>
+<td>Command ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x00</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x00</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0xA6</td>
+<td>Header CRC8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="response-2">
+<span id="id4"></span><h2>Response<a class="headerlink" href="#response-2" title="Permalink to this headline">¶</a></h2>
+<p><em>Example Response:</em> <strong>00 BC 02 07 8D 67 00 98 07 2D 05 FE 54</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="15%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x02</td>
+<td>Message ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x00</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x8D</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0x67</td>
+<td>Header CRC8</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>0x00</td>
+<td>Command Response Code</td>
+</tr>
+<tr class="row-odd"><td>7 - 12</td>
+<td>&#160;</td>
+<td>BT MAC: <em>* 98 07 2D 05 FE 54</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="read-firmware-version">
+<h2>Read Firmware Version<a class="headerlink" href="#read-firmware-version" title="Permalink to this headline">¶</a></h2>
+<p>Send this command to retrieve the Firmware version of the serial beacon.</p>
+</div>
+<div class="section" id="command-3">
+<span id="id5"></span><h2>Command<a class="headerlink" href="#command-3" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="24%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x03</td>
+<td>Command ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x00</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x00</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0xCD</td>
+<td>Header CRC8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="response-3">
+<span id="id6"></span><h2>Response<a class="headerlink" href="#response-3" title="Permalink to this headline">¶</a></h2>
+<p><em>Example Response:</em> <strong>00 BC 03 03 48 0D 00 02 16</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="19%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x03</td>
+<td>Message ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x03</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x48</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0x0D</td>
+<td>Header CRC8</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>0x00</td>
+<td>Command Response Code</td>
+</tr>
+<tr class="row-odd"><td>7 - 8</td>
+<td>&#160;</td>
+<td>Firmware version</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="read-firmware-uid">
+<h2>Read Firmware UID<a class="headerlink" href="#read-firmware-uid" title="Permalink to this headline">¶</a></h2>
+<p>Send this command to retrieve the Firmware UID of the serial beacon.</p>
+</div>
+<div class="section" id="command-4">
+<span id="id7"></span><h2>Command<a class="headerlink" href="#command-4" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="24%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x04</td>
+<td>Command ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x00</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x00</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0xDB</td>
+<td>Header CRC8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="response-4">
+<span id="id8"></span><h2>Response<a class="headerlink" href="#response-4" title="Permalink to this headline">¶</a></h2>
+<p><em>Example Response:</em> <strong>00 BC 04 05 81 14 00 00 11 02 16</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="18%" />
+<col width="61%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x04</td>
+<td>Message ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x05</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x81</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0x14</td>
+<td>Header CRC8</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>0x00</td>
+<td>Command Response Code</td>
+</tr>
+<tr class="row-odd"><td>7 - 10</td>
+<td>&#160;</td>
+<td>Firmware UID</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="read-model-number">
+<h2>Read Model Number<a class="headerlink" href="#read-model-number" title="Permalink to this headline">¶</a></h2>
+<p>Send this command to retrieve the Model Number of the serial beacon.</p>
+</div>
+<div class="section" id="command-5">
+<span id="id9"></span><h2>Command<a class="headerlink" href="#command-5" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="24%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x05</td>
+<td>Command ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x00</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x00</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0xB0</td>
+<td>Header CRC8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="response-5">
+<span id="id10"></span><h2>Response<a class="headerlink" href="#response-5" title="Permalink to this headline">¶</a></h2>
+<p><em>Example Response:</em> <strong>00 BC 05 03 77 CD 00 00 11</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="18%" />
+<col width="18%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x05</td>
+<td>Message ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x03</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x77</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0xCD</td>
+<td>Header CRC8</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>0x00</td>
+<td>Command Response Code</td>
+</tr>
+<tr class="row-odd"><td>7 - 8</td>
+<td>&#160;</td>
+<td>Model Number<em>*00 11</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="read-status">
+<h2>Read Status<a class="headerlink" href="#read-status" title="Permalink to this headline">¶</a></h2>
+<p>Send this command to retrieve the current status of the serial beacon.</p>
+</div>
+<div class="section" id="command-6">
+<span id="id11"></span><h2>Command<a class="headerlink" href="#command-6" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="24%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x06</td>
+<td>Command ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x00</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x00</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0x0D</td>
+<td>Header CRC8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="response-6">
+<span id="id12"></span><h2>Response<a class="headerlink" href="#response-6" title="Permalink to this headline">¶</a></h2>
+<p><em>Example Response:</em> <strong>00 BC 06 11 51 FF 00 98 07 2D 05 FE 54 00 11 02 16
+00 00 00 BC BC BC</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="21%" />
+<col width="67%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x06</td>
+<td>Message ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x11</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x51</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0xFF</td>
+<td>Header CRC8</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>0x00</td>
+<td>Command Response Code</td>
+</tr>
+<tr class="row-odd"><td>7-12</td>
+<td>&#160;</td>
+<td>Module BT MAC<em>*98 07 2D 05 FE 54</em></td>
+</tr>
+<tr class="row-even"><td>13-16</td>
+<td>&#160;</td>
+<td>Firmware build<em>*00 11 02 16</em></td>
+</tr>
+<tr class="row-odd"><td>17</td>
+<td>&#160;</td>
+<td>Settings Version<em>*00</em></td>
+</tr>
+<tr class="row-even"><td>18</td>
+<td>&#160;</td>
+<td>Measured Power at 1m<em>Stored as 2’s compliment</em></td>
+</tr>
+<tr class="row-odd"><td>19</td>
+<td>&#160;</td>
+<td>Battery Voltage<strong>0 if not battery powered</strong></td>
+</tr>
+<tr class="row-even"><td>20 - 22</td>
+<td>0xBC 0xBC 0xBC</td>
+<td>Fixed content</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="read-encrypted-status">
+<h2>Read Encrypted Status<a class="headerlink" href="#read-encrypted-status" title="Permalink to this headline">¶</a></h2>
+<p>Send this command to retrieve the current status of the serial beacon
+but encrypted.</p>
+</div>
+<div class="section" id="command-7">
+<span id="id13"></span><h2>Command<a class="headerlink" href="#command-7" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="24%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x07</td>
+<td>Command ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x00</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x00</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0x66</td>
+<td>Header CRC8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="response-7">
+<span id="id14"></span><h2>Response<a class="headerlink" href="#response-7" title="Permalink to this headline">¶</a></h2>
+<p><em>Example Response:</em> <strong>00 BC 07 11 F6 E8 00 E5 9C 67 DF 1B A0 5D E0 23 33
+23 A5 1D 4B 7D F8</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="19%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x06</td>
+<td>Message ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x11</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0xF6</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0xE8</td>
+<td>Header CRC8</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>0x00</td>
+<td>Command Response Code</td>
+</tr>
+<tr class="row-odd"><td>7-22</td>
+<td>&#160;</td>
+<td>Encrypted Data</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="start-scanning">
+<h2>Start Scanning<a class="headerlink" href="#start-scanning" title="Permalink to this headline">¶</a></h2>
+<p>This command returns a live stream of detected BLE devices ad packets.
+We recommend starting and stopping on intervals (for instance 1 second).</p>
+<p>Start Scanning is one of the commands that is sent with a payload.</p>
+<p>The payload consists of:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="29%" />
+<col width="25%" />
+<col width="46%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Allowed Values</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00 - 0x03</td>
+<td>Discovery Mode</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0x00 - 0xFF</td>
+<td>Number of results per Scan
+Duration</td>
+</tr>
+<tr class="row-even"><td>2-3</td>
+<td>0x0000 - 0xFFFF</td>
+<td>Scan Duration in ms, &gt;= Scan
+Interval<strong>Note little
+endian</strong></td>
+</tr>
+<tr class="row-odd"><td>4-5</td>
+<td>0x0000 - 0xFFFF</td>
+<td>Scan Interval in units of
+0.625 ms, &gt;= Scan Window
+<strong>Note little endian</strong></td>
+</tr>
+<tr class="row-even"><td>6-7</td>
+<td>0x00 - 0xFF</td>
+<td>Scan Window in units of 0.625
+ms, scan active <strong>Note
+little endian</strong></td>
+</tr>
+<tr class="row-odd"><td>8</td>
+<td>0x00 - 0xFF</td>
+<td>Discover Active Scan mode</td>
+</tr>
+</tbody>
+</table>
+<p>For full descriptions on all of these variables, please visit the Texas
+Instruments website</p>
+<!-- ###(link to follow) --><p><strong>Example command:</strong> <strong>00 BC 08 09 DF 8F 03 05 64 00 35 00 35 00 00</strong></p>
+</div>
+<div class="section" id="command-8">
+<span id="id15"></span><h2>Command<a class="headerlink" href="#command-8" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="18%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x08</td>
+<td>Command ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x09</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0xDF</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0x8F</td>
+<td>Header CRC8</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>0x03</td>
+<td>Mode 3</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>0x05</td>
+<td>5 Results per Scan Duration</td>
+</tr>
+<tr class="row-even"><td>8-9</td>
+<td>0x6400</td>
+<td>100 ms</td>
+</tr>
+<tr class="row-odd"><td>10-11</td>
+<td>0x3500</td>
+<td>53 * 0.625 = 33.125 ms</td>
+</tr>
+<tr class="row-even"><td>12-13</td>
+<td>0x3500</td>
+<td>53 * 0.625 = 33.125 ms</td>
+</tr>
+<tr class="row-odd"><td>14</td>
+<td>0x00</td>
+<td>Discover Active Scan Mode 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="response-8">
+<span id="id16"></span><h2>Response<a class="headerlink" href="#response-8" title="Permalink to this headline">¶</a></h2>
+<p><em>Example Response:</em> <strong>00 BC 08 01 00 34 00 80 BC 0B 00 00 0B 80 BC 10 12
+14 54 7D 42 99 FB 51 61 CC 02 01 1A 07 FF 4C 00 10 02 0A 00 80 BC 10 25
+20 4A 47 01 00 02 22 D4 BB 02 01 06 1A FF 4C 00 02 15 E2 C5 6D B5 DF FB
+48 D2 B0 60 D0 F5 A7 10 96 E0 00 00 00 00 C5 80 BC 10 12 DE 2C 7D 80 00
+50 E6 80 CF 02 01 06 07 FF 4C 00 10 02 0B 00 80 BC 10 0E 39 3C 84 F3 07
+89 71 24 BC 02 01 06 03 02 F0 FF 80 BC ………..</strong></p>
+<p>We can see in the above example, a standard Response PDU (00 BC 08 01 00
+34 00), followed by a lot of Bluecats Event PDUs (80 BC 0B …..) or other
+BLE PDUs (for instance iBeacon or Eddystone).</p>
+<p>Note that each Event PDU starts with 80 BC which means [Event] [Class
+ID]. The first Event PDU shows that scanning has started as the Event ID
+(0B). <a class="reference external" href="#eventResponses">Full list of event IDs</a></p>
+<p>To decipher all the data coming through, you will need to make sure you
+use the length variable to parse the payloads and recognise each packet
+type.</p>
+<p><strong>Two most important PDUs from the very start of each start scanning
+command follow:</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="10%" />
+<col width="11%" />
+<col width="79%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x08</td>
+<td>Message ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x01</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x00</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0x34</td>
+<td>Header CRC8</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>0x00</td>
+<td>Command Response Code</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>0x80</td>
+<td>Message Type 0x80 (event)</td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-odd"><td>9</td>
+<td>0x0B</td>
+<td>BLE Scanning Stopped</td>
+</tr>
+<tr class="row-even"><td>10</td>
+<td>0x00</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-odd"><td>11</td>
+<td>0x00</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-even"><td>12</td>
+<td>0x1D</td>
+<td>Header CRC8</td>
+</tr>
+<tr class="row-odd"><td>13-n</td>
+<td>&#160;</td>
+<td>Blocks of Events [0x0D - 0x10] (#eventResponses)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="stop-scanning">
+<h2>Stop Scanning<a class="headerlink" href="#stop-scanning" title="Permalink to this headline">¶</a></h2>
+<p>Stop scanning - this will work whether scanning is running or not.</p>
+<p>This command will return a response and an event.</p>
+</div>
+<div class="section" id="command-9">
+<span id="id17"></span><h2>Command<a class="headerlink" href="#command-9" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="24%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x09</td>
+<td>Command ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x00</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x00</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0x4A</td>
+<td>Header CRC8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="response-9">
+<span id="id18"></span><h2>Response<a class="headerlink" href="#response-9" title="Permalink to this headline">¶</a></h2>
+<p><em>Example Response:</em> <strong>00 BC 09 01 00 5F 00 80 BC 0C 00 00 1D</strong></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="18%" />
+<col width="68%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x09</td>
+<td>Message ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x01</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x00</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0x5F</td>
+<td>Header CRC8</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>0x00</td>
+<td>Command Response Code</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>0x80</td>
+<td>Message Type 0x80 (event)</td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-odd"><td>9</td>
+<td>0x0C</td>
+<td>BLE Scanning Stopped</td>
+</tr>
+<tr class="row-even"><td>10</td>
+<td>0x00</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-odd"><td>11</td>
+<td>0x00</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-even"><td>12</td>
+<td>0x1D</td>
+<td>Header CRC8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="go-dfu-mode">
+<h2>Go DFU mode<a class="headerlink" href="#go-dfu-mode" title="Permalink to this headline">¶</a></h2>
+<p>Enter Device Firmware Update mode.</p>
+<p>This command will return a response and an event.</p>
+</div>
+<div class="section" id="command-10">
+<span id="id19"></span><h2>Command<a class="headerlink" href="#command-10" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="24%" />
+<col width="55%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x0C</td>
+<td>Command ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x00</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x00</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0x8A</td>
+<td>Header CRC8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="response-10">
+<span id="id20"></span><h2>Response<a class="headerlink" href="#response-10" title="Permalink to this headline">¶</a></h2>
+<p><em>Example Response:</em> <strong>00 BC 09 01 15 F4 07</strong> &gt; <strong>Not
+supported</strong>Payload too short</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="19%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Byte</th>
+<th class="head">Value</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0x00</td>
+<td>Message type</td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>0xBC</td>
+<td>Class ID</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>0x09</td>
+<td>Message ID</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>0x01</td>
+<td>Payload Length</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>0x15</td>
+<td>Payload CRC8</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>0xF4</td>
+<td>Header CRC8</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>0x07</td>
+<td>Command Response Code</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<div>Remainder incomplete stop reading from this point forward</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#define SERAPI_CMD_WRITE_FW_HDR                    0x0A</span>
+<span class="c1">#define SERAPI_CMD_WRITE_FW_BLK                    0x0B</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Table of Contents</a></li>
+<li><a class="reference internal" href="#firmware-release-information">Firmware Release Information</a></li>
+<li><a class="reference internal" href="#serial-packet-format">Serial Packet Format</a><ul>
+<li><a class="reference internal" href="#command">Command</a></li>
+<li><a class="reference internal" href="#command-ids">Command IDs:</a><ul>
+<li><a class="reference internal" href="#response">Response</a></li>
+<li><a class="reference internal" href="#response-codes">Response Codes</a></li>
+<li><a class="reference internal" href="#message-type-field">Message Type Field</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#responses">Responses</a><ul>
+<li><a class="reference internal" href="#command-response-ids">Command response IDs:</a></li>
+<li><a class="reference internal" href="#event-ids">Event IDs:</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#data-types">Data Types</a></li>
+<li><a class="reference internal" href="#serial-configuration">Serial Configuration</a></li>
+<li><a class="reference internal" href="#commands">Commands</a><ul>
+<li><a class="reference internal" href="#calculating-crc">Calculating CRC</a></li>
+<li><a class="reference internal" href="#meow">Meow</a></li>
+<li><a class="reference internal" href="#command-1">Command</a></li>
+<li><a class="reference internal" href="#response-1">Response</a></li>
+<li><a class="reference internal" href="#read-bt-address">Read BT Address</a></li>
+<li><a class="reference internal" href="#command-2">Command</a></li>
+<li><a class="reference internal" href="#response-2">Response</a></li>
+<li><a class="reference internal" href="#read-firmware-version">Read Firmware Version</a></li>
+<li><a class="reference internal" href="#command-3">Command</a></li>
+<li><a class="reference internal" href="#response-3">Response</a></li>
+<li><a class="reference internal" href="#read-firmware-uid">Read Firmware UID</a></li>
+<li><a class="reference internal" href="#command-4">Command</a></li>
+<li><a class="reference internal" href="#response-4">Response</a></li>
+<li><a class="reference internal" href="#read-model-number">Read Model Number</a></li>
+<li><a class="reference internal" href="#command-5">Command</a></li>
+<li><a class="reference internal" href="#response-5">Response</a></li>
+<li><a class="reference internal" href="#read-status">Read Status</a></li>
+<li><a class="reference internal" href="#command-6">Command</a></li>
+<li><a class="reference internal" href="#response-6">Response</a></li>
+<li><a class="reference internal" href="#read-encrypted-status">Read Encrypted Status</a></li>
+<li><a class="reference internal" href="#command-7">Command</a></li>
+<li><a class="reference internal" href="#response-7">Response</a></li>
+<li><a class="reference internal" href="#start-scanning">Start Scanning</a></li>
+<li><a class="reference internal" href="#command-8">Command</a></li>
+<li><a class="reference internal" href="#response-8">Response</a></li>
+<li><a class="reference internal" href="#stop-scanning">Stop Scanning</a></li>
+<li><a class="reference internal" href="#command-9">Command</a></li>
+<li><a class="reference internal" href="#response-9">Response</a></li>
+<li><a class="reference internal" href="#go-dfu-mode">Go DFU mode</a></li>
+<li><a class="reference internal" href="#command-10">Command</a></li>
+<li><a class="reference internal" href="#response-10">Response</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/libraries/serial/serial-api.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Ernie Forzano.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../../_sources/libraries/serial/serial-api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
