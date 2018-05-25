@@ -25,7 +25,6 @@ Information about development is also available:
 * :ref:`libraries`
 
 
-.. _beacons-docs:
 
 .. toctree::
    :maxdepth: 3
