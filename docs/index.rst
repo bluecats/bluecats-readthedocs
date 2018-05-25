@@ -25,22 +25,17 @@ Information about development is also available:
 * :ref:`libraries`
 
 
-.. _beacons:
+.. beacons:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Beacons
 
-   getting_started
-   versions
-   builds
-   features
-   support
-   faq
-   yaml-config
-   guides/index
-   api
-   embed
+   beacon-guides
+   guides/beacon-settings
+   guides/beacons101
+   guides/bluecats-platform-tools
+
 
 .. _dman-docs:
 
