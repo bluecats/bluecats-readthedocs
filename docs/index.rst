@@ -25,11 +25,11 @@ Information about development is also available:
 * :ref:`libraries`
 
 
-.. _user-docs:
+.. _beacons:
 
 .. toctree::
    :maxdepth: 2
-   :caption: BlueCats Documentation
+   :caption: Beacons
 
    getting_started
    versions
@@ -42,7 +42,7 @@ Information about development is also available:
    api
    embed
 
-.. _about-docs:
+.. _dman-docs:
 
 .. toctree::
    :maxdepth: 2
@@ -61,7 +61,7 @@ Information about development is also available:
    abandoned-projects
    dmca/index
 
-.. _feature-docs:
+.. _dman:
 
 .. toctree::
    :maxdepth: 2
