@@ -25,7 +25,7 @@ Information about development is also available:
 * :ref:`libraries`
 
 
-.. beacons:
+.. _beacons-docs:
 
 .. toctree::
    :maxdepth: 3
@@ -37,45 +37,16 @@ Information about development is also available:
    guides/bluecats-platform-tools
 
 
-.. _dman-docs:
+.. _beacons-docs:
 
 .. toctree::
-   :maxdepth: 2
-   :caption: About Read the Docs
+   :maxdepth: 3
+   :caption: Beacons
 
-   contribute
-   team
-   gsoc
-   code-of-conduct
-   privacy-policy
-   ethical-advertising
-   advertising-details
-   sponsors
-   open-source-philosophy
-   story
-   abandoned-projects
-   dmca/index
-
-.. _dman:
-
-.. toctree::
-   :maxdepth: 2
-   :glob:
-   :caption: Feature Documentation
-
-   webhooks
-   badges
-   alternate_domains
-   localization
-   vcs
-   subprojects
-   conda
-   canonical
-   single_version
-   privacy
-   user-defined-redirects
-   automatic-redirects
-   features/*
+   beacon-guides
+   guides/beacon-settings
+   guides/beacons101
+   guides/bluecats-platform-tools
 
 
 .. _dev-docs:
